@@ -3,6 +3,12 @@ import "@/styles/globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 
+// ============================================
+// COMING SOON MODE TOGGLE
+// Set to false when ready to launch
+// ============================================
+const COMING_SOON_MODE = true;
+
 export const metadata: Metadata = {
   title: {
     default: "Binelek - AI-Powered Command Center for Your Business",
@@ -45,12 +51,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // In coming soon mode, hide header/footer entirely
+  // The middleware redirects all pages to /coming-soon anyway
+  const showNav = !COMING_SOON_MODE;
+
   return (
     <html lang="en">
       <body className="antialiased min-h-screen flex flex-col">
-        <Header />
+        {showNav && <Header />}
         <main className="flex-grow">{children}</main>
-        <Footer />
+        {showNav && <Footer />}
       </body>
     </html>
   );

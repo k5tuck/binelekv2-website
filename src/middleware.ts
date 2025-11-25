@@ -9,7 +9,6 @@ import type { NextRequest } from "next/server";
 const COMING_SOON_MODE = true;
 
 export function middleware(request: NextRequest) {
-
   // If coming soon mode is enabled, redirect all pages to /coming-soon
   // except for the coming-soon page itself and static assets
   if (COMING_SOON_MODE) {
