@@ -1,12 +1,18 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
+// ============================================
+// COMING SOON MODE TOGGLE
+// Set to true to show coming soon page
+// Set to false when ready to launch
+// ============================================
+const COMING_SOON_MODE = true;
+
 export function middleware(request: NextRequest) {
-  const isComingSoonMode = process.env.COMING_SOON_MODE === "true";
 
   // If coming soon mode is enabled, redirect all pages to /coming-soon
   // except for the coming-soon page itself and static assets
-  if (isComingSoonMode) {
+  if (COMING_SOON_MODE) {
     const pathname = request.nextUrl.pathname;
 
     // Allow these paths through without redirect
