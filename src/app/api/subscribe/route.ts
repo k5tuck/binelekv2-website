@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-
-// Loops API endpoint for creating contacts
-const LOOPS_API_URL = "https://app.loops.so/api/v1/contacts/create";
+import { LoopsClient } from "loops";
 
 export async function POST(request: NextRequest) {
   try {
@@ -30,46 +28,45 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Send to Loops
-    const response = await fetch(LOOPS_API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        email,
+    // Initialize Loops client
+    const loops = new LoopsClient(apiKey);
+
+    // Create contact in Loops
+    const resp = await loops.createContact({
+      email,
+      properties: {
         source,
-        subscribed: true,
-        userGroup: "waitlist",
-      }),
+      },
+      mailingLists: {
+        // Add your mailing list ID here from Loops dashboard
+        // Example: "cm06f5v0e45nf0ml5754o9cix": true
+      },
     });
 
-    const data = await response.json();
-
-    if (!response.ok) {
-      // Handle duplicate email (already subscribed)
-      if (data.message?.includes("already exists") || response.status === 409) {
-        return NextResponse.json({
-          success: true,
-          message: "You're already on the list!",
-          alreadySubscribed: true,
-        });
-      }
-
-      console.error("Loops API error:", data);
+    if (resp.success) {
+      return NextResponse.json({
+        success: true,
+        message: "Successfully subscribed!",
+      });
+    } else {
       return NextResponse.json(
         { error: "Failed to subscribe. Please try again." },
         { status: 500 }
       );
     }
-
-    return NextResponse.json({
-      success: true,
-      message: "Successfully subscribed!",
-    });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error("Subscribe error:", error);
+
+    // Handle duplicate email error
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    if (errorMessage.includes("already") || errorMessage.includes("exists")) {
+      return NextResponse.json({
+        success: true,
+        message: "You're already on the list!",
+        alreadySubscribed: true,
+      });
+    }
+
     return NextResponse.json(
       { error: "Something went wrong. Please try again." },
       { status: 500 }
