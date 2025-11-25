@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const productLinks = [
   { name: "Overview", href: "/product" },
@@ -143,7 +144,14 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center">
+          <div className="flex items-center gap-2">
+            <Image
+              src="/logo.png"
+              alt="Binelek Logo"
+              width={28}
+              height={28}
+              className="h-7 w-auto"
+            />
             <span className="text-xl font-bold text-primary-600">Binelek</span>
           </div>
 

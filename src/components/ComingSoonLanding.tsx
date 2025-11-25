@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import Link from "next/link"
+import Image from "next/image"
 import { Database, Zap, Brain, Globe } from "lucide-react"
 
 export function ComingSoonLanding() {
@@ -33,9 +34,13 @@ export function ComingSoonLanding() {
         className="relative z-20 flex items-center justify-between px-8 py-6 max-w-7xl mx-auto"
       >
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-[#FFD240] rounded-sm flex items-center justify-center">
-            <div className="w-4 h-4 border-2 border-[#0A0A0A] rounded-sm" />
-          </div>
+          <Image
+            src="/logo.png"
+            alt="Binelek Logo"
+            width={32}
+            height={32}
+            className="h-8 w-auto"
+          />
           <span className="text-xl font-bold text-white tracking-tight">Binelek</span>
         </div>
         <div className="flex items-center gap-6">

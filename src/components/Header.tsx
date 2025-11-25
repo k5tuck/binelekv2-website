@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 const productLinks = [
@@ -33,7 +34,14 @@ export function Header() {
       <nav className="container-marketing">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href="/" className="flex items-center">
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/logo.png"
+              alt="Binelek Logo"
+              width={36}
+              height={36}
+              className="h-9 w-auto"
+            />
             <span className="text-2xl font-bold text-primary-600">Binelek</span>
           </Link>
 
