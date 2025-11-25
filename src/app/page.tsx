@@ -1,5 +1,10 @@
 import Link from "next/link";
 import { CTASection } from "@/components/CTASection";
+import { ComingSoonLanding } from "@/components/ComingSoonLanding";
+
+// Environment variable toggle for coming soon mode
+// Set NEXT_PUBLIC_COMING_SOON_MODE=true in Vercel to show coming soon page
+const isComingSoonMode = process.env.NEXT_PUBLIC_COMING_SOON_MODE === "true";
 
 const modules = [
   {
@@ -59,6 +64,11 @@ const steps = [
 ];
 
 export default function HomePage() {
+  // Show coming soon page if environment variable is set
+  if (isComingSoonMode) {
+    return <ComingSoonLanding />;
+  }
+
   return (
     <>
       {/* Hero Section */}
