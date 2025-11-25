@@ -8,6 +8,7 @@ interface EmailSignupProps {
   placeholder?: string;
   buttonText?: string;
   successMessage?: string;
+  source?: string;
 }
 
 export function EmailSignup({
@@ -15,31 +16,44 @@ export function EmailSignup({
   placeholder = "Enter your email",
   buttonText = "Get Notified",
   successMessage = "Thanks! We'll notify you when we launch.",
+  source = "website",
 }: EmailSignupProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!email || !email.includes("@")) {
       setStatus("error");
-      setErrorMessage("Please enter a valid email address");
+      setMessage("Please enter a valid email address");
       return;
     }
 
     setStatus("loading");
 
-    // Simulate API call - replace with actual endpoint
     try {
-      // TODO: Replace with actual email signup API
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, source }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Something went wrong");
+      }
+
       setStatus("success");
+      setMessage(data.alreadySubscribed ? "You're already on the list!" : successMessage);
       setEmail("");
-    } catch {
+    } catch (error) {
       setStatus("error");
-      setErrorMessage("Something went wrong. Please try again.");
+      setMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
     }
   };
 
@@ -47,7 +61,7 @@ export function EmailSignup({
     return (
       <div className={`flex items-center gap-2 ${variant === "dark" ? "text-white" : "text-green-600"}`}>
         <CheckCircle className="w-5 h-5" />
-        <span className="font-medium">{successMessage}</span>
+        <span className="font-medium">{message}</span>
       </div>
     );
   }
@@ -104,7 +118,7 @@ export function EmailSignup({
         {status === "loading" ? (
           <>
             <Loader2 className="w-5 h-5 animate-spin" />
-            <span>Sending...</span>
+            <span>Joining...</span>
           </>
         ) : (
           buttonText
@@ -112,7 +126,7 @@ export function EmailSignup({
       </button>
       {status === "error" && (
         <p className={`text-sm mt-1 ${variant === "dark" ? "text-red-300" : "text-red-600"}`}>
-          {errorMessage}
+          {message}
         </p>
       )}
     </form>
