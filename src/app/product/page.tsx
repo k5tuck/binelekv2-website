@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { CTASection } from "@/components/CTASection";
+import { Zap, Database, Shield, Search } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Product Overview",
@@ -14,7 +15,7 @@ const modules = [
     description: "AI-powered task management and workflow automation. Create automations with plain English, not complicated flowcharts.",
     features: ["Task automation", "Email automation", "Workflow builder", "Natural language commands"],
     href: "/product/ops-copilot",
-    icon: "⚡",
+    Icon: Zap,
   },
   {
     name: "Mini Foundry",
@@ -22,7 +23,7 @@ const modules = [
     description: "Business intelligence without the learning curve. Connect your data sources and ask questions in plain English.",
     features: ["Custom dashboards", "Natural language queries", "Automated reports", "Data consolidation"],
     href: "/product/mini-foundry",
-    icon: "📊",
+    Icon: Database,
   },
   {
     name: "Cybersecurity Scanner",
@@ -30,7 +31,7 @@ const modules = [
     description: "Enterprise security made simple for growing businesses. Continuous monitoring with actionable recommendations.",
     features: ["Security scoring", "Vulnerability scanning", "Compliance reporting", "MFA monitoring"],
     href: "/product/security",
-    icon: "🛡️",
+    Icon: Shield,
   },
   {
     name: "Marketplace Intelligence",
@@ -38,7 +39,7 @@ const modules = [
     description: "Know what competitors charge before your customers do. Real-time price tracking across every marketplace.",
     features: ["Price tracking", "Competitor monitoring", "Market trends", "Price alerts"],
     href: "/product/marketplace",
-    icon: "🔍",
+    Icon: Search,
   },
 ];
 
@@ -93,7 +94,7 @@ export default function ProductOverviewPage() {
                 className="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-100"
               >
                 <div className="flex items-start gap-4">
-                  <div className="text-4xl">{module.icon}</div>
+                  <module.Icon className="w-10 h-10 text-primary-600 flex-shrink-0" strokeWidth={1.5} />
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
                       {module.name}

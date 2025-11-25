@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CTASection } from "@/components/CTASection";
 import { ComingSoonLanding } from "@/components/ComingSoonLanding";
+import { Zap, Database, Shield, Search, FolderOpen, Clock, HelpCircle, ShieldOff, Eye } from "lucide-react";
 
 // Environment variable toggle for coming soon mode
 // Set NEXT_PUBLIC_COMING_SOON_MODE=true in Vercel to show coming soon page
@@ -11,26 +12,34 @@ const modules = [
     name: "Ops Copilot",
     description: "Automate your operations with AI-powered task management and workflow automation.",
     href: "/product/ops-copilot",
-    icon: "⚡",
+    Icon: Zap,
   },
   {
     name: "Mini Foundry",
     description: "Understand your data with beautiful dashboards and natural language queries.",
     href: "/product/mini-foundry",
-    icon: "📊",
+    Icon: Database,
   },
   {
     name: "Cybersecurity Scanner",
     description: "Protect your business with automated security monitoring and compliance.",
     href: "/product/security",
-    icon: "🛡️",
+    Icon: Shield,
   },
   {
     name: "Marketplace Intelligence",
     description: "Outsmart your competition with real-time price tracking and market insights.",
     href: "/product/marketplace",
-    icon: "🔍",
+    Icon: Search,
   },
+];
+
+const problems = [
+  { Icon: FolderOpen, title: "Data silos", desc: "Information scattered across dozens of tools" },
+  { Icon: Clock, title: "Manual work", desc: "Hours spent on repetitive tasks" },
+  { Icon: HelpCircle, title: "Limited insights", desc: "No time to analyze what matters" },
+  { Icon: ShieldOff, title: "Security gaps", desc: "Vulnerabilities you don't know about" },
+  { Icon: Eye, title: "Competitive blindness", desc: "No visibility into market changes" },
 ];
 
 const integrations = [
@@ -107,19 +116,13 @@ export default function HomePage() {
               Running a business shouldn&apos;t be this hard
             </h2>
             <p className="text-lg text-gray-600 font-serif">
-              Most SMBs struggle with scattered data, manual processes, and tools that don&apos;t talk to each other.
+              Most businesses struggle with scattered data, manual processes, and tools that don&apos;t talk to each other.
             </p>
           </div>
           <div className="grid md:grid-cols-2 lg:grid-cols-5 gap-6">
-            {[
-              { icon: "📁", title: "Data silos", desc: "Information scattered across dozens of tools" },
-              { icon: "⏰", title: "Manual work", desc: "Hours spent on repetitive tasks" },
-              { icon: "❓", title: "Limited insights", desc: "No time to analyze what matters" },
-              { icon: "🔓", title: "Security gaps", desc: "Vulnerabilities you don't know about" },
-              { icon: "👁️", title: "Competitive blindness", desc: "No visibility into market changes" },
-            ].map((problem) => (
+            {problems.map((problem) => (
               <div key={problem.title} className="text-center p-6 rounded-xl bg-gray-50">
-                <div className="text-3xl mb-3">{problem.icon}</div>
+                <problem.Icon className="w-8 h-8 text-primary-600 mx-auto mb-3" strokeWidth={1.5} />
                 <h3 className="font-semibold text-gray-900 mb-2">{problem.title}</h3>
                 <p className="text-sm text-gray-600">{problem.desc}</p>
               </div>
@@ -146,7 +149,7 @@ export default function HomePage() {
                 href={module.href}
                 className="group p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-100"
               >
-                <div className="text-4xl mb-4">{module.icon}</div>
+                <module.Icon className="w-10 h-10 text-primary-600 mb-4" strokeWidth={1.5} />
                 <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
                   {module.name}
                 </h3>
