@@ -1,23 +1,17 @@
-import Link from "next/link";
+import { EmailSignup } from "./EmailSignup";
 
 interface CTASectionProps {
   headline?: string;
   subheadline?: string;
-  primaryCTA?: string;
-  primaryHref?: string;
-  secondaryCTA?: string;
-  secondaryHref?: string;
   variant?: "default" | "gradient" | "dark";
+  showEmailSignup?: boolean;
 }
 
 export function CTASection({
-  headline = "See Binelek in action",
-  subheadline = "Book a personalized demo and discover how Binelek can transform your business operations.",
-  primaryCTA = "Schedule a Demo",
-  primaryHref = "/demo",
-  secondaryCTA,
-  secondaryHref,
+  headline = "Be the first to know",
+  subheadline = "Sign up to get notified when Binelek launches and receive early access.",
   variant = "default",
+  showEmailSignup = true,
 }: CTASectionProps) {
   const variants = {
     default: "bg-gray-50",
@@ -25,17 +19,7 @@ export function CTASection({
     dark: "bg-gray-900 text-white",
   };
 
-  const buttonVariants = {
-    default: "bg-primary-600 text-white hover:bg-primary-700",
-    gradient: "bg-white text-primary-600 hover:bg-gray-100",
-    dark: "bg-white text-gray-900 hover:bg-gray-100",
-  };
-
-  const secondaryButtonVariants = {
-    default: "border-primary-600 text-primary-600 hover:bg-primary-50",
-    gradient: "border-white text-white hover:bg-white/10",
-    dark: "border-white text-white hover:bg-white/10",
-  };
+  const emailVariant = variant === "default" ? "default" : "dark";
 
   return (
     <section className={`py-16 lg:py-24 ${variants[variant]}`}>
@@ -46,22 +30,16 @@ export function CTASection({
         <p className={`text-lg max-w-2xl mx-auto mb-8 ${variant !== "default" ? "opacity-90" : "text-gray-600"}`}>
           {subheadline}
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Link
-            href={primaryHref}
-            className={`inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-lg transition-colors ${buttonVariants[variant]}`}
-          >
-            {primaryCTA}
-          </Link>
-          {secondaryCTA && secondaryHref && (
-            <Link
-              href={secondaryHref}
-              className={`inline-flex items-center justify-center px-8 py-4 text-base font-medium rounded-lg border-2 transition-colors ${secondaryButtonVariants[variant]}`}
-            >
-              {secondaryCTA}
-            </Link>
-          )}
-        </div>
+        {showEmailSignup && (
+          <div className="flex justify-center">
+            <EmailSignup
+              variant={emailVariant === "dark" ? "dark" : "hero"}
+              buttonText="Notify Me"
+              placeholder="Enter your email address"
+              successMessage="You're on the list! We'll be in touch soon."
+            />
+          </div>
+        )}
       </div>
     </section>
   );

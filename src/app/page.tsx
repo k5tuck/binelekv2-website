@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { CTASection } from "@/components/CTASection";
 import { ComingSoonLanding } from "@/components/ComingSoonLanding";
+import { EmailSignup } from "@/components/EmailSignup";
 import { Zap, Database, Shield, Search, FolderOpen, Clock, HelpCircle, ShieldOff, Eye } from "lucide-react";
 
 // Environment variable toggle for coming soon mode
@@ -84,25 +84,23 @@ export default function HomePage() {
       <section className="gradient-hero py-20 lg:py-32">
         <div className="container-marketing">
           <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6">
+              <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
+              Coming Soon
+            </div>
             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
               Your AI-powered command center for business
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-serif">
               Ask questions. Automate tasks. See everything.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/demo"
-                className="inline-flex items-center px-8 py-4 text-lg font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors"
-              >
-                Schedule a Demo
-              </Link>
-              <Link
-                href="/resources/videos"
-                className="inline-flex items-center px-8 py-4 text-lg font-medium text-primary-600 bg-white border-2 border-primary-600 rounded-lg hover:bg-primary-50 transition-colors"
-              >
-                Watch Demo Video
-              </Link>
+            <div className="flex justify-center">
+              <EmailSignup
+                variant="hero"
+                buttonText="Get Early Access"
+                placeholder="Enter your email for early access"
+                successMessage="You're on the list! We'll notify you when we launch."
+              />
             </div>
           </div>
         </div>
@@ -144,17 +142,16 @@ export default function HomePage() {
           </div>
           <div className="grid md:grid-cols-2 gap-8">
             {modules.map((module) => (
-              <Link
+              <div
                 key={module.name}
-                href={module.href}
-                className="group p-8 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-100"
+                className="p-8 bg-white rounded-2xl shadow-sm border border-gray-100"
               >
                 <module.Icon className="w-10 h-10 text-primary-600 mb-4" strokeWidth={1.5} />
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 mb-2">
                   {module.name}
                 </h3>
                 <p className="text-gray-600 font-serif">{module.description}</p>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -204,24 +201,29 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Social Proof Placeholder */}
-      <section className="py-16 lg:py-24 bg-gray-50">
+      {/* Early Access Section */}
+      <section id="signup" className="py-16 lg:py-24 bg-gray-50 scroll-mt-20">
         <div className="container-marketing text-center">
-          <p className="text-lg text-gray-600 font-serif italic">
-            &ldquo;Join hundreds of businesses simplifying their operations with Binelek.&rdquo;
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">
+            Be among the first to try Binelek
+          </h2>
+          <p className="text-lg text-gray-600 font-serif mb-8 max-w-2xl mx-auto">
+            We&apos;re launching soon. Sign up now to get early access and exclusive updates.
           </p>
-          <p className="text-sm text-gray-500 mt-4">Customer testimonials coming soon</p>
+          <div className="flex justify-center">
+            <EmailSignup
+              variant="default"
+              buttonText="Join Waitlist"
+              placeholder="your@email.com"
+            />
+          </div>
         </div>
       </section>
 
       {/* Final CTA */}
       <CTASection
-        headline="See Binelek in action"
-        subheadline="Book a personalized demo and discover how Binelek can transform your business operations."
-        primaryCTA="Schedule a Demo"
-        primaryHref="/demo"
-        secondaryCTA="Watch Demo Video"
-        secondaryHref="/resources/videos"
+        headline="Be the first to know"
+        subheadline="Sign up to get notified when Binelek launches and receive early access."
         variant="gradient"
       />
     </>

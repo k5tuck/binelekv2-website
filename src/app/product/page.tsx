@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { CTASection } from "@/components/CTASection";
+import { EmailSignup } from "@/components/EmailSignup";
 import { Zap, Database, Shield, Search } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -50,18 +51,23 @@ export default function ProductOverviewPage() {
       <section className="gradient-hero py-20 lg:py-32">
         <div className="container-marketing">
           <div className="max-w-4xl mx-auto text-center">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6">
+              <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
+              Coming Soon
+            </div>
             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
               Everything your business needs. One platform.
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-serif">
               Four powerful modules that work together to automate, analyze, secure, and grow your business.
             </p>
-            <Link
-              href="/demo"
-              className="inline-flex items-center px-8 py-4 text-lg font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors"
-            >
-              Schedule a Demo
-            </Link>
+            <div className="flex justify-center">
+              <EmailSignup
+                variant="hero"
+                buttonText="Get Early Access"
+                placeholder="Enter your email for updates"
+              />
+            </div>
           </div>
         </div>
       </section>

@@ -103,9 +103,7 @@ export default function CareersPage() {
       {/* CTA */}
       <CTASection
         headline="Not looking for a job?"
-        subheadline="Check out Binelek for your business instead."
-        primaryCTA="Schedule a Demo"
-        primaryHref="/demo"
+        subheadline="Check out Binelek for your business instead. Sign up to be notified when we launch."
         variant="gradient"
       />
     </>

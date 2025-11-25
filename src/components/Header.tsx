@@ -151,14 +151,11 @@ export function Header() {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
-            <Link href="/login" className="text-gray-700 hover:text-primary-600 font-medium">
-              Login
-            </Link>
             <Link
-              href="/demo"
+              href="/#signup"
               className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors"
             >
-              Schedule a Demo
+              Get Early Access
             </Link>
           </div>
 
@@ -216,16 +213,13 @@ export function Header() {
                   </Link>
                 ))}
               </div>
-              <div className="pt-4 space-y-3">
-                <Link href="/login" className="block text-center py-2 text-gray-700 font-medium">
-                  Login
-                </Link>
+              <div className="pt-4">
                 <Link
-                  href="/demo"
+                  href="/#signup"
                   className="block text-center py-3 text-white bg-primary-600 rounded-lg font-medium"
                   onClick={() => setMobileMenuOpen(false)}
                 >
-                  Schedule a Demo
+                  Get Early Access
                 </Link>
               </div>
             </div>
