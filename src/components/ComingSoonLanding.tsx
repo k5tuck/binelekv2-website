@@ -27,13 +27,14 @@ export function ComingSoonLanding() {
 
       {/* Main Content */}
       <div className="relative z-10 max-w-2xl mx-auto px-8 text-center">
-        {/* Logo Placeholder - uncomment and customize when ready
+        {/* Company Name */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           className="flex items-center justify-center gap-3 mb-12"
         >
+          {/* Logo Placeholder - uncomment when ready
           <Image
             src="/logo.png"
             alt="Binelek Logo"
@@ -41,9 +42,9 @@ export function ComingSoonLanding() {
             height={48}
             className="h-12 w-auto"
           />
+          */}
           <span className="text-3xl font-bold text-gray-900 tracking-tight">Binelek</span>
         </motion.div>
-        */}
 
         {/* Coming Soon Badge */}
         <motion.div
