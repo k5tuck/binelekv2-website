@@ -9,10 +9,18 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "keywords": ["binelek", "smb", "ai", "business", "automation"],
+  "keywords": [
+    "binelek",
+    "smb",
+    "ai",
+    "business",
+    "automation"
+  ],
   "author": "Binelek",
   "license": "UNLICENSED",
   "dependencies": {
+    "framer-motion": "^12.23.24",
+    "lucide-react": "^0.554.0",
     "next": "^16.0.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
