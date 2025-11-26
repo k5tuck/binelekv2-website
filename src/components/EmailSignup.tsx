@@ -17,7 +17,7 @@ export function EmailSignup({
   variant = "default",
   placeholder = "Enter your email",
   buttonText = "Join Waitlist",
-  successMessage = "Thanks! We'll be in touch!",
+  successMessage = "You're on the list! We'll notify you when we launch.",
 }: EmailSignupProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");

@@ -92,7 +92,6 @@ export function ComingSoonLanding() {
             variant="hero"
             placeholder="Enter your email"
             buttonText="Join Waitlist"
-            successMessage="Thanks! We'll be in touch!"
           />
         </motion.div>
 
