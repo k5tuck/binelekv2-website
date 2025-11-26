@@ -90,10 +90,9 @@ export function ComingSoonLanding() {
           <p className="text-sm text-gray-500 mb-4">Be the first to know when we launch</p>
           <EmailSignup
             variant="hero"
-            source="coming-soon"
             placeholder="Enter your email"
-            buttonText="Notify Me"
-            successMessage="You're on the list! We'll notify you when we launch."
+            buttonText="Join Waitlist"
+            successMessage="Thanks! We'll be in touch!"
           />
         </motion.div>
 

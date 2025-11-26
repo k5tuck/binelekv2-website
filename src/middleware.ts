@@ -17,7 +17,6 @@ export function middleware(request: NextRequest) {
     // Allow these paths through without redirect
     const allowedPaths = [
       "/coming-soon",
-      "/api/subscribe",
       "/_next",
       "/favicon",
       "/images",

@@ -3,20 +3,21 @@
 import { useState } from "react";
 import { Mail, CheckCircle, Loader2 } from "lucide-react";
 
+// Loops form endpoint - posts directly to Loops, no API key needed
+const LOOPS_FORM_URL = "https://app.loops.so/api/newsletter-form/cmif1oyfve17g0s0ik5zr5ki0";
+
 interface EmailSignupProps {
   variant?: "default" | "hero" | "inline" | "dark";
   placeholder?: string;
   buttonText?: string;
   successMessage?: string;
-  source?: string;
 }
 
 export function EmailSignup({
   variant = "default",
   placeholder = "Enter your email",
-  buttonText = "Get Notified",
-  successMessage = "Thanks! We'll notify you when we launch.",
-  source = "website",
+  buttonText = "Join Waitlist",
+  successMessage = "Thanks! We'll be in touch!",
 }: EmailSignupProps) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
@@ -31,35 +32,51 @@ export function EmailSignup({
       return;
     }
 
+    // Rate limiting - check if signed up in last minute
+    const timestamp = Date.now();
+    const previousTimestamp = localStorage.getItem("loops-form-timestamp");
+    if (previousTimestamp && Number(previousTimestamp) + 60000 > timestamp) {
+      setStatus("error");
+      setMessage("Too many signups, please try again in a little while");
+      return;
+    }
+    localStorage.setItem("loops-form-timestamp", String(timestamp));
+
     setStatus("loading");
 
     try {
-      const response = await fetch("/api/subscribe", {
+      const formBody = `userGroup=waitList&mailingLists=&email=${encodeURIComponent(email)}`;
+
+      const response = await fetch(LOOPS_FORM_URL, {
         method: "POST",
+        body: formBody,
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: JSON.stringify({ email, source }),
       });
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Something went wrong");
+      if (response.ok) {
+        setStatus("success");
+        setMessage(successMessage);
+        setEmail("");
+      } else {
+        const data = await response.json();
+        throw new Error(data.message || "Something went wrong");
       }
-
-      setStatus("success");
-      setMessage(data.alreadySubscribed ? "You're already on the list!" : successMessage);
-      setEmail("");
     } catch (error) {
       setStatus("error");
-      setMessage(error instanceof Error ? error.message : "Something went wrong. Please try again.");
+      if (error instanceof Error && error.message === "Failed to fetch") {
+        setMessage("Too many signups, please try again in a little while");
+      } else {
+        setMessage(error instanceof Error ? error.message : "Oops! Something went wrong, please try again");
+      }
+      localStorage.setItem("loops-form-timestamp", "");
     }
   };
 
   if (status === "success") {
     return (
-      <div className={`flex items-center gap-2 ${variant === "dark" ? "text-white" : "text-green-600"}`}>
+      <div className={`flex items-center justify-center gap-2 ${variant === "dark" ? "text-white" : "text-green-600"}`}>
         <CheckCircle className="w-5 h-5" />
         <span className="font-medium">{message}</span>
       </div>
@@ -76,7 +93,7 @@ export function EmailSignup({
       button: `${baseButtonStyles} bg-primary-600 text-white hover:bg-primary-700`,
     },
     hero: {
-      container: "flex flex-col sm:flex-row gap-3 w-full max-w-lg",
+      container: "flex flex-col sm:flex-row gap-3 w-full max-w-lg mx-auto",
       input: `${baseInputStyles} border-gray-300 focus:ring-primary-500 focus:border-primary-500 text-lg py-4`,
       button: `${baseButtonStyles} bg-primary-600 text-white hover:bg-primary-700 text-lg px-8 py-4`,
     },
@@ -118,14 +135,14 @@ export function EmailSignup({
         {status === "loading" ? (
           <>
             <Loader2 className="w-5 h-5 animate-spin" />
-            <span>Joining...</span>
+            <span>Please wait...</span>
           </>
         ) : (
           buttonText
         )}
       </button>
       {status === "error" && (
-        <p className={`text-sm mt-1 ${variant === "dark" ? "text-red-300" : "text-red-600"}`}>
+        <p className={`text-sm mt-1 w-full text-center ${variant === "dark" ? "text-red-300" : "text-red-600"}`}>
           {message}
         </p>
       )}
