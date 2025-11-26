@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, CheckCircle, Loader2 } from "lucide-react";
+import { CheckCircle, Loader2 } from "lucide-react";
 
 // Loops form endpoint - posts directly to Loops, no API key needed
 const LOOPS_FORM_URL = "https://app.loops.so/api/newsletter-form/cmif1oyfve17g0s0ik5zr5ki0";
@@ -89,17 +89,17 @@ export function EmailSignup({
   const variantStyles = {
     default: {
       container: "flex flex-col sm:flex-row gap-3 w-full max-w-md",
-      input: `${baseInputStyles} border-gray-300 focus:ring-primary-500 focus:border-primary-500`,
+      input: `${baseInputStyles} border-gray-300 focus:ring-primary-500 focus:border-primary-500 text-black`,
       button: `${baseButtonStyles} bg-primary-600 text-white hover:bg-primary-700`,
     },
     hero: {
       container: "flex flex-col sm:flex-row gap-3 w-full max-w-lg mx-auto",
-      input: `${baseInputStyles} border-gray-300 focus:ring-primary-500 focus:border-primary-500 text-lg py-4`,
+      input: `${baseInputStyles} border-gray-300 focus:ring-primary-500 focus:border-primary-500 text-lg py-4 text-black`,
       button: `${baseButtonStyles} bg-primary-600 text-white hover:bg-primary-700 text-lg px-8 py-4`,
     },
     inline: {
       container: "flex gap-2 w-full max-w-sm",
-      input: `${baseInputStyles} border-gray-300 focus:ring-primary-500 focus:border-primary-500 text-sm py-2`,
+      input: `${baseInputStyles} border-gray-300 focus:ring-primary-500 focus:border-primary-500 text-sm py-2 text-black`,
       button: `${baseButtonStyles} bg-primary-600 text-white hover:bg-primary-700 text-sm px-4 py-2`,
     },
     dark: {
@@ -113,20 +113,17 @@ export function EmailSignup({
 
   return (
     <form onSubmit={handleSubmit} className={styles.container}>
-      <div className="relative flex-1">
-        <Mail className={`absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 ${variant === "dark" ? "text-white/60" : "text-gray-400"}`} />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => {
-            setEmail(e.target.value);
-            if (status === "error") setStatus("idle");
-          }}
-          placeholder={placeholder}
-          className={`${styles.input} pl-10`}
-          disabled={status === "loading"}
-        />
-      </div>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => {
+          setEmail(e.target.value);
+          if (status === "error") setStatus("idle");
+        }}
+        placeholder={placeholder}
+        className={styles.input}
+        disabled={status === "loading"}
+      />
       <button
         type="submit"
         disabled={status === "loading"}
