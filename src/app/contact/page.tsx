@@ -138,7 +138,7 @@ export default function ContactPage() {
         <div className="container-marketing">
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <Link href="/demo" className="p-6 bg-white rounded-xl hover:shadow-lg transition-shadow">
-              <h3 className="font-bold text-gray-900 mb-2">Schedule a Demo</h3>
+              <h3 className="font-bold text-gray-900 mb-2">Get Early Access</h3>
               <p className="text-gray-600 text-sm">See Binelek in action with a personalized walkthrough.</p>
             </Link>
             <Link href="/resources/faq" className="p-6 bg-white rounded-xl hover:shadow-lg transition-shadow">
