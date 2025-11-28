@@ -72,11 +72,17 @@ export default function ProductOverviewPage() {
         </div>
       </section>
 
-      {/* Platform Screenshot Placeholder */}
+      {/* Platform Screenshot */}
       <section className="py-16 bg-white">
         <div className="container-marketing">
-          <div className="bg-gray-100 rounded-2xl h-96 flex items-center justify-center">
-            <p className="text-gray-500">Platform screenshot placeholder</p>
+          <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+            <Image
+              src="/screenshots/dashboard-desktop.png"
+              alt="Binelek Platform Dashboard"
+              width={1200}
+              height={800}
+              className="w-full h-auto"
+            />
           </div>
         </div>
       </section>

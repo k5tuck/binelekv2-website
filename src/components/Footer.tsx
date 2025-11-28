@@ -144,15 +144,14 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center">
             <Image
-              src="/logo.png"
-              alt="Binelek Logo"
-              width={28}
-              height={28}
-              className="h-7 w-auto"
+              src="/logo-light.svg"
+              alt="Binelek - The SMB AI Platform"
+              width={120}
+              height={36}
+              className="h-8 w-auto"
             />
-            <span className="text-xl font-bold text-primary-600">Binelek</span>
           </div>
 
           <p className="text-sm text-gray-500">

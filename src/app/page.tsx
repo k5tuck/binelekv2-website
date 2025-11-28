@@ -131,11 +131,12 @@ export default function HomePage() {
             {/* Logo */}
             <div className="flex justify-center mb-8">
               <Image
-                src="/logo.png"
-                alt="Binelek"
-                width={80}
-                height={80}
-                className="h-20 w-auto"
+                src="/logo-light.svg"
+                alt="Binelek - The SMB AI Platform"
+                width={200}
+                height={60}
+                className="h-16 w-auto"
+                priority
               />
             </div>
 

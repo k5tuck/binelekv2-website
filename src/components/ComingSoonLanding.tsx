@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-// import Image from "next/image" // Uncomment when adding logo back
+import Image from "next/image"
 import { EmailSignup } from "./EmailSignup"
 
 export function ComingSoonLanding() {
@@ -18,32 +18,30 @@ export function ComingSoonLanding() {
         }} />
       </div>
 
-      {/* Subtle radial gradient */}
+      {/* Subtle radial gradient - Emerald green */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] opacity-30"
         style={{
-          background: 'radial-gradient(ellipse at center, rgba(2, 132, 199, 0.1) 0%, transparent 60%)',
+          background: 'radial-gradient(ellipse at center, rgba(40, 65, 57, 0.15) 0%, transparent 60%)',
         }}
       />
 
       {/* Main Content */}
       <div className="relative z-10 max-w-2xl mx-auto px-8 text-center">
-        {/* Company Name */}
+        {/* Logo */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex items-center justify-center gap-3 mb-12"
+          className="flex items-center justify-center mb-12"
         >
-          {/* Logo Placeholder - uncomment when ready
           <Image
-            src="/logo.png"
-            alt="Binelek Logo"
-            width={48}
-            height={48}
-            className="h-12 w-auto"
+            src="/logo-light.svg"
+            alt="Binelek - The SMB AI Platform"
+            width={180}
+            height={54}
+            className="h-14 w-auto"
+            priority
           />
-          */}
-          <span className="text-3xl font-bold text-gray-900 tracking-tight">Binelek</span>
         </motion.div>
 
         {/* Coming Soon Badge */}

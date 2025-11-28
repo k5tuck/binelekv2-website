@@ -94,15 +94,19 @@ export default function OpsCopilotPage() {
         </div>
       </section>
 
-      {/* Screenshot Placeholder */}
+      {/* Screenshot */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="container-marketing">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
               Build workflows visually
             </h2>
-            <div className="bg-gray-100 rounded-2xl h-96 flex items-center justify-center">
-              <p className="text-gray-500">Workflow builder screenshot placeholder</p>
+            <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
+              <img
+                src="/screenshots/ops-copilot.png"
+                alt="Ops Copilot - Task & Workflow Automation"
+                className="w-full h-auto"
+              />
             </div>
           </div>
         </div>
