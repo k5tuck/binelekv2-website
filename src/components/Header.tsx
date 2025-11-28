@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { LanguageSelector } from "./LanguageSelector";
 
 const productLinks = [
   { name: "Overview", href: "/product" },
@@ -161,6 +162,7 @@ export function Header() {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
+            <LanguageSelector />
             <Link
               href="/#signup"
               className="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors"
@@ -233,7 +235,11 @@ export function Header() {
                   )
                 ))}
               </div>
-              <div className="pt-4">
+              <div className="pt-4 space-y-4">
+                <div className="flex items-center justify-between py-2">
+                  <span className="text-sm font-semibold text-gray-500">Language</span>
+                  <LanguageSelector />
+                </div>
                 <Link
                   href="/#signup"
                   className="block text-center py-3 text-white bg-primary-600 rounded-lg font-medium"

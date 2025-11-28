@@ -1,0 +1,88 @@
+{
+  "common": {
+    "getEarlyAccess": "Get Early Access",
+    "learnMore": "Learn More",
+    "contactSales": "Contact Sales",
+    "subscribe": "Subscribe",
+    "comingSoon": "Coming Soon",
+    "viewAll": "View All"
+  },
+  "nav": {
+    "product": "Product",
+    "solutions": "Solutions",
+    "pricing": "Pricing",
+    "resources": "Resources",
+    "company": "Company",
+    "overview": "Overview",
+    "opsCopilot": "Ops Copilot",
+    "miniFoundry": "Mini Foundry",
+    "security": "Security",
+    "marketplace": "Marketplace",
+    "integrations": "Integrations",
+    "whyBinelek": "Why Binelek",
+    "gettingStarted": "Getting Started",
+    "demoVideos": "Demo Videos",
+    "faq": "FAQ",
+    "about": "About",
+    "contact": "Contact",
+    "careers": "Careers"
+  },
+  "home": {
+    "heroTitle": "The AI-powered command center for your business",
+    "heroSubtitle": "Connect your tools, automate operations, and make smarter decisions — all from one platform built for growing businesses.",
+    "trustedBy": "Trusted by growing businesses",
+    "featuresTitle": "Everything you need to run smarter",
+    "featuresSubtitle": "One platform. Four powerful modules. Infinite possibilities."
+  },
+  "pricing": {
+    "title": "Simple, transparent pricing",
+    "subtitle": "Start free. Scale as you grow.",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "save": "Save {percent}%",
+    "perMonth": "/month",
+    "starter": "Starter",
+    "starterDesc": "For trying out Binelek",
+    "pro": "Pro",
+    "proDesc": "For growing businesses",
+    "business": "Business",
+    "businessDesc": "For scaling teams",
+    "enterprise": "Enterprise",
+    "enterpriseDesc": "For large organizations",
+    "free": "Free",
+    "custom": "Custom",
+    "features": {
+      "connectors": "{count} connectors",
+      "unlimitedConnectors": "Unlimited connectors",
+      "aiQueries": "{count} AI queries/month",
+      "unlimitedAiQueries": "Unlimited AI queries",
+      "teamMembers": "{count} team members",
+      "unlimitedTeamMembers": "Unlimited team members",
+      "dataRefresh24h": "24-hour data refresh",
+      "dataRefresh1h": "1-hour data refresh",
+      "dataRefreshRealtime": "Real-time data refresh",
+      "emailSupport": "Email support",
+      "prioritySupport": "Priority support",
+      "dedicatedSupport": "Dedicated support",
+      "customDashboards": "Custom dashboards",
+      "advancedSecurity": "Advanced security features",
+      "customIntegrations": "Custom integrations",
+      "dedicatedAccountManager": "Dedicated account manager",
+      "customSla": "Custom SLA",
+      "onPremise": "On-premise option",
+      "advancedCompliance": "Advanced compliance"
+    }
+  },
+  "footer": {
+    "stayUpdated": "Stay Updated",
+    "newsletterText": "Get product updates and news delivered to your inbox.",
+    "integratesWith": "Integrates with your favorite tools",
+    "allRightsReserved": "All rights reserved."
+  },
+  "cookie": {
+    "message": "We use cookies to improve your experience. By continuing to use our site, you agree to our",
+    "privacyPolicy": "Privacy Policy",
+    "essentialOnly": "Essential Only",
+    "acceptAll": "Accept All"
+  }
+}

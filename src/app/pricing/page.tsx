@@ -1,107 +1,153 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { CTASection } from "@/components/CTASection";
+import { localeCurrencies, currencyMultipliers, type Locale } from "@/i18n/config";
 
-const plans = [
-  {
-    name: "Starter",
-    monthlyPrice: "Free",
-    yearlyPrice: "Free",
-    description: "For trying out Binelek",
-    features: [
-      "2 connectors",
-      "50 AI queries/month",
-      "1 team member",
-      "24-hour data refresh",
-      "Email support",
-    ],
-    cta: "Get Early Access",
-    href: "/demo",
-    highlighted: false,
-  },
-  {
-    name: "Pro",
-    monthlyPrice: "$49",
-    yearlyPrice: "$39",
-    yearlySavings: "$120/year",
-    description: "For growing businesses",
-    features: [
-      "10 connectors",
-      "Unlimited AI queries",
-      "5 team members",
-      "1-hour data refresh",
-      "Priority support",
-      "Custom dashboards",
-    ],
-    cta: "Get Early Access",
-    href: "/demo",
-    highlighted: true,
-  },
-  {
-    name: "Business",
-    monthlyPrice: "$149",
-    yearlyPrice: "$119",
-    yearlySavings: "$360/year",
-    description: "For scaling teams",
-    features: [
-      "Unlimited connectors",
-      "Unlimited AI queries",
-      "25 team members",
-      "Real-time data refresh",
-      "Dedicated support",
-      "Advanced security features",
-      "Custom integrations",
-    ],
-    cta: "Get Early Access",
-    href: "/demo",
-    highlighted: false,
-  },
-  {
-    name: "Enterprise",
-    monthlyPrice: "Custom",
-    yearlyPrice: "Custom",
-    description: "For large organizations",
-    features: [
-      "Everything in Business",
-      "Unlimited team members",
-      "Dedicated account manager",
-      "Custom SLA",
-      "On-premise option",
-      "Advanced compliance",
-    ],
-    cta: "Contact Sales",
-    href: "/contact",
-    highlighted: false,
-  },
-];
+// Base prices in USD
+const basePrices = {
+  pro: { monthly: 49, yearly: 39, yearlySavings: 120 },
+  business: { monthly: 149, yearly: 119, yearlySavings: 360 },
+};
 
-const faqs = [
-  {
-    question: "How does billing work?",
-    answer: "We bill monthly or annually depending on your choice. Annual plans save up to 20%.",
-  },
-  {
-    question: "Can I change plans?",
-    answer: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.",
-  },
-  {
-    question: "What happens if I exceed limits?",
-    answer: "We'll notify you when you're approaching limits. You can upgrade anytime to continue without interruption.",
-  },
-  {
-    question: "Is there a free trial?",
-    answer: "Yes! Our Starter plan is free forever. You can also request a demo to see the full platform.",
-  },
-  {
-    question: "How do I cancel?",
-    answer: "You can cancel anytime from your account settings. No questions asked.",
-  },
-];
+function formatPrice(amount: number, currency: { code: string; symbol: string }): string {
+  // Apply currency multiplier
+  const multiplier = currencyMultipliers[currency.code] || 1;
+  const convertedAmount = Math.round(amount * multiplier);
+
+  // Format based on currency
+  if (currency.code === "EUR") {
+    return `€${convertedAmount}`;
+  }
+  return `${currency.symbol}${convertedAmount}`;
+}
+
+function formatSavings(amount: number, currency: { code: string; symbol: string }): string {
+  const multiplier = currencyMultipliers[currency.code] || 1;
+  const convertedAmount = Math.round(amount * multiplier);
+
+  if (currency.code === "EUR") {
+    return `€${convertedAmount}/year`;
+  }
+  return `${currency.symbol}${convertedAmount}/year`;
+}
 
 export default function PricingPage() {
   const [isYearly, setIsYearly] = useState(true);
+  const [currency, setCurrency] = useState(localeCurrencies.en);
+
+  useEffect(() => {
+    // Get locale from cookie
+    const cookies = document.cookie.split(";");
+    const localeCookie = cookies.find((c) => c.trim().startsWith("NEXT_LOCALE="));
+    if (localeCookie) {
+      const locale = localeCookie.split("=")[1] as Locale;
+      if (localeCurrencies[locale]) {
+        setCurrency(localeCurrencies[locale]);
+      }
+    }
+  }, []);
+
+  const plans = [
+    {
+      name: "Starter",
+      monthlyPrice: "Free",
+      yearlyPrice: "Free",
+      description: "For trying out Binelek",
+      features: [
+        "2 connectors",
+        "50 AI queries/month",
+        "1 team member",
+        "24-hour data refresh",
+        "Email support",
+      ],
+      cta: "Get Early Access",
+      href: "/demo",
+      highlighted: false,
+    },
+    {
+      name: "Pro",
+      monthlyPrice: formatPrice(basePrices.pro.monthly, currency),
+      yearlyPrice: formatPrice(basePrices.pro.yearly, currency),
+      yearlySavings: formatSavings(basePrices.pro.yearlySavings, currency),
+      description: "For growing businesses",
+      features: [
+        "10 connectors",
+        "Unlimited AI queries",
+        "5 team members",
+        "1-hour data refresh",
+        "Priority support",
+        "Custom dashboards",
+      ],
+      cta: "Get Early Access",
+      href: "/demo",
+      highlighted: true,
+    },
+    {
+      name: "Business",
+      monthlyPrice: formatPrice(basePrices.business.monthly, currency),
+      yearlyPrice: formatPrice(basePrices.business.yearly, currency),
+      yearlySavings: formatSavings(basePrices.business.yearlySavings, currency),
+      description: "For scaling teams",
+      features: [
+        "Unlimited connectors",
+        "Unlimited AI queries",
+        "25 team members",
+        "Real-time data refresh",
+        "Dedicated support",
+        "Advanced security features",
+        "Custom integrations",
+      ],
+      cta: "Get Early Access",
+      href: "/demo",
+      highlighted: false,
+    },
+    {
+      name: "Enterprise",
+      monthlyPrice: "Custom",
+      yearlyPrice: "Custom",
+      description: "For large organizations",
+      features: [
+        "Everything in Business",
+        "Unlimited team members",
+        "Dedicated account manager",
+        "Custom SLA",
+        "On-premise option",
+        "Advanced compliance",
+      ],
+      cta: "Contact Sales",
+      href: "/contact",
+      highlighted: false,
+    },
+  ];
+
+  const faqs = [
+    {
+      question: "How does billing work?",
+      answer: "We bill monthly or annually depending on your choice. Annual plans save up to 20%.",
+    },
+    {
+      question: "Can I change plans?",
+      answer: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.",
+    },
+    {
+      question: "What happens if I exceed limits?",
+      answer: "We'll notify you when you're approaching limits. You can upgrade anytime to continue without interruption.",
+    },
+    {
+      question: "Is there a free trial?",
+      answer: "Yes! Our Starter plan is free forever. You can also request a demo to see the full platform.",
+    },
+    {
+      question: "How do I cancel?",
+      answer: "You can cancel anytime from your account settings. No questions asked.",
+    },
+    {
+      question: "What currencies do you accept?",
+      answer: "We accept payments in USD and EUR. Prices are automatically shown in your local currency based on your region.",
+    },
+  ];
 
   return (
     <>
@@ -114,6 +160,11 @@ export default function PricingPage() {
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-serif">
               Start free. Scale as you grow.
+            </p>
+
+            {/* Currency indicator */}
+            <p className="text-sm text-gray-500 mb-4">
+              Prices shown in {currency.name} ({currency.code})
             </p>
 
             {/* Billing Toggle */}
