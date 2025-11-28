@@ -6,7 +6,7 @@ import type { NextRequest } from "next/server";
 // Set to true to show coming soon page
 // Set to false when ready to launch
 // ============================================
-const COMING_SOON_MODE = true;
+const COMING_SOON_MODE = false;
 
 export function middleware(request: NextRequest) {
   // If coming soon mode is enabled, redirect all pages to /coming-soon
