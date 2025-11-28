@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { EmailSignup } from "./EmailSignup";
 
 const productLinks = [
   { name: "Overview", href: "/product" },
@@ -152,19 +155,11 @@ export function Footer() {
             <p className="text-sm text-gray-600 mb-4">
               Get product updates and news delivered to your inbox.
             </p>
-            <form className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="flex-1 px-3 py-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              />
-              <button
-                type="submit"
-                className="px-4 py-2 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700"
-              >
-                Subscribe
-              </button>
-            </form>
+            <EmailSignup
+              variant="inline"
+              buttonText="Subscribe"
+              successMessage="You're subscribed! We'll keep you updated."
+            />
           </div>
         </div>
 
