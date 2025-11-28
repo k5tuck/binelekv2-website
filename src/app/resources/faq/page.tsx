@@ -73,10 +73,6 @@ const faqCategories = [
         a: "Absolutely not. Your data is yours. We never sell, share, or use your data for advertising.",
       },
       {
-        q: "What compliance certifications do you have?",
-        a: "We support SOC2, GDPR, HIPAA, and PCI-DSS compliance requirements. Contact us for specific compliance documentation.",
-      },
-      {
         q: "Can I delete my data?",
         a: "Yes. You can request complete data deletion at any time, and we'll remove all your data within 30 days.",
       },

@@ -20,8 +20,8 @@ const solutionsLinks = [
 ];
 
 const resourcesLinks = [
-  { name: "Getting Started", href: "/resources/getting-started" },
-  { name: "Demo Videos", href: "/resources/videos" },
+  { name: "Getting Started", href: "/resources/getting-started", disabled: true },
+  { name: "Demo Videos", href: "/resources/videos", disabled: true },
   { name: "FAQ", href: "/resources/faq" },
 ];
 
@@ -136,13 +136,23 @@ export function Header() {
               {openDropdown === "resources" && (
                 <div className="absolute top-full left-0 w-48 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
                   {resourcesLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600"
-                    >
-                      {link.name}
-                    </Link>
+                    link.disabled ? (
+                      <span
+                        key={link.href}
+                        className="flex items-center justify-between px-4 py-2 text-gray-400 cursor-not-allowed"
+                      >
+                        {link.name}
+                        <span className="text-xs bg-gray-100 text-gray-400 px-2 py-0.5 rounded">Soon</span>
+                      </span>
+                    ) : (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600"
+                      >
+                        {link.name}
+                      </Link>
+                    )
                   ))}
                 </div>
               )}
@@ -203,14 +213,24 @@ export function Header() {
               <div>
                 <p className="text-sm font-semibold text-gray-500 mb-2">Resources</p>
                 {resourcesLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="block py-2 text-gray-700"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {link.name}
-                  </Link>
+                  link.disabled ? (
+                    <span
+                      key={link.href}
+                      className="flex items-center gap-2 py-2 text-gray-400"
+                    >
+                      {link.name}
+                      <span className="text-xs bg-gray-100 text-gray-400 px-2 py-0.5 rounded">Soon</span>
+                    </span>
+                  ) : (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className="block py-2 text-gray-700"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {link.name}
+                    </Link>
+                  )
                 ))}
               </div>
               <div className="pt-4">
