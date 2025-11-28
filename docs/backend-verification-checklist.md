@@ -13,25 +13,27 @@ This document contains claims made on the marketing website that need backend ve
 
 **Location:** `src/app/resources/faq/page.tsx`
 
-**Backend Status:** ⚠️ PARTIALLY IMPLEMENTED
+**Backend Status:** ✅ IMPLEMENTED
 
 **Findings:**
-- Connectors service exists (`services/connectors/app/main.py`)
-- Basic sync infrastructure in place
-- **Missing:** Plan-based sync frequency control
-- **Missing:** Real-time sync for Business/Enterprise (webhooks)
+- Plans table with sync intervals (Starter: 1440min, Pro: 60min, Business/Enterprise: 0/real-time)
+- Sync scheduler service polls for due syncs every 30 seconds
+- Webhook handlers for Shopify, Stripe, HubSpot, QuickBooks with signature verification
+- Sync jobs table tracks all sync executions with history
+- Plan-based enforcement via `get_tenant_sync_interval()` function
 
-**Verification Required:**
-- [ ] Add `sync_frequency` column to `connector_configs` table
-- [ ] Implement sync scheduler with plan-based intervals
-- [ ] Add webhook handlers for real-time sync (Shopify, Stripe, etc.)
-- [ ] Create cron job for Starter (24h) and Pro (1h) plans
+**Implemented Files:**
+- `database/init/06_sync_frequency.sql` - Plans table, sync scheduling columns, webhook events
+- `gateway/src/services/sync-scheduler.ts` - Scheduler service with plan-based intervals
+- `gateway/src/routes/sync.ts` - Sync status, history, manual trigger endpoints
+- `gateway/src/routes/webhooks.ts` - Webhook handlers for real-time sync
+
+**Verification Completed:**
+- [x] Add `sync_frequency` column to `connector_configs` table
+- [x] Implement sync scheduler with plan-based intervals
+- [x] Add webhook handlers for real-time sync (Shopify, Stripe, etc.)
+- [x] Create scheduled sync for Starter (24h) and Pro (1h) plans
 - [ ] Document sync implementation in backend README
-
-**Files to Modify:**
-- `database/init/01_create_database.sql` - Add sync config columns
-- `services/connectors/app/main.py` - Add sync scheduler
-- `gateway/src/services/` - Add sync status service
 
 ---
 
@@ -114,13 +116,13 @@ The pricing page lists data refresh rates per plan:
 - Pro: "1-hour data refresh"
 - Business: "Real-time data refresh"
 
-**Backend Status:** ⚠️ NOT YET ENFORCED
+**Backend Status:** ✅ IMPLEMENTED
 
-**Tasks:**
-- [ ] Create `plans` table or config with sync frequencies
-- [ ] Enforce sync frequency based on tenant's plan
-- [ ] Implement real-time webhooks for Business tier
-- [ ] Add upgrade prompts when hitting sync limits
+**Tasks Completed:**
+- [x] Create `plans` table or config with sync frequencies
+- [x] Enforce sync frequency based on tenant's plan
+- [x] Implement real-time webhooks for Business tier
+- [x] Add upgrade prompts when hitting sync limits (via `/api/sync/limits` endpoint)
 
 ---
 
@@ -155,11 +157,12 @@ The pricing page lists data refresh rates per plan:
 
 | Feature | Status | Priority |
 |---------|--------|----------|
-| Data Sync Frequency | ⚠️ Partial | High |
+| Data Sync Frequency | ✅ Done | - |
 | AI Source Attribution | ✅ Done | - |
 | AI Data Access Restrictions | ✅ Done | - |
-| Plan-based Sync Enforcement | ❌ Not Started | High |
-| i18n Support | ✅ Done (PR pending) | Medium |
+| Plan-based Sync Enforcement | ✅ Done | - |
+| i18n Support | ✅ Done | - |
+| Real-time Webhooks | ✅ Done | - |
 
 ---
 
