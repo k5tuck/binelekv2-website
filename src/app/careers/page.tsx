@@ -77,8 +77,8 @@ export default function CareersPage() {
               </p>
               <p className="text-gray-900 font-medium">
                 Send your resume to{" "}
-                <a href="mailto:careers@binelek.io" className="text-primary-600 hover:text-primary-700">
-                  careers@binelek.io
+                <a href="mailto:info@binelek.io" className="text-primary-600 hover:text-primary-700">
+                  info@binelek.io
                 </a>
               </p>
             </div>

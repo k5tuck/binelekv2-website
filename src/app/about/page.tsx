@@ -105,7 +105,7 @@ export default function AboutPage() {
             </p>
             <div className="space-y-4">
               <p className="text-gray-700">
-                <strong>Email:</strong> hello@binelek.io
+                <strong>Email:</strong> info@binelek.io
               </p>
               <div className="flex justify-center space-x-4">
                 <a href="https://twitter.com/binelek" className="text-primary-600 hover:text-primary-700">Twitter</a>
