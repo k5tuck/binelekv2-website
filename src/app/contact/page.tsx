@@ -24,11 +24,12 @@ export default function ContactPage() {
               <div className="space-y-6">
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">General Inquiries</h3>
-                  <p className="text-gray-600">hello@binelek.io</p>
+                  <p className="text-gray-600">info@binelek.io</p>
                 </div>
+                {/* TODO: Create sales@binelek.io email account */}
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">Sales</h3>
-                  <p className="text-gray-600">sales@binelek.io</p>
+                  <p className="text-gray-400">sales@binelek.io <span className="text-xs bg-gray-100 px-1.5 py-0.5 rounded ml-1">Coming Soon</span></p>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 mb-2">Support</h3>
