@@ -62,7 +62,7 @@ export default function MiniFoundryPage() {
               href="/demo"
               className="inline-flex items-center px-8 py-4 text-lg font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors"
             >
-              Schedule a Demo
+              Get Early Access
             </Link>
           </div>
         </div>
