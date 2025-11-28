@@ -72,7 +72,7 @@ export default function AboutPage() {
                 We knew there had to be a better way. So we built Binelek — a unified platform that brings enterprise capabilities to growing businesses, without the enterprise complexity or price tag.
               </p>
               <p>
-                Today, Binelek helps hundreds of businesses run smarter, faster, and more securely. And we&apos;re just getting started.
+                Today, Binelek aims to help hundreds of businesses run smarter, faster, and more securely. And we&apos;re just getting started.
               </p>
             </div>
           </div>
