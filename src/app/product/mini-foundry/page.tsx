@@ -26,12 +26,79 @@ const capabilities = [
 ];
 
 const widgetTypes = [
-  { name: "Line Chart", description: "Trends over time" },
-  { name: "Bar Chart", description: "Comparing categories" },
-  { name: "Pie Chart", description: "Distribution/composition" },
-  { name: "Number Card", description: "Single key metrics" },
-  { name: "Table", description: "Detailed data lists" },
-  { name: "Map", description: "Geographic data" },
+  {
+    name: "Line Chart",
+    description: "Trends over time",
+    icon: (
+      <svg viewBox="0 0 48 32" className="w-12 h-8" fill="none" stroke="currentColor" strokeWidth="2">
+        <polyline points="4,24 14,16 24,20 34,8 44,12" className="text-primary-500" />
+        <circle cx="14" cy="16" r="2" className="fill-primary-500" />
+        <circle cx="24" cy="20" r="2" className="fill-primary-500" />
+        <circle cx="34" cy="8" r="2" className="fill-primary-500" />
+      </svg>
+    ),
+  },
+  {
+    name: "Bar Chart",
+    description: "Comparing categories",
+    icon: (
+      <svg viewBox="0 0 48 32" className="w-12 h-8" fill="currentColor">
+        <rect x="4" y="18" width="8" height="14" className="text-primary-300" rx="1" />
+        <rect x="14" y="10" width="8" height="22" className="text-primary-400" rx="1" />
+        <rect x="24" y="6" width="8" height="26" className="text-primary-500" rx="1" />
+        <rect x="34" y="14" width="8" height="18" className="text-primary-400" rx="1" />
+      </svg>
+    ),
+  },
+  {
+    name: "Pie Chart",
+    description: "Distribution/composition",
+    icon: (
+      <svg viewBox="0 0 32 32" className="w-8 h-8">
+        <circle cx="16" cy="16" r="12" className="fill-primary-200" />
+        <path d="M16,16 L16,4 A12,12 0 0,1 27.8,20 Z" className="fill-primary-500" />
+        <path d="M16,16 L27.8,20 A12,12 0 0,1 8,25 Z" className="fill-primary-400" />
+      </svg>
+    ),
+  },
+  {
+    name: "Number Card",
+    description: "Single key metrics",
+    icon: (
+      <svg viewBox="0 0 48 32" className="w-12 h-8" fill="currentColor">
+        <rect x="4" y="4" width="40" height="24" rx="4" className="text-primary-100" />
+        <text x="24" y="21" textAnchor="middle" className="text-primary-600 text-sm font-bold" style={{ fontSize: '14px' }}>$47K</text>
+      </svg>
+    ),
+  },
+  {
+    name: "Table",
+    description: "Detailed data lists",
+    icon: (
+      <svg viewBox="0 0 48 32" className="w-12 h-8" fill="currentColor">
+        <rect x="4" y="4" width="40" height="6" className="text-primary-500" rx="1" />
+        <rect x="4" y="12" width="18" height="4" className="text-primary-200" rx="1" />
+        <rect x="26" y="12" width="18" height="4" className="text-primary-200" rx="1" />
+        <rect x="4" y="18" width="18" height="4" className="text-primary-100" rx="1" />
+        <rect x="26" y="18" width="18" height="4" className="text-primary-100" rx="1" />
+        <rect x="4" y="24" width="18" height="4" className="text-primary-200" rx="1" />
+        <rect x="26" y="24" width="18" height="4" className="text-primary-200" rx="1" />
+      </svg>
+    ),
+  },
+  {
+    name: "Map",
+    description: "Geographic data",
+    icon: (
+      <svg viewBox="0 0 48 32" className="w-12 h-8" fill="currentColor">
+        <path d="M8,8 L18,4 L28,8 L38,4 L42,6 L42,26 L38,28 L28,24 L18,28 L8,24 L4,26 L4,6 Z" className="text-primary-200" />
+        <path d="M18,4 L18,28 M28,8 L28,24" stroke="currentColor" strokeWidth="1" className="text-primary-300" fill="none" />
+        <circle cx="24" cy="14" r="3" className="text-primary-500" />
+        <circle cx="14" cy="18" r="2" className="text-primary-400" />
+        <circle cx="34" cy="12" r="2" className="text-primary-400" />
+      </svg>
+    ),
+  },
 ];
 
 const exampleQueries = [
@@ -92,8 +159,8 @@ export default function MiniFoundryPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {widgetTypes.map((widget) => (
               <div key={widget.name} className="bg-white p-4 rounded-xl text-center">
-                <div className="h-16 bg-gray-100 rounded-lg mb-3 flex items-center justify-center text-2xl">
-                  📈
+                <div className="h-16 bg-gray-50 rounded-lg mb-3 flex items-center justify-center">
+                  {widget.icon}
                 </div>
                 <h3 className="font-semibold text-gray-900 text-sm">{widget.name}</h3>
                 <p className="text-xs text-gray-500">{widget.description}</p>
