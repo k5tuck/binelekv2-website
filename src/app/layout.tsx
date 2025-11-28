@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 // COMING SOON MODE TOGGLE
 // Set to false when ready to launch
 // ============================================
-const COMING_SOON_MODE = true;
+const COMING_SOON_MODE = false;
 
 export const metadata: Metadata = {
   title: {
