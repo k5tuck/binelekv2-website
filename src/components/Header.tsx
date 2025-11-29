@@ -209,6 +209,22 @@ export function Header() {
               <Link href="/why-binelek" className="block py-2 text-gray-700 font-medium" onClick={() => setMobileMenuOpen(false)}>
                 Why Binelek
               </Link>
+              <div>
+                <p className="text-sm font-semibold text-gray-500 mb-2 flex items-center gap-2">
+                  Solutions
+                  <span className="text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full">Coming Soon</span>
+                </p>
+                {solutionsLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className="flex items-center gap-2 py-2 text-gray-400"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
               <Link href="/integrations" className="block py-2 text-gray-700 font-medium" onClick={() => setMobileMenuOpen(false)}>
                 Integrations
               </Link>
