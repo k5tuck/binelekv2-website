@@ -67,6 +67,7 @@ export function Header() {
                       key={link.href}
                       href={link.href}
                       className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600"
+                      onClick={() => setOpenDropdown(null)}
                     >
                       {link.name}
                     </Link>
@@ -101,6 +102,7 @@ export function Header() {
                       key={link.name}
                       href={link.href}
                       className="flex items-center justify-between px-4 py-2 text-gray-500 hover:bg-primary-50"
+                      onClick={() => setOpenDropdown(null)}
                     >
                       {link.name}
                       {link.badge && (
@@ -150,6 +152,7 @@ export function Header() {
                         key={link.href}
                         href={link.href}
                         className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600"
+                        onClick={() => setOpenDropdown(null)}
                       >
                         {link.name}
                       </Link>
