@@ -9,7 +9,7 @@ This document details all locations where the **Security Scanner / Cybersecurity
 - Backend Platform: `/home/user/binelekv2-smb-platform-backend`
 - Frontend Platform: `/home/user/binelekv2-smb-platform-frontend`
 
-**Total Files to Modify:** ~35 files across 3 repositories
+**Total Files to Modify:** ~50+ files across 3 repositories
 **Total Translation Keys to Update:** 57 keys across 4 languages
 **Estimated API Endpoints to Rename:** 15+ endpoints
 
@@ -214,13 +214,263 @@ CREATE TABLE data_sources (
 
 ---
 
-## Part 3: Frontend Platform (binelekv2-smb-platform-frontend)
+## Part 3: Frontend Application (binelekv2-smb-platform-frontend)
 
-*Note: Detailed audit of frontend platform pending. Expected similar changes for:*
-- Dashboard components showing security metrics
-- Navigation items
-- API client calls
-- TypeScript interfaces/types
+### 3.1 Main Module Page
+
+**File:** `src/pages/modules/CybersecurityScanner.tsx` (641 lines)
+
+| Element | Details |
+|---------|---------|
+| Route | `/cybersecurity` |
+| Component | `CybersecurityScanner` / `CybersecurityScannerContent` |
+| Features | Security Score, Issues tracking, Employee MFA, Compliance Checklist, Scan functionality |
+
+**Key Functionality:**
+- Security Score display (0-100 scale with colored indicators)
+- Security Issues tracking (severity: critical, high, medium, low)
+- Employee Security status (MFA tracking)
+- Compliance Checklist management
+- Security Scan functionality (full/quick scans with polling)
+- Real-time WebSocket updates
+- Issue status management (open, in_progress, resolved)
+- MFA reminder notifications
+
+### 3.2 API Service Client
+
+**File:** `src/services/cybersecurity.ts` (111 lines)
+
+| Method | Endpoint | Function |
+|--------|----------|----------|
+| GET | `/modules/cybersecurity/posture` | `getSecurityPosture()` |
+| GET | `/modules/cybersecurity/score` | `getSecurityScore()` |
+| GET | `/modules/cybersecurity/stats` | `getStats()` |
+| GET | `/modules/cybersecurity/issues` | `getIssues()` |
+| GET | `/modules/cybersecurity/issues/{id}` | `getIssue()` |
+| PUT | `/modules/cybersecurity/issues/{id}` | `updateIssue()` |
+| GET | `/modules/cybersecurity/employees` | `getEmployees()` |
+| GET | `/modules/cybersecurity/compliance` | `getCompliance()` |
+| PUT | `/modules/cybersecurity/compliance` | `updateComplianceItem()` |
+| POST | `/modules/cybersecurity/scan` | `runScan()` |
+| GET | `/modules/cybersecurity/scan/{scanId}` | `getScanStatus()` |
+| POST | `/modules/cybersecurity/employees/{id}/mfa/enable` | `enableMFA()` |
+| POST | `/modules/cybersecurity/employees/{id}/mfa/remind` | `sendMFAReminder()` |
+
+### 3.3 TypeScript Type Definitions
+
+**File:** `src/types/index.ts`
+
+```typescript
+// Types to rename/update
+export type SecuritySeverity = 'critical' | 'high' | 'medium' | 'low';
+export type SecurityIssueStatus = 'open' | 'in_progress' | 'resolved';
+export type RiskLevel = 'low' | 'medium' | 'high';
+export type ModuleType = 'ops-copilot' | 'mini-foundry' | 'cybersecurity-scanner' | 'marketplace-intel';
+
+// Interfaces to rename
+interface SecurityIssue { ... }      → PredictionInsight
+interface Employee { ... }           → DataSource (or keep for different purpose)
+interface ComplianceItem { ... }     → AnalyticsModel
+interface SecurityStats { ... }      → PredictionStats
+interface SecurityPosture { ... }    → AnalyticsOverview
+interface UpdateSecurityIssueRequest → UpdatePredictionRequest
+```
+
+### 3.4 Real-time WebSocket Integration
+
+**File:** `src/hooks/useRealtime.ts`
+
+```typescript
+// Hook to rename
+export function useCybersecurityRealtime() → usePredictiveAnalyticsRealtime()
+
+// Events to update
+'security:issue_detected' → 'prediction:generated'
+'security:scan_complete'  → 'prediction:analysis_complete'
+```
+
+**File:** `src/services/realtime.ts`
+
+| Current Event | New Event |
+|---------------|-----------|
+| `security:alert` | `prediction:alert` |
+| `security:posture_change` | `prediction:accuracy_change` |
+| `security:issue_detected` | `prediction:generated` |
+| `security:scan_complete` | `prediction:analysis_complete` |
+
+**Channel:** `'security'` → `'predictive-analytics'`
+
+### 3.5 Routing
+
+**File:** `src/App.tsx`
+
+| Current | New |
+|---------|-----|
+| Route: `/cybersecurity` | `/predictive-analytics` |
+| Import: `CybersecurityScanner` | `PredictiveAnalytics` |
+| Line 166 | Update route path |
+| Line 28 | Update import |
+
+### 3.6 Navigation Components
+
+**File:** `src/components/layout/Sidebar.tsx` (Line 49)
+```typescript
+// Current
+{ name: 'Security', href: '/cybersecurity', icon: Shield, moduleId: 'cybersecurity' }
+// New
+{ name: 'Predictive Analytics', href: '/predictive-analytics', icon: TrendingUp, moduleId: 'predictive-analytics' }
+```
+
+**File:** `src/components/layout/Breadcrumbs.tsx` (Line 19)
+```typescript
+// Current
+'cybersecurity': 'Security Scanner',
+// New
+'predictive-analytics': 'Predictive Analytics',
+```
+
+### 3.7 Dashboard Integration
+
+**File:** `src/pages/dashboard/Dashboard.tsx` (Lines 66-72)
+```typescript
+// Current
+{
+  name: 'Security Scanner',
+  icon: Shield,
+  description: 'Security posture & compliance',
+  color: 'bg-green-500',
+  href: '/cybersecurity',
+  goalId: 'security',
+}
+// New
+{
+  name: 'Predictive Analytics',
+  icon: TrendingUp,
+  description: 'Forecasts & trend analysis',
+  color: 'bg-indigo-500',
+  href: '/predictive-analytics',
+  goalId: 'predictions',
+}
+```
+
+**File:** `src/pages/dashboard/ThemedDashboard.tsx`
+- Update "Security Score" gauge widget → "Prediction Accuracy"
+- Update activity type `'security'` → `'prediction'`
+
+### 3.8 Module Configuration
+
+**File:** `src/services/modules.ts` (Lines 134-140)
+```typescript
+// Current
+{
+  id: 'cybersecurity',
+  name: 'Cybersecurity Scanner',
+  description: 'Security monitoring and compliance tracking',
+  enabled: true,
+  tier: 'pro',
+  features: ['Security scanning', 'Compliance monitoring', 'MFA tracking'],
+}
+// New
+{
+  id: 'predictive-analytics',
+  name: 'Predictive Analytics',
+  description: 'AI-powered forecasting and trend analysis',
+  enabled: true,
+  tier: 'pro',
+  features: ['Trend detection', 'Revenue forecasting', 'Anomaly alerts'],
+}
+```
+
+### 3.9 Onboarding Integration
+
+**File:** `src/pages/onboarding/steps/GoalsStep.tsx` (Lines 41-45)
+```typescript
+// Current
+{
+  id: 'security',
+  icon: Shield,
+  title: 'Monitor Security',
+  description: 'Security posture, compliance, MFA tracking',
+}
+// New
+{
+  id: 'predictions',
+  icon: TrendingUp,
+  title: 'Predict Trends',
+  description: 'Revenue forecasting, trend detection, anomaly alerts',
+}
+```
+
+**File:** `src/services/onboarding.ts` (Line 11)
+```typescript
+// Update goal type
+| 'security' → | 'predictions'
+```
+
+### 3.10 Documentation Page
+
+**File:** `src/pages/Documentation.tsx` (Lines 85-89)
+```typescript
+// Current
+{
+  id: 'cybersecurity-scanner',
+  title: 'Cybersecurity Scanner Guide',
+  description: 'Monitor security posture and compliance',
+  readTime: '10 min',
+}
+// New
+{
+  id: 'predictive-analytics',
+  title: 'Predictive Analytics Guide',
+  description: 'AI-powered forecasting and trend analysis',
+  readTime: '10 min',
+}
+```
+
+### 3.11 Settings Page
+
+**File:** `src/pages/Settings.tsx`
+
+| Line | Current | New |
+|------|---------|-----|
+| 56 | Tab: `{ id: 'security', name: 'Security', icon: Shield }` | Keep (user security settings) |
+| 557 | Security Alerts notification preference | Rename to "Prediction Alerts" |
+
+*Note: User account security settings (2FA, password) should remain unchanged as they are unrelated to the security module.*
+
+### 3.12 Icons Used
+
+| Current Icon | New Icon | Usage |
+|--------------|----------|-------|
+| `Shield` | `TrendingUp` or `LineChart` | Primary module icon |
+| `ShieldCheck` | `CheckCircle2` | Good score indicator |
+| `ShieldAlert` | `AlertTriangle` | Warning indicator |
+| `ShieldX` | `XCircle` | Poor score indicator |
+| `Key` | `Database` | Data sources metric |
+| `Lock` | `BarChart3` | Protected assets → Data quality |
+
+### 3.13 Frontend Files Summary
+
+```
+src/pages/modules/CybersecurityScanner.tsx    → RENAME to PredictiveAnalytics.tsx & REWRITE
+src/services/cybersecurity.ts                  → RENAME to predictive-analytics.ts
+src/services/index.ts                          → UPDATE import
+src/types/index.ts                             → UPDATE types & interfaces
+src/hooks/useRealtime.ts                       → UPDATE hook name & events
+src/services/realtime.ts                       → UPDATE event types & channel
+src/App.tsx                                    → UPDATE route & import
+src/components/layout/Sidebar.tsx              → UPDATE nav item
+src/components/layout/Breadcrumbs.tsx          → UPDATE breadcrumb label
+src/pages/dashboard/Dashboard.tsx              → UPDATE module card
+src/pages/dashboard/ThemedDashboard.tsx        → UPDATE widgets & activity
+src/services/modules.ts                        → UPDATE module config
+src/pages/onboarding/steps/GoalsStep.tsx       → UPDATE goal option
+src/services/onboarding.ts                     → UPDATE goal type
+src/pages/Documentation.tsx                    → UPDATE doc entry
+src/pages/Settings.tsx                         → UPDATE notification pref
+```
+
+**Total Frontend Files:** 16 files
 
 ---
 
@@ -374,4 +624,24 @@ gateway/src/middleware/module-access.ts
 gateway/src/services/auth.ts
 README.md
 CLAUDE.md
+```
+
+### Frontend Application Files (16 files)
+```
+src/pages/modules/CybersecurityScanner.tsx    → RENAME & REWRITE
+src/services/cybersecurity.ts                  → RENAME
+src/services/index.ts                          → UPDATE
+src/types/index.ts                             → UPDATE
+src/hooks/useRealtime.ts                       → UPDATE
+src/services/realtime.ts                       → UPDATE
+src/App.tsx                                    → UPDATE
+src/components/layout/Sidebar.tsx              → UPDATE
+src/components/layout/Breadcrumbs.tsx          → UPDATE
+src/pages/dashboard/Dashboard.tsx              → UPDATE
+src/pages/dashboard/ThemedDashboard.tsx        → UPDATE
+src/services/modules.ts                        → UPDATE
+src/pages/onboarding/steps/GoalsStep.tsx       → UPDATE
+src/services/onboarding.ts                     → UPDATE
+src/pages/Documentation.tsx                    → UPDATE
+src/pages/Settings.tsx                         → UPDATE
 ```
