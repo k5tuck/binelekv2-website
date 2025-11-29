@@ -1,48 +1,46 @@
-import { Metadata } from "next";
-import Link from "next/link";
+"use client";
+
+import { useTranslations } from "next-intl";
 import { CTASection } from "@/components/CTASection";
 
-export const metadata: Metadata = {
-  title: "Getting Started",
-  description: "Get up and running with Binelek in minutes. Step-by-step guide to setting up your account and connecting your first data source.",
-};
-
-const steps = [
-  {
-    number: "1",
-    title: "Create your account",
-    description: "Sign up with your email and set up your workspace. Takes less than a minute.",
-  },
-  {
-    number: "2",
-    title: "Connect your first data source",
-    description: "Link Shopify, QuickBooks, or any of our supported integrations via OAuth.",
-  },
-  {
-    number: "3",
-    title: "Explore your dashboard",
-    description: "See your data flow in and explore the pre-built dashboards and insights.",
-  },
-  {
-    number: "4",
-    title: "Ask your first question",
-    description: "Try asking something like 'What was my revenue this month?' and see the magic happen.",
-  },
-  {
-    number: "5",
-    title: "Create your first automation",
-    description: "Set up a simple automation like weekly sales reports or invoice reminders.",
-  },
-];
-
-const quickWins = [
-  "Connect Shopify or QuickBooks",
-  "View your revenue dashboard",
-  "Ask 'What was my revenue this month?'",
-  "Set up an invoice reminder",
-];
-
 export default function GettingStartedPage() {
+  const t = useTranslations("resources.gettingStarted");
+
+  const steps = [
+    {
+      number: "1",
+      title: t("step1Title"),
+      description: t("step1Desc"),
+    },
+    {
+      number: "2",
+      title: t("step2Title"),
+      description: t("step2Desc"),
+    },
+    {
+      number: "3",
+      title: t("step3Title"),
+      description: t("step3Desc"),
+    },
+    {
+      number: "4",
+      title: t("step4Title"),
+      description: t("step4Desc"),
+    },
+    {
+      number: "5",
+      title: t("step5Title"),
+      description: t("step5Desc"),
+    },
+  ];
+
+  const quickWins = [
+    t("quickWin1"),
+    t("quickWin2"),
+    t("quickWin3"),
+    t("quickWin4"),
+  ];
+
   return (
     <>
       {/* Hero */}
@@ -50,10 +48,10 @@ export default function GettingStartedPage() {
         <div className="container-marketing">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Up and running in minutes
+              {t("heroTitle")}
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-serif">
-              Everything you need to get started with Binelek.
+              {t("heroSubtitle")}
             </p>
           </div>
         </div>
@@ -68,7 +66,7 @@ export default function GettingStartedPage() {
                 <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
                   <span className="text-white text-2xl">▶</span>
                 </div>
-                <p className="text-white/80">Your first 5 minutes with Binelek</p>
+                <p className="text-white/80">{t("videoTitle")}</p>
               </div>
             </div>
           </div>
@@ -80,7 +78,7 @@ export default function GettingStartedPage() {
         <div className="container-marketing">
           <div className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-              Onboarding steps
+              {t("stepsTitle")}
             </h2>
             <div className="space-y-8">
               {steps.map((step, index) => (
@@ -109,7 +107,7 @@ export default function GettingStartedPage() {
         <div className="container-marketing">
           <div className="max-w-2xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-              Quick wins checklist
+              {t("quickWinsTitle")}
             </h2>
             <div className="bg-gray-50 rounded-xl p-6">
               {quickWins.map((win) => (
@@ -128,8 +126,8 @@ export default function GettingStartedPage() {
 
       {/* CTA */}
       <CTASection
-        headline="Ready to get started?"
-        subheadline="Schedule a demo and we'll walk you through everything."
+        headline={t("ctaHeadline")}
+        subheadline={t("ctaSubheadline")}
         variant="gradient"
       />
     </>

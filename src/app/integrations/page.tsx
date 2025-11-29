@@ -1,11 +1,8 @@
-import { Metadata } from "next";
-import Link from "next/link";
-import { CTASection } from "@/components/CTASection";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Integrations",
-  description: "Connect Binelek to the tools you already use. Shopify, QuickBooks, Stripe, HubSpot, and more.",
-};
+import Link from "next/link";
+import { useTranslations } from "next-intl";
+import { CTASection } from "@/components/CTASection";
 
 const integrationIcons: Record<string, React.ReactNode> = {
   Shopify: (
@@ -100,12 +97,15 @@ const integrationCategories = [
 ];
 
 const steps = [
-  { number: "1", title: "Click to connect", description: "Choose the tool you want to integrate" },
-  { number: "2", title: "Authorize access", description: "Securely connect via OAuth" },
-  { number: "3", title: "Data syncs automatically", description: "Your data flows into Binelek" },
+  { number: "1", titleKey: "step1Title", descKey: "step1Desc" },
+  { number: "2", titleKey: "step2Title", descKey: "step2Desc" },
+  { number: "3", titleKey: "step3Title", descKey: "step3Desc" },
 ];
 
 export default function IntegrationsPage() {
+  const t = useTranslations("integrations");
+  const tCommon = useTranslations("common");
+
   return (
     <>
       {/* Hero */}
@@ -113,16 +113,16 @@ export default function IntegrationsPage() {
         <div className="container-marketing">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Connect everything you already use
+              {t("heroTitle")}
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-serif">
-              Binelek works with the tools your business runs on.
+              {t("heroSubtitle")}
             </p>
             <Link
               href="/demo"
               className="inline-flex items-center px-8 py-4 text-lg font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors"
             >
-              Get Early Access
+              {tCommon("getEarlyAccess")}
             </Link>
           </div>
         </div>
@@ -151,7 +151,7 @@ export default function IntegrationsPage() {
                         </div>
                         {integration.status === "coming" && (
                           <span className="px-2 py-1 bg-gray-200 text-gray-500 rounded text-xs">
-                            Coming Soon
+                            {t("comingSoon")}
                           </span>
                         )}
                       </div>
@@ -170,13 +170,13 @@ export default function IntegrationsPage() {
       <section className="py-16 bg-gray-50">
         <div className="container-marketing text-center">
           <h2 className="text-2xl font-bold text-gray-900 mb-4">
-            More integrations on the way
+            {t("requestIntegration")}
           </h2>
           <p className="text-gray-600 mb-6">
-            Need an integration we don&apos;t have yet?
+            {t("requestDesc")}
           </p>
           <button className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-100 transition-colors">
-            Request an Integration
+            {t("requestButton")}
           </button>
         </div>
       </section>
@@ -193,8 +193,8 @@ export default function IntegrationsPage() {
                 <div className="w-12 h-12 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center text-xl font-bold mx-auto mb-4">
                   {step.number}
                 </div>
-                <h3 className="font-bold text-gray-900 mb-2">{step.title}</h3>
-                <p className="text-gray-600 font-serif">{step.description}</p>
+                <h3 className="font-bold text-gray-900 mb-2">Click to connect</h3>
+                <p className="text-gray-600 font-serif">Choose the tool you want to integrate</p>
               </div>
             ))}
           </div>

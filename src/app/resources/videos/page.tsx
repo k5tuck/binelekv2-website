@@ -1,39 +1,38 @@
-import { Metadata } from "next";
+"use client";
+
+import { useTranslations } from "next-intl";
 import { CTASection } from "@/components/CTASection";
 
-export const metadata: Metadata = {
-  title: "Demo Videos",
-  description: "Watch Binelek in action. Platform overview and module-specific demo videos.",
-};
-
-const videos = [
-  {
-    category: "Platform Overview",
-    duration: "2-3 min",
-    items: [
-      { title: "Full Platform Walkthrough", description: "See all four modules working together" },
-    ],
-  },
-  {
-    category: "Module Demos",
-    duration: "1-2 min each",
-    items: [
-      { title: "Ops Copilot", description: "Creating your first automation" },
-      { title: "Mini Foundry", description: "Building a custom dashboard" },
-      { title: "Cybersecurity Scanner", description: "Understanding your security score" },
-      { title: "Marketplace Intelligence", description: "Tracking competitor prices" },
-    ],
-  },
-  {
-    category: "Getting Started",
-    duration: "3-5 min",
-    items: [
-      { title: "Complete Onboarding Tutorial", description: "From signup to first insights" },
-    ],
-  },
-];
-
 export default function VideosPage() {
+  const t = useTranslations("resources.videos");
+
+  const videos = [
+    {
+      category: t("categoryPlatform"),
+      duration: t("duration2to3"),
+      items: [
+        { title: t("videoFullWalkthrough"), description: t("videoFullWalkthroughDesc") },
+      ],
+    },
+    {
+      category: t("categoryModules"),
+      duration: t("duration1to2"),
+      items: [
+        { title: t("videoOpsCopilot"), description: t("videoOpsCopilotDesc") },
+        { title: t("videoMiniFoundry"), description: t("videoMiniFoundryDesc") },
+        { title: t("videoSecurity"), description: t("videoSecurityDesc") },
+        { title: t("videoMarketplace"), description: t("videoMarketplaceDesc") },
+      ],
+    },
+    {
+      category: t("categoryOnboarding"),
+      duration: t("duration3to5"),
+      items: [
+        { title: t("videoOnboarding"), description: t("videoOnboardingDesc") },
+      ],
+    },
+  ];
+
   return (
     <>
       {/* Hero */}
@@ -41,10 +40,10 @@ export default function VideosPage() {
         <div className="container-marketing">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-              See Binelek in action
+              {t("heroTitle")}
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-serif">
-              Watch demo videos to understand what Binelek can do for your business.
+              {t("heroSubtitle")}
             </p>
           </div>
         </div>
@@ -83,8 +82,8 @@ export default function VideosPage() {
 
       {/* CTA */}
       <CTASection
-        headline="Want a personalized walkthrough?"
-        subheadline="Schedule a live demo with one of our product specialists."
+        headline={t("ctaHeadline")}
+        subheadline={t("ctaSubheadline")}
         variant="gradient"
       />
     </>
