@@ -102,8 +102,76 @@ export default function MarketplacePage() {
             <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
               See the full picture
             </h2>
-            <div className="bg-gray-50 rounded-2xl p-6">
-              <div className="overflow-x-auto">
+            <div className="bg-gray-50 rounded-2xl p-4 sm:p-6">
+              {/* Mobile card layout */}
+              <div className="md:hidden space-y-4">
+                {/* Widget Pro */}
+                <div className="bg-white rounded-xl p-4 shadow-sm">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="font-semibold text-gray-900">Widget Pro</h3>
+                    <span className="text-green-600 font-medium text-sm bg-green-50 px-2 py-1 rounded">+$2.00</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-3 text-sm">
+                    <div>
+                      <p className="text-gray-500 mb-1">Your Price</p>
+                      <p className="font-semibold text-gray-900">$49.99</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500 mb-1">Comp. A</p>
+                      <p className="text-gray-700">$52.99</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500 mb-1">Comp. B</p>
+                      <p className="text-gray-700">$47.99</p>
+                    </div>
+                  </div>
+                </div>
+                {/* Widget Basic */}
+                <div className="bg-white rounded-xl p-4 shadow-sm">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="font-semibold text-gray-900">Widget Basic</h3>
+                    <span className="text-yellow-600 font-medium text-sm bg-yellow-50 px-2 py-1 rounded">$0.00</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-3 text-sm">
+                    <div>
+                      <p className="text-gray-500 mb-1">Your Price</p>
+                      <p className="font-semibold text-gray-900">$29.99</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500 mb-1">Comp. A</p>
+                      <p className="text-gray-700">$29.99</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500 mb-1">Comp. B</p>
+                      <p className="text-gray-700">$31.99</p>
+                    </div>
+                  </div>
+                </div>
+                {/* Widget Enterprise */}
+                <div className="bg-white rounded-xl p-4 shadow-sm">
+                  <div className="flex justify-between items-start mb-3">
+                    <h3 className="font-semibold text-gray-900">Widget Enterprise</h3>
+                    <span className="text-red-600 font-medium text-sm bg-red-50 px-2 py-1 rounded">-$10.00</span>
+                  </div>
+                  <div className="grid grid-cols-3 gap-3 text-sm">
+                    <div>
+                      <p className="text-gray-500 mb-1">Your Price</p>
+                      <p className="font-semibold text-gray-900">$199.99</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500 mb-1">Comp. A</p>
+                      <p className="text-gray-700">$189.99</p>
+                    </div>
+                    <div>
+                      <p className="text-gray-500 mb-1">Comp. B</p>
+                      <p className="text-gray-700">$195.99</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Desktop table layout */}
+              <div className="hidden md:block">
                 <table className="w-full">
                   <thead>
                     <tr className="text-left border-b border-gray-200">
