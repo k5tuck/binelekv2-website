@@ -191,8 +191,14 @@ export function Header() {
 
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-gray-100">
+          <div className="lg:hidden py-4 border-t border-gray-100 max-h-[calc(100vh-5rem)] overflow-y-auto">
             <div className="space-y-4">
+              {/* Language Selector - Prominent at top */}
+              <div className="flex items-center justify-between py-3 px-4 bg-gray-50 rounded-lg">
+                <span className="text-sm font-semibold text-gray-700">Language</span>
+                <LanguageSelector />
+              </div>
+
               <div>
                 <p className="text-sm font-semibold text-gray-500 mb-2">Product</p>
                 {productLinks.map((link) => (
@@ -254,11 +260,7 @@ export function Header() {
                   )
                 ))}
               </div>
-              <div className="pt-4 space-y-4">
-                <div className="flex items-center justify-between py-2">
-                  <span className="text-sm font-semibold text-gray-500">Language</span>
-                  <LanguageSelector />
-                </div>
+              <div className="pt-4">
                 <Link
                   href="/#signup"
                   className="block text-center py-3 text-white bg-primary-600 rounded-lg font-medium"
