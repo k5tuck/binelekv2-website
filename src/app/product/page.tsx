@@ -1,51 +1,72 @@
-import { Metadata } from "next";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { CTASection } from "@/components/CTASection";
 import { EmailSignup } from "@/components/EmailSignup";
 import { Zap, Database, Shield, Search } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Product Overview",
-  description: "Explore the Binelek platform - four powerful modules that work together to automate, analyze, secure, and grow your business.",
-};
-
-const modules = [
-  {
-    name: "Ops Copilot",
-    tagline: "Automate your operations",
-    description: "AI-powered task management and workflow automation. Create automations with plain English, not complicated flowcharts.",
-    features: ["Task automation", "Email automation", "Workflow builder", "Natural language commands"],
-    href: "/product/ops-copilot",
-    Icon: Zap,
-  },
-  {
-    name: "Mini Foundry",
-    tagline: "Understand your data",
-    description: "Business intelligence without the learning curve. Connect your data sources and ask questions in plain English.",
-    features: ["Custom dashboards", "Natural language queries", "Automated reports", "Data consolidation"],
-    href: "/product/mini-foundry",
-    Icon: Database,
-  },
-  {
-    name: "Cybersecurity Scanner",
-    tagline: "Protect your business",
-    description: "Enterprise security made simple for growing businesses. Continuous monitoring with actionable recommendations.",
-    features: ["Security scoring", "Vulnerability scanning", "Compliance reporting", "MFA monitoring"],
-    href: "/product/security",
-    Icon: Shield,
-  },
-  {
-    name: "Marketplace Intelligence",
-    tagline: "Outsmart your competition",
-    description: "Know what competitors charge before your customers do. Real-time price tracking across every marketplace.",
-    features: ["Price tracking", "Competitor monitoring", "Market trends", "Price alerts"],
-    href: "/product/marketplace",
-    Icon: Search,
-  },
-];
-
 export default function ProductOverviewPage() {
+  const t = useTranslations("product.overview");
+  const tHome = useTranslations("home");
+  const tCommon = useTranslations("common");
+
+  const modules = [
+    {
+      name: tHome("moduleOpsCopilot"),
+      tagline: tHome("moduleOpsCopilotTagline"),
+      description: tHome("moduleOpsCopilotDesc"),
+      features: [
+        tHome("featureTaskScheduling"),
+        tHome("featureEmailAutomation"),
+        tHome("featureWorkflowBuilder"),
+        tHome("featureNaturalLanguage"),
+      ],
+      href: "/product/ops-copilot",
+      Icon: Zap,
+    },
+    {
+      name: tHome("moduleMiniFoundry"),
+      tagline: tHome("moduleMiniFoundryTagline"),
+      description: tHome("moduleMiniFoundryDesc"),
+      features: [
+        tHome("featureCustomDashboards"),
+        tHome("featureNaturalLanguageQueries"),
+        tHome("featureAutomatedReports"),
+        tHome("featureDataConsolidation"),
+      ],
+      href: "/product/mini-foundry",
+      Icon: Database,
+    },
+    {
+      name: tHome("moduleSecurity"),
+      tagline: tHome("moduleSecurityTagline"),
+      description: tHome("moduleSecurityDesc"),
+      features: [
+        tHome("featureSecurityScoring"),
+        tHome("featureVulnerabilityScanning"),
+        tHome("featureComplianceReporting"),
+        tHome("featureMfaMonitoring"),
+      ],
+      href: "/product/security",
+      Icon: Shield,
+    },
+    {
+      name: tHome("moduleMarketplace"),
+      tagline: tHome("moduleMarketplaceTagline"),
+      description: tHome("moduleMarketplaceDesc"),
+      features: [
+        tHome("featurePriceTracking"),
+        tHome("featureCompetitorMonitoring"),
+        tHome("featureMarketTrends"),
+        tHome("featurePriceAlerts"),
+      ],
+      href: "/product/marketplace",
+      Icon: Search,
+    },
+  ];
+
   return (
     <>
       {/* Hero */}
@@ -54,19 +75,19 @@ export default function ProductOverviewPage() {
           <div className="max-w-4xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6">
               <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
-              Coming Soon
+              {tCommon("comingSoon")}
             </div>
             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Everything your business needs. One platform.
+              {t("heroTitle")}
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-serif">
-              Four powerful modules that work together to automate, analyze, secure, and grow your business.
+              {t("heroSubtitle")}
             </p>
             <div className="flex justify-center">
               <EmailSignup
                 variant="hero"
-                buttonText="Get Early Access"
-                placeholder="Enter your email for updates"
+                buttonText={tCommon("getEarlyAccess")}
+                placeholder={t("emailPlaceholder")}
               />
             </div>
           </div>
@@ -79,7 +100,7 @@ export default function ProductOverviewPage() {
           <div className="rounded-2xl overflow-hidden shadow-xl border border-gray-200">
             <Image
               src="/screenshots/dashboard-desktop.png"
-              alt="Binelek Platform Dashboard"
+              alt={t("platformAlt")}
               width={1200}
               height={800}
               className="w-full h-auto"
@@ -93,10 +114,10 @@ export default function ProductOverviewPage() {
         <div className="container-marketing">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              One platform, not four tools
+              {t("modulesTitle")}
             </h2>
             <p className="text-lg text-gray-600 font-serif max-w-2xl mx-auto">
-              Unlike piecemeal tools, Binelek brings everything together with a unified data layer and AI that understands your entire business.
+              {t("modulesSubtitle")}
             </p>
           </div>
           <div className="grid lg:grid-cols-2 gap-8">
@@ -136,21 +157,21 @@ export default function ProductOverviewPage() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-                AI that works across everything
+                {t("aiTitle")}
               </h2>
               <p className="text-lg text-gray-600 font-serif">
-                Ask questions in plain English and get answers from all your connected data.
+                {t("aiSubtitle")}
               </p>
             </div>
             <div className="bg-gray-50 rounded-2xl p-8">
               <div className="space-y-4">
                 <div className="bg-white rounded-lg p-4 shadow-sm">
-                  <p className="text-sm text-gray-500 mb-1">You ask:</p>
-                  <p className="text-gray-900">&ldquo;What was my revenue this month?&rdquo;</p>
+                  <p className="text-sm text-gray-500 mb-1">{t("aiYouAsk")}</p>
+                  <p className="text-gray-900">&ldquo;{t("aiQuestion")}&rdquo;</p>
                 </div>
                 <div className="bg-primary-50 rounded-lg p-4">
-                  <p className="text-sm text-primary-600 mb-1">Binelek responds:</p>
-                  <p className="text-gray-900">&ldquo;Your revenue this month is $47,832, up 12% from last month. Your top-selling product is Widget Pro, accounting for 34% of sales.&rdquo;</p>
+                  <p className="text-sm text-primary-600 mb-1">{t("aiBinelekResponds")}</p>
+                  <p className="text-gray-900">&ldquo;{t("aiAnswer")}&rdquo;</p>
                 </div>
               </div>
             </div>

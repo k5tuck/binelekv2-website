@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { CTASection } from "@/components/CTASection";
 import { localeCurrencies, currencyMultipliers, type Locale } from "@/i18n/config";
 
@@ -34,6 +35,8 @@ function formatSavings(amount: number, currency: { code: string; symbol: string 
 }
 
 export default function PricingPage() {
+  const t = useTranslations("pricing");
+  const tCommon = useTranslations("common");
   const [isYearly, setIsYearly] = useState(true);
   const [currency, setCurrency] = useState(localeCurrencies.en);
 
@@ -51,102 +54,88 @@ export default function PricingPage() {
 
   const plans = [
     {
-      name: "Starter",
-      monthlyPrice: "Free",
-      yearlyPrice: "Free",
-      description: "For trying out Binelek",
+      name: t("starter"),
+      monthlyPrice: t("free"),
+      yearlyPrice: t("free"),
+      description: t("starterDesc"),
+      showPerMonth: false,
       features: [
-        "2 connectors",
-        "50 AI queries/month",
-        "1 team member",
-        "24-hour data refresh",
-        "Email support",
+        t("features.connectors", { count: 2 }),
+        t("features.aiQueries", { count: 50 }),
+        t("features.teamMembers", { count: 1 }),
+        t("features.dataRefresh24h"),
+        t("features.emailSupport"),
       ],
-      cta: "Get Early Access",
+      cta: tCommon("getEarlyAccess"),
       href: "/demo",
       highlighted: false,
     },
     {
-      name: "Pro",
+      name: t("pro"),
       monthlyPrice: formatPrice(basePrices.pro.monthly, currency),
       yearlyPrice: formatPrice(basePrices.pro.yearly, currency),
       yearlySavings: formatSavings(basePrices.pro.yearlySavings, currency),
-      description: "For growing businesses",
+      description: t("proDesc"),
+      showPerMonth: true,
       features: [
-        "10 connectors",
-        "Unlimited AI queries",
-        "5 team members",
-        "1-hour data refresh",
-        "Priority support",
-        "Custom dashboards",
+        t("features.connectors", { count: 10 }),
+        t("features.unlimitedAiQueries"),
+        t("features.teamMembers", { count: 5 }),
+        t("features.dataRefresh1h"),
+        t("features.prioritySupport"),
+        t("features.customDashboards"),
       ],
-      cta: "Get Early Access",
+      cta: tCommon("getEarlyAccess"),
       href: "/demo",
       highlighted: true,
     },
     {
-      name: "Business",
+      name: t("business"),
       monthlyPrice: formatPrice(basePrices.business.monthly, currency),
       yearlyPrice: formatPrice(basePrices.business.yearly, currency),
       yearlySavings: formatSavings(basePrices.business.yearlySavings, currency),
-      description: "For scaling teams",
+      description: t("businessDesc"),
+      showPerMonth: true,
       features: [
-        "Unlimited connectors",
-        "Unlimited AI queries",
-        "25 team members",
-        "Real-time data refresh",
-        "Dedicated support",
-        "Advanced security features",
-        "Custom integrations",
+        t("features.unlimitedConnectors"),
+        t("features.unlimitedAiQueries"),
+        t("features.teamMembers", { count: 25 }),
+        t("features.dataRefreshRealtime"),
+        t("features.dedicatedSupport"),
+        t("features.advancedSecurity"),
+        t("features.customIntegrations"),
       ],
-      cta: "Get Early Access",
+      cta: tCommon("getEarlyAccess"),
       href: "/demo",
       highlighted: false,
     },
     {
-      name: "Enterprise",
-      monthlyPrice: "Custom",
-      yearlyPrice: "Custom",
-      description: "For large organizations",
+      name: t("enterprise"),
+      monthlyPrice: t("custom"),
+      yearlyPrice: t("custom"),
+      description: t("enterpriseDesc"),
+      showPerMonth: false,
       features: [
-        "Everything in Business",
-        "Unlimited team members",
-        "Dedicated account manager",
-        "Custom SLA",
-        "On-premise option",
-        "Advanced compliance",
+        t("everythingInBusiness"),
+        t("features.unlimitedTeamMembers"),
+        t("features.dedicatedAccountManager"),
+        t("features.customSla"),
+        t("features.onPremise"),
+        t("features.advancedCompliance"),
       ],
-      cta: "Contact Sales",
+      cta: tCommon("contactSales"),
       href: "/contact",
       highlighted: false,
     },
   ];
 
   const faqs = [
-    {
-      question: "How does billing work?",
-      answer: "We bill monthly or annually depending on your choice. Annual plans save up to 20%.",
-    },
-    {
-      question: "Can I change plans?",
-      answer: "Yes, you can upgrade or downgrade your plan at any time. Changes take effect immediately.",
-    },
-    {
-      question: "What happens if I exceed limits?",
-      answer: "We'll notify you when you're approaching limits. You can upgrade anytime to continue without interruption.",
-    },
-    {
-      question: "Is there a free trial?",
-      answer: "Yes! Our Starter plan is free forever. You can also request a demo to see the full platform.",
-    },
-    {
-      question: "How do I cancel?",
-      answer: "You can cancel anytime from your account settings. No questions asked.",
-    },
-    {
-      question: "What currencies do you accept?",
-      answer: "We accept payments in USD and EUR. Prices are automatically shown in your local currency based on your region.",
-    },
+    { question: t("faq.billingQuestion"), answer: t("faq.billingAnswer") },
+    { question: t("faq.changePlansQuestion"), answer: t("faq.changePlansAnswer") },
+    { question: t("faq.limitsQuestion"), answer: t("faq.limitsAnswer") },
+    { question: t("faq.trialQuestion"), answer: t("faq.trialAnswer") },
+    { question: t("faq.cancelQuestion"), answer: t("faq.cancelAnswer") },
+    { question: t("faq.currencyQuestion"), answer: t("faq.currencyAnswer") },
   ];
 
   return (
@@ -156,15 +145,15 @@ export default function PricingPage() {
         <div className="container-marketing">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Simple, transparent pricing
+              {t("title")}
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-serif">
-              Start free. Scale as you grow.
+              {t("subtitle")}
             </p>
 
             {/* Currency indicator */}
             <p className="text-sm text-gray-500 mb-4">
-              Prices shown in {currency.name} ({currency.code})
+              {t("pricesShownIn", { currency: currency.name, code: currency.code })}
             </p>
 
             {/* Billing Toggle */}
@@ -175,7 +164,7 @@ export default function PricingPage() {
                   !isYearly ? "bg-primary-600 text-white" : "text-gray-600"
                 }`}
               >
-                Monthly
+                {t("monthly")}
               </button>
               <button
                 onClick={() => setIsYearly(true)}
@@ -183,8 +172,8 @@ export default function PricingPage() {
                   isYearly ? "bg-primary-600 text-white" : "text-gray-600"
                 }`}
               >
-                Yearly
-                <span className="ml-1 text-xs opacity-75">Save 20%</span>
+                {t("yearly")}
+                <span className="ml-1 text-xs opacity-75">{t("save", { percent: 20 })}</span>
               </button>
             </div>
           </div>
@@ -212,14 +201,14 @@ export default function PricingPage() {
                   <span className="text-4xl font-bold">
                     {isYearly ? plan.yearlyPrice : plan.monthlyPrice}
                   </span>
-                  {plan.monthlyPrice !== "Free" && plan.monthlyPrice !== "Custom" && (
+                  {plan.showPerMonth && (
                     <span className={`text-sm ${plan.highlighted ? "text-primary-100" : "text-gray-500"}`}>
-                      /month
+                      {t("perMonth")}
                     </span>
                   )}
                   {isYearly && plan.yearlySavings && (
                     <p className={`text-sm mt-1 ${plan.highlighted ? "text-primary-200" : "text-green-600"}`}>
-                      Save {plan.yearlySavings}
+                      {t("saveAmount", { amount: plan.yearlySavings })}
                     </p>
                   )}
                 </div>
@@ -253,7 +242,7 @@ export default function PricingPage() {
       <section className="py-16 lg:py-24 bg-gray-50">
         <div className="container-marketing">
           <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
-            Pricing FAQ
+            {t("faqTitle")}
           </h2>
           <div className="max-w-3xl mx-auto space-y-6">
             {faqs.map((faq) => (
