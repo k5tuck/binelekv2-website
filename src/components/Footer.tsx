@@ -2,36 +2,37 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { EmailSignup } from "./EmailSignup";
 
 const productLinks = [
-  { name: "Overview", href: "/product" },
-  { name: "Ops Copilot", href: "/product/ops-copilot" },
-  { name: "Mini Foundry", href: "/product/mini-foundry" },
-  { name: "Security", href: "/product/security" },
-  { name: "Marketplace", href: "/product/marketplace" },
+  { nameKey: "overview", href: "/product" },
+  { nameKey: "opsCopilot", href: "/product/ops-copilot" },
+  { nameKey: "miniFoundry", href: "/product/mini-foundry" },
+  { nameKey: "security", href: "/product/security" },
+  { nameKey: "marketplace", href: "/product/marketplace" },
 ];
 
 const solutionsLinks = [
-  { name: "For E-commerce", href: "/solutions" },
-  { name: "For Retail", href: "/solutions" },
-  { name: "For Prof. Services", href: "/solutions" },
-  { name: "For SaaS", href: "/solutions" },
+  { nameKey: "forEcommerce", href: "/solutions" },
+  { nameKey: "forRetail", href: "/solutions" },
+  { nameKey: "forProfessionalServices", href: "/solutions" },
+  { nameKey: "forSaas", href: "/solutions" },
 ];
 
 const resourcesLinks = [
-  { name: "Getting Started", href: "/resources/getting-started", disabled: true },
-  { name: "Demo Videos", href: "/resources/videos", disabled: true },
-  { name: "FAQ", href: "/resources/faq" },
-  { name: "Status", href: "/status", disabled: true },
+  { nameKey: "gettingStarted", href: "/resources/getting-started", disabled: true },
+  { nameKey: "demoVideos", href: "/resources/videos", disabled: true },
+  { nameKey: "faq", href: "/resources/faq" },
+  { nameKey: "status", href: "/status", disabled: true },
 ];
 
 const companyLinks = [
-  { name: "About", href: "/about" },
-  { name: "Contact", href: "/contact" },
-  { name: "Careers", href: "/careers" },
-  { name: "Privacy", href: "/privacy" },
-  { name: "Terms", href: "/terms" },
+  { nameKey: "about", href: "/about" },
+  { nameKey: "contact", href: "/contact" },
+  { nameKey: "careers", href: "/careers" },
+  { nameKey: "privacy", href: "/privacy" },
+  { nameKey: "terms", href: "/terms" },
 ];
 
 const integrationLogos = [
@@ -78,6 +79,10 @@ const integrationLogos = [
 ];
 
 export function Footer() {
+  const t = useTranslations("nav");
+  const tFooter = useTranslations("footer");
+  const tCommon = useTranslations("common");
+
   return (
     <footer className="bg-gray-50 border-t border-gray-100">
       <div className="container-marketing py-12 lg:py-16">
@@ -85,12 +90,12 @@ export function Footer() {
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12">
           {/* Product */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">Product</h3>
+            <h3 className="text-sm font-semibold text-gray-900 mb-4">{t("product")}</h3>
             <ul className="space-y-3">
               {productLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-gray-600 hover:text-primary-600">
-                    {link.name}
+                    {t(link.nameKey)}
                   </Link>
                 </li>
               ))}
@@ -100,14 +105,14 @@ export function Footer() {
           {/* Solutions */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 mb-4">
-              Solutions
-              <span className="ml-2 text-xs text-gray-400">Coming Soon</span>
+              {t("solutions")}
+              <span className="ml-2 text-xs text-gray-400">{tCommon("comingSoon")}</span>
             </h3>
             <ul className="space-y-3">
               {solutionsLinks.map((link) => (
-                <li key={link.name}>
+                <li key={link.nameKey}>
                   <Link href={link.href} className="text-sm text-gray-400 hover:text-primary-600">
-                    {link.name}
+                    {t(link.nameKey)}
                   </Link>
                 </li>
               ))}
@@ -116,18 +121,18 @@ export function Footer() {
 
           {/* Resources */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">Resources</h3>
+            <h3 className="text-sm font-semibold text-gray-900 mb-4">{t("resources")}</h3>
             <ul className="space-y-3">
               {resourcesLinks.map((link) => (
                 <li key={link.href}>
                   {link.disabled ? (
                     <span className="text-sm text-gray-400 flex items-center gap-2">
-                      {link.name}
-                      <span className="text-xs bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded">Soon</span>
+                      {t(link.nameKey)}
+                      <span className="text-xs bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded">{tCommon("soon")}</span>
                     </span>
                   ) : (
                     <Link href={link.href} className="text-sm text-gray-600 hover:text-primary-600">
-                      {link.name}
+                      {t(link.nameKey)}
                     </Link>
                   )}
                 </li>
@@ -137,12 +142,12 @@ export function Footer() {
 
           {/* Company */}
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">Company</h3>
+            <h3 className="text-sm font-semibold text-gray-900 mb-4">{t("company")}</h3>
             <ul className="space-y-3">
               {companyLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-gray-600 hover:text-primary-600">
-                    {link.name}
+                    {t(link.nameKey)}
                   </Link>
                 </li>
               ))}
@@ -153,16 +158,16 @@ export function Footer() {
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
             <div className="md:flex md:items-start md:justify-between md:gap-8 lg:block">
               <div className="md:flex-1 lg:block">
-                <h3 className="text-sm font-semibold text-gray-900 mb-4 md:mb-2 lg:mb-4">Stay Updated</h3>
+                <h3 className="text-sm font-semibold text-gray-900 mb-4 md:mb-2 lg:mb-4">{tFooter("stayUpdated")}</h3>
                 <p className="text-sm text-gray-600 mb-4 md:mb-0 lg:mb-4">
-                  Get product updates and news delivered to your inbox.
+                  {tFooter("newsletterText")}
                 </p>
               </div>
               <div className="md:flex-1 md:max-w-sm lg:max-w-none">
                 <EmailSignup
                   variant="inline"
-                  buttonText="Subscribe"
-                  successMessage="You're subscribed! We'll keep you updated."
+                  buttonText={tCommon("subscribe")}
+                  successMessage={tFooter("subscribeSuccess")}
                 />
               </div>
             </div>
@@ -171,7 +176,7 @@ export function Footer() {
 
         {/* Integration Logos */}
         <div className="mt-12 pt-8 border-t border-gray-200">
-          <p className="text-sm text-gray-500 text-center mb-6">Integrates with your favorite tools</p>
+          <p className="text-sm text-gray-500 text-center mb-6">{tFooter("integratesWith")}</p>
           <div className="flex flex-wrap justify-center items-center gap-6">
             {integrationLogos.map((logo) => (
               <div
@@ -198,7 +203,7 @@ export function Footer() {
           </div>
 
           <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} Binelek. All rights reserved.
+            &copy; {new Date().getFullYear()} Binelek. {tFooter("allRightsReserved")}
           </p>
 
           {/* Social Links */}
