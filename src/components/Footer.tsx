@@ -151,15 +151,21 @@ export function Footer() {
 
           {/* Newsletter / CTA */}
           <div className="col-span-2 md:col-span-4 lg:col-span-1">
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">Stay Updated</h3>
-            <p className="text-sm text-gray-600 mb-4">
-              Get product updates and news delivered to your inbox.
-            </p>
-            <EmailSignup
-              variant="inline"
-              buttonText="Subscribe"
-              successMessage="You're subscribed! We'll keep you updated."
-            />
+            <div className="md:flex md:items-start md:justify-between md:gap-8 lg:block">
+              <div className="md:flex-1 lg:block">
+                <h3 className="text-sm font-semibold text-gray-900 mb-4 md:mb-2 lg:mb-4">Stay Updated</h3>
+                <p className="text-sm text-gray-600 mb-4 md:mb-0 lg:mb-4">
+                  Get product updates and news delivered to your inbox.
+                </p>
+              </div>
+              <div className="md:flex-1 md:max-w-sm lg:max-w-none">
+                <EmailSignup
+                  variant="inline"
+                  buttonText="Subscribe"
+                  successMessage="You're subscribed! We'll keep you updated."
+                />
+              </div>
+            </div>
           </div>
         </div>
 
