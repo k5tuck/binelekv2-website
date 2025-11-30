@@ -42,9 +42,9 @@ We are integrating 4 existing microservices from the binelek-* repositories. The
 
 | Service | Port | Repository | Purpose |
 |---------|------|------------|---------|
-| **binah-ontology** | 8091 | binelek-core | Knowledge Graph engine using Neo4j. Manages entities (Industry, Template, DataSource) and relationships. Publishes Kafka events on entity changes. Supports Cypher queries for prediction chaining. |
-| **binah-context** | 8096 | binelek-data | Semantic intelligence layer. Generates embeddings (Ollama/OpenAI), stores in Qdrant, provides semantic search. Enables NL queries like "When should I plant?" → "Optimal Planting Window". |
-| **binah-ml** | 8102 | binelek-ai | ML model training and inference. MLflow for model registry. Currently has 4 models (cost forecast, risk, ROI, anomaly). Will extend to ~10 prediction model types. |
+| **binah-ontology** | 8088 | binelek-core | Knowledge Graph engine using Neo4j. Manages entities (Industry, Template, DataSource) and relationships. Publishes Kafka events on entity changes. Supports Cypher queries for prediction chaining. |
+| **binah-context** | 8089 | binelek-data | Semantic intelligence layer. Generates embeddings (Ollama/OpenAI), stores in Qdrant, provides semantic search. Enables NL queries like "When should I plant?" → "Optimal Planting Window". |
+| **binah-ml** | 8098 | binelek-ai | ML model training and inference. MLflow for model registry. Currently has 4 models (cost forecast, risk, ROI, anomaly). Will extend to ~10 prediction model types. |
 | **binah-pipeline** | 8094 | binelek-data | ETL engine with 14 data connectors (Shopify, QuickBooks, weather APIs, etc.). Hangfire scheduled jobs. Fetches data required for predictions. |
 
 ### Services NOT Needed
@@ -318,22 +318,50 @@ GET  /api/modules/predictive-analytics/accuracy
 | Kafka | confluentinc/cp-kafka:7.5.0 | 9092 |
 | Zookeeper | confluentinc/cp-zookeeper:7.5.0 | 2181 |
 | Ollama | ollama/ollama:latest | 11434 |
-| MLflow | ghcr.io/mlflow/mlflow:latest | 5000 |
-| binah-ontology | Build from binelek-core | 8091 |
-| binah-context | Build from binelek-data | 8096 |
-| binah-ml | Build from binelek-ai | 8102 |
+| MLflow | ghcr.io/mlflow/mlflow:v2.10.0 | 5000 |
+| binah-ontology | Build from binelek-core | 8088 |
+| binah-context | Build from binelek-data | 8089 |
+| binah-ml | Build from binelek-ai | 8098 |
 | binah-pipeline | Build from binelek-data | 8094 |
+
+---
+
+## Progress Completed
+
+### Session 2 (Nov 30, 2024)
+- [x] Cloned all 4 binelek repositories (core, data, ai, infra)
+- [x] Explored binah-ontology structure - discovered actual ports (8088, 8089, 8098, 8094)
+- [x] Cloned binelekv2-smb-platform-backend repository
+- [x] Created `docker-compose.services.yml` with all binah services + infrastructure
+- [x] Created database migration `05_binah_services_databases.sql` with:
+  - Additional databases (binah_ontology, binah_context, binah_pipeline, binah_ml, mlflow)
+  - Prediction templates table with JSON-LD ontology
+  - Industry verticals taxonomy (19 top-level industries seeded)
+  - Data source types (19 types seeded)
+  - Sample prediction templates (15 templates across 5 industries)
+- [x] Updated `.env.example` with binah service environment variables
+- [x] Updated README.md with Predictive Analytics documentation
+- [x] Pushed changes to `claude/setup-predictive-analytics-01HKYzdHbkyneWkpqC4A4cDX` branch
+
+### Files Created/Modified in SMB Backend
+| File | Status |
+|------|--------|
+| `docker-compose.services.yml` | Created |
+| `database/init/05_binah_services_databases.sql` | Created |
+| `.env.example` | Modified |
+| `README.md` | Modified |
 
 ---
 
 ## Next Steps
 
-1. **Clone the binelek-* repositories** (if not already local)
-2. **Create docker-compose.services.yml** with all binah services
-3. **Implement Phase 1** - JSON-LD schema in PostgreSQL
-4. **Deploy infrastructure** - Neo4j, Qdrant, Kafka
-5. **Build service clients** in ai-orchestrator
-6. **Begin Sprint 1** per timeline
+1. ~~Clone the binelek-* repositories~~ ✅ DONE
+2. ~~Create docker-compose.services.yml~~ ✅ DONE
+3. ~~Implement Phase 1 - JSON-LD schema in PostgreSQL~~ ✅ DONE (migration created)
+4. **Deploy infrastructure** - Run `docker-compose -f docker-compose.yml -f docker-compose.services.yml up -d`
+5. **Build service clients** in ai-orchestrator (OntologyClient, SemanticSearchService, MLServiceClient, PipelineClient)
+6. **Create API routes** for predictive analytics in gateway
+7. **Begin Sprint 2** - Integrate binah-ontology client and migrate templates to Neo4j
 
 ---
 
