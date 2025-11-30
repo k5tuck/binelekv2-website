@@ -1,39 +1,39 @@
-import { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { EmailSignup } from "@/components/EmailSignup";
 import { Bell, Zap, Gift, Users } from "lucide-react";
-
-export const metadata: Metadata = {
-  title: "Get Early Access",
-  description: "Join the waitlist to be the first to know when Binelek launches. Get early access and exclusive updates.",
-};
-
-const benefits = [
-  {
-    Icon: Bell,
-    title: "Be the first to know",
-    description: "Get notified the moment we launch",
-  },
-  {
-    Icon: Zap,
-    title: "Early access",
-    description: "Priority access before public launch",
-  },
-  {
-    Icon: Gift,
-    title: "Exclusive perks",
-    description: "Special pricing for early adopters",
-  },
-  {
-    Icon: Users,
-    title: "Shape the product",
-    description: "Your feedback helps build Binelek",
-  },
-];
 
 const integrationLogos = ["Shopify", "QuickBooks", "Stripe", "HubSpot", "Square", "Xero"];
 
 export default function WaitlistPage() {
+  const t = useTranslations("demo");
+  const tCommon = useTranslations("common");
+
+  const benefits = [
+    {
+      Icon: Bell,
+      title: t("expect1"),
+      description: t("expect2"),
+    },
+    {
+      Icon: Zap,
+      title: t("expect3"),
+      description: t("expect4"),
+    },
+    {
+      Icon: Gift,
+      title: t("interestOps"),
+      description: t("interestFoundry"),
+    },
+    {
+      Icon: Users,
+      title: t("interestSecurity"),
+      description: t("interestMarketplace"),
+    },
+  ];
+
   return (
     <>
       <section className="py-20 lg:py-32 bg-gradient-to-br from-primary-50 to-white">
@@ -43,14 +43,13 @@ export default function WaitlistPage() {
             <div>
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary-100 text-primary-700 text-sm font-medium mb-6">
                 <span className="w-2 h-2 rounded-full bg-primary-500 animate-pulse" />
-                Coming Soon
+                {tCommon("comingSoon")}
               </div>
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-                Get early access to Binelek
+                {t("heroTitle")}
               </h1>
               <p className="text-xl text-gray-600 mb-8 font-serif">
-                We&apos;re building the AI-powered command center for growing businesses.
-                Join the waitlist to be among the first to try it.
+                {t("heroSubtitle")}
               </p>
 
               <div className="grid grid-cols-2 gap-4 mb-8">
@@ -68,7 +67,7 @@ export default function WaitlistPage() {
               </div>
 
               <div className="border-t border-gray-200 pt-8">
-                <p className="text-sm text-gray-500 mb-4">Will integrate with:</p>
+                <p className="text-sm text-gray-500 mb-4">{t("trustedBy")}:</p>
                 <div className="flex flex-wrap gap-3">
                   {integrationLogos.map((logo) => (
                     <span key={logo} className="px-3 py-1 bg-gray-100 rounded text-sm text-gray-600">
@@ -81,15 +80,15 @@ export default function WaitlistPage() {
 
             {/* Right Column - Form */}
             <div className="bg-white rounded-2xl shadow-xl p-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Join the waitlist</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-2">{t("submit")}</h2>
               <p className="text-gray-600 mb-6">
-                Enter your email to get notified when we launch.
+                {t("whatToExpect")}
               </p>
 
               <div className="space-y-6">
                 <EmailSignup
                   variant="default"
-                  buttonText="Join Waitlist"
+                  buttonText={tCommon("getEarlyAccess")}
                   placeholder="your@email.com"
                   successMessage="You're on the list! We'll be in touch soon."
                 />
@@ -108,19 +107,19 @@ export default function WaitlistPage() {
                   <ul className="space-y-2 text-sm text-gray-600">
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-primary-500 rounded-full" />
-                      Ops Copilot - Automate tasks with AI
+                      {t("interestOps")}
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-primary-500 rounded-full" />
-                      Mini Foundry - Dashboards & insights
+                      {t("interestFoundry")}
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-primary-500 rounded-full" />
-                      Security Scanner - Protect your business
+                      {t("interestSecurity")}
                     </li>
                     <li className="flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-primary-500 rounded-full" />
-                      Marketplace Intel - Track competitors
+                      {t("interestMarketplace")}
                     </li>
                   </ul>
                 </div>
@@ -134,7 +133,7 @@ export default function WaitlistPage() {
       <section className="py-16 bg-gray-50">
         <div className="container-marketing text-center">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Want to learn more?
+            {tCommon("learnMore")}
           </h2>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link

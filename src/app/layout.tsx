@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { CookieConsent } from "@/components/CookieConsent";
 
 // ============================================
 // COMING SOON MODE TOGGLE
 // Set to false when ready to launch
 // ============================================
-const COMING_SOON_MODE = true;
+const COMING_SOON_MODE = false;
 
 export const metadata: Metadata = {
   title: {
@@ -46,7 +49,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -55,12 +58,18 @@ export default function RootLayout({
   // The middleware redirects all pages to /coming-soon anyway
   const showNav = !COMING_SOON_MODE;
 
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body className="antialiased min-h-screen flex flex-col">
-        {showNav && <Header />}
-        <main className="flex-grow">{children}</main>
-        {showNav && <Footer />}
+        <NextIntlClientProvider messages={messages}>
+          {showNav && <Header />}
+          <main className="flex-grow">{children}</main>
+          {showNav && <Footer />}
+          <CookieConsent />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -1,19 +1,18 @@
-import { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = {
-  title: "System Status",
-  description: "Check the current status of Binelek services and infrastructure.",
-};
-
-const services = [
-  { name: "API", status: "operational" },
-  { name: "Web Application", status: "operational" },
-  { name: "Data Sync", status: "operational" },
-  { name: "AI Services", status: "operational" },
-  { name: "Integrations", status: "operational" },
-];
+import { useTranslations } from "next-intl";
 
 export default function StatusPage() {
+  const t = useTranslations("status");
+
+  const services = [
+    { name: t("apiService"), status: "operational" },
+    { name: t("webApplication"), status: "operational" },
+    { name: t("dataSync"), status: "operational" },
+    { name: t("aiEngine"), status: "operational" },
+    { name: t("integrations"), status: "operational" },
+  ];
+
   return (
     <>
       <section className="py-20 lg:py-32 bg-white">
@@ -21,11 +20,11 @@ export default function StatusPage() {
           <div className="max-w-2xl mx-auto">
             <div className="text-center mb-12">
               <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-6">
-                System Status
+                {t("heroTitle")}
               </h1>
               <div className="inline-flex items-center px-4 py-2 bg-green-100 text-green-700 rounded-full">
                 <span className="w-2 h-2 bg-green-500 rounded-full mr-2" />
-                All systems operational
+                {t("allSystemsOperational")}
               </div>
             </div>
 
@@ -40,7 +39,7 @@ export default function StatusPage() {
                     <span className="text-gray-700">{service.name}</span>
                     <span className="flex items-center text-sm text-green-600">
                       <span className="w-2 h-2 bg-green-500 rounded-full mr-2" />
-                      Operational
+                      {t("operational")}
                     </span>
                   </div>
                 ))}
@@ -48,7 +47,7 @@ export default function StatusPage() {
             </div>
 
             <div className="mt-8 text-center text-sm text-gray-500">
-              <p>Last updated: {new Date().toLocaleString()}</p>
+              <p>{t("lastUpdated")}: {new Date().toLocaleString()}</p>
               <p className="mt-2">
                 For real-time updates, follow{" "}
                 <a href="https://twitter.com/binelekstatus" className="text-primary-600 hover:text-primary-700">
@@ -59,8 +58,7 @@ export default function StatusPage() {
 
             <div className="mt-12 p-6 bg-gray-100 rounded-xl text-center">
               <p className="text-gray-600 text-sm">
-                This is a placeholder status page. A full status page with incident history and real-time monitoring will be available at{" "}
-                <span className="font-mono text-primary-600">status.binelek.io</span>
+                {t("placeholderNote")}
               </p>
             </div>
           </div>

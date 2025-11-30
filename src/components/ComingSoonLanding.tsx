@@ -2,9 +2,19 @@
 
 import { motion } from "framer-motion"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 import { EmailSignup } from "./EmailSignup"
 
 export function ComingSoonLanding() {
+  const t = useTranslations("comingSoon")
+
+  const features = [
+    { label: "Ops Copilot", desc: t("feature1") },
+    { label: "Mini Foundry", desc: t("feature2") },
+    { label: "Security", desc: t("feature3") },
+    { label: "Marketplace", desc: t("feature4") },
+  ]
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-white flex items-center justify-center">
       {/* Subtle background grid */}
@@ -52,7 +62,7 @@ export function ComingSoonLanding() {
           className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary-600/30 bg-primary-600/10 mb-8"
         >
           <div className="w-2 h-2 rounded-full bg-primary-600 animate-pulse" />
-          <span className="text-sm text-primary-600 font-medium">Coming Soon</span>
+          <span className="text-sm text-primary-600 font-medium">{t("launching")}</span>
         </motion.div>
 
         {/* Main Headline */}
@@ -62,9 +72,7 @@ export function ComingSoonLanding() {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl md:text-6xl font-bold mb-6 leading-tight"
         >
-          <span className="text-gray-900">Something </span>
-          <span className="text-primary-600">Big</span>
-          <span className="text-gray-900"> is Coming</span>
+          <span className="text-gray-900">{t("heroTitle")}</span>
         </motion.h1>
 
         {/* Subheadline */}
@@ -74,8 +82,7 @@ export function ComingSoonLanding() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="text-xl text-gray-600 mb-12 max-w-lg mx-auto leading-relaxed"
         >
-          The AI-powered command center for growing businesses.
-          Connect your tools, automate operations, and make smarter decisions.
+          {t("heroSubtitle")}
         </motion.p>
 
         {/* Email Signup */}
@@ -85,11 +92,11 @@ export function ComingSoonLanding() {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="mb-16"
         >
-          <p className="text-sm text-gray-500 mb-4">Be the first to know when we launch</p>
+          <p className="text-sm text-gray-500 mb-4">{t("features")}</p>
           <EmailSignup
             variant="hero"
-            placeholder="Enter your email"
-            buttonText="Join Waitlist"
+            placeholder={t("emailPlaceholder")}
+            buttonText={t("notifyMe")}
           />
         </motion.div>
 
@@ -100,12 +107,7 @@ export function ComingSoonLanding() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 pt-12 border-t border-gray-200"
         >
-          {[
-            { label: "Ops Copilot", desc: "AI Automation" },
-            { label: "Mini Foundry", desc: "Smart Analytics" },
-            { label: "Security", desc: "Enterprise Grade" },
-            { label: "Marketplace", desc: "Competitive Intel" },
-          ].map((feature, i) => (
+          {features.map((feature, i) => (
             <motion.div
               key={feature.label}
               initial={{ opacity: 0, y: 10 }}

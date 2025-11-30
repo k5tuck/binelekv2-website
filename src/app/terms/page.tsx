@@ -83,7 +83,7 @@ export default function TermsPage() {
             <h2 className="text-2xl font-bold text-gray-900 mt-8 mb-4">12. Contact</h2>
             <p>
               Questions about these Terms should be sent to: <br />
-              <strong>legal@binelek.io</strong>
+              <strong>support@binelek.io</strong>
             </p>
 
             <div className="mt-12 p-6 bg-gray-50 rounded-xl">

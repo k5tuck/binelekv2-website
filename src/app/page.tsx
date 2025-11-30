@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { CTASection } from "@/components/CTASection";
 import { ComingSoonLanding } from "@/components/ComingSoonLanding";
 import { EmailSignup } from "@/components/EmailSignup";
@@ -21,87 +24,64 @@ import {
 // Set NEXT_PUBLIC_COMING_SOON_MODE=true in Vercel to show coming soon page
 const isComingSoonMode = process.env.NEXT_PUBLIC_COMING_SOON_MODE === "true";
 
-const modules = [
-  {
-    name: "Ops Copilot",
-    tagline: "Automate your operations",
-    description: "AI-powered task management and workflow automation. Create automations with natural language, not complicated flowcharts.",
-    features: ["Email automation", "Task scheduling", "Workflow builder", "Natural language commands"],
-    Icon: Zap,
-    color: "from-amber-500 to-orange-500",
-    href: "/product/ops-copilot",
-  },
-  {
-    name: "Mini Foundry",
-    tagline: "Understand your data",
-    description: "Business intelligence without the learning curve. Connect your data sources and ask questions in plain English.",
-    features: ["Custom dashboards", "Natural language queries", "Automated reports", "Data consolidation"],
-    Icon: Database,
-    color: "from-blue-500 to-cyan-500",
-    href: "/product/mini-foundry",
-  },
-  {
-    name: "Security Scanner",
-    tagline: "Protect your business",
-    description: "Enterprise-grade security made simple. Continuous monitoring with actionable recommendations.",
-    features: ["Security scoring", "Vulnerability scanning", "Compliance reporting", "MFA monitoring"],
-    Icon: Shield,
-    color: "from-emerald-500 to-teal-500",
-    href: "/product/security",
-  },
-  {
-    name: "Marketplace Intel",
-    tagline: "Outsmart your competition",
-    description: "Know what competitors charge before your customers do. Real-time price tracking across marketplaces.",
-    features: ["Price tracking", "Competitor monitoring", "Market trends", "Price alerts"],
-    Icon: Search,
-    color: "from-purple-500 to-pink-500",
-    href: "/product/marketplace",
-  },
+const moduleIcons = [
+  { Icon: Zap, color: "from-amber-500 to-orange-500", href: "/product/ops-copilot" },
+  { Icon: Database, color: "from-blue-500 to-cyan-500", href: "/product/mini-foundry" },
+  { Icon: Shield, color: "from-emerald-500 to-teal-500", href: "/product/security" },
+  { Icon: Search, color: "from-purple-500 to-pink-500", href: "/product/marketplace" },
 ];
 
-const benefits = [
-  {
-    Icon: Bot,
-    title: "AI-First Design",
-    description: "Ask questions in plain English. No complex queries or dashboards to learn.",
-  },
-  {
-    Icon: BarChart3,
-    title: "Unified Data",
-    description: "All your business data in one place. No more switching between apps.",
-  },
-  {
-    Icon: Lock,
-    title: "Enterprise Security",
-    description: "Bank-level security built in. SOC2 compliant from day one.",
-  },
-  {
-    Icon: TrendingUp,
-    title: "Actionable Insights",
-    description: "Not just data, but recommendations. Know what to do next.",
-  },
-];
-
-const steps = [
-  {
-    number: "01",
-    title: "Connect your tools",
-    description: "Link Shopify, QuickBooks, Stripe, and more in just a few clicks. No engineering required.",
-  },
-  {
-    number: "02",
-    title: "Ask anything",
-    description: "\"What was my revenue last month?\" \"Send a follow-up email to John.\" Just ask.",
-  },
-  {
-    number: "03",
-    title: "Automate and scale",
-    description: "Set up workflows that run automatically. Focus on growth, not busywork.",
-  },
-];
+const benefitIcons = [Bot, BarChart3, Lock, TrendingUp];
 
 export default function HomePage() {
+  const t = useTranslations("home");
+  const tCommon = useTranslations("common");
+
+  // Build translated arrays
+  const modules = [
+    {
+      name: t("moduleOpsCopilot"),
+      tagline: t("moduleOpsCopilotTagline"),
+      description: t("moduleOpsCopilotDesc"),
+      features: [t("featureEmailAutomation"), t("featureTaskScheduling"), t("featureWorkflowBuilder"), t("featureNaturalLanguage")],
+      ...moduleIcons[0],
+    },
+    {
+      name: t("moduleMiniFoundry"),
+      tagline: t("moduleMiniFoundryTagline"),
+      description: t("moduleMiniFoundryDesc"),
+      features: [t("featureCustomDashboards"), t("featureNaturalLanguageQueries"), t("featureAutomatedReports"), t("featureDataConsolidation")],
+      ...moduleIcons[1],
+    },
+    {
+      name: t("moduleSecurity"),
+      tagline: t("moduleSecurityTagline"),
+      description: t("moduleSecurityDesc"),
+      features: [t("featureSecurityScoring"), t("featureVulnerabilityScanning"), t("featureComplianceReporting"), t("featureMfaMonitoring")],
+      ...moduleIcons[2],
+    },
+    {
+      name: t("moduleMarketplace"),
+      tagline: t("moduleMarketplaceTagline"),
+      description: t("moduleMarketplaceDesc"),
+      features: [t("featurePriceTracking"), t("featureCompetitorMonitoring"), t("featureMarketTrends"), t("featurePriceAlerts")],
+      ...moduleIcons[3],
+    },
+  ];
+
+  const benefits = [
+    { Icon: benefitIcons[0], title: t("benefitAiFirst"), description: t("benefitAiFirstDesc") },
+    { Icon: benefitIcons[1], title: t("benefitUnifiedData"), description: t("benefitUnifiedDataDesc") },
+    { Icon: benefitIcons[2], title: t("benefitEnterpriseSecurity"), description: t("benefitEnterpriseSecurityDesc") },
+    { Icon: benefitIcons[3], title: t("benefitActionableInsights"), description: t("benefitActionableInsightsDesc") },
+  ];
+
+  const steps = [
+    { number: "01", title: t("step1Title"), description: t("step1Desc") },
+    { number: "02", title: t("step2Title"), description: t("step2Desc") },
+    { number: "03", title: t("step3Title"), description: t("step3Desc") },
+  ];
+
   // Show coming soon page if environment variable is set
   if (isComingSoonMode) {
     return <ComingSoonLanding />;
@@ -125,7 +105,7 @@ export default function HomePage() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
               </span>
-              Launching Soon
+              {t("launchingSoon")}
             </div>
 
             {/* Logo */}
@@ -142,28 +122,28 @@ export default function HomePage() {
 
             {/* Headline */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 tracking-tight">
-              The AI Command Center
-              <span className="block text-primary-600">for Your Business</span>
+              {t("heroTitle")}
+              <span className="block text-primary-600">{t("heroTitleHighlight")}</span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-xl lg:text-2xl text-gray-600 mb-10 max-w-2xl mx-auto leading-relaxed">
-              One platform to automate operations, understand your data, secure your business, and outsmart the competition.
+              {t("heroSubtitle")}
             </p>
 
             {/* Email Signup */}
             <div className="flex justify-center mb-8">
               <EmailSignup
                 variant="hero"
-                buttonText="Get Early Access"
-                placeholder="Enter your work email"
-                successMessage="You're on the list! We'll be in touch soon."
+                buttonText={tCommon("getEarlyAccess")}
+                placeholder={t("enterWorkEmail")}
+                successMessage={t("onWaitlist")}
               />
             </div>
 
             {/* Social proof */}
             <p className="text-sm text-gray-500">
-              Join 500+ businesses on the waitlist
+              {t("joinWaitlistCount")}
             </p>
           </div>
         </div>
@@ -173,7 +153,7 @@ export default function HomePage() {
       <section className="py-12 bg-white border-y border-gray-100">
         <div className="container-marketing">
           <p className="text-center text-sm font-medium text-gray-500 mb-8">
-            Connects with the tools you already use
+            {t("connectsWithTools")}
           </p>
           <IntegrationLogos />
         </div>
@@ -184,10 +164,10 @@ export default function HomePage() {
         <div className="container-marketing">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Stop juggling. Start scaling.
+              {t("valuePropTitle")}
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Most businesses waste hours every week on manual tasks and scattered data. Binelek brings everything together.
+              {t("valuePropSubtitle")}
             </p>
           </div>
 
@@ -210,10 +190,10 @@ export default function HomePage() {
         <div className="container-marketing">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Four modules. One platform.
+              {t("modulesTitle")}
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Everything you need to run your business smarter, faster, and more securely.
+              {t("modulesSubtitle")}
             </p>
           </div>
 
@@ -261,10 +241,10 @@ export default function HomePage() {
         <div className="container-marketing">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Up and running in minutes
+              {t("howItWorksTitle")}
             </h2>
             <p className="text-lg text-gray-600">
-              No complex setup. No engineering team required.
+              {t("howItWorksSubtitle")}
             </p>
           </div>
 
@@ -297,20 +277,20 @@ export default function HomePage() {
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold mb-4">
-                Just ask. Binelek answers.
+                {t("aiDemoTitle")}
               </h2>
               <p className="text-lg text-gray-400">
-                No dashboards to navigate. No reports to generate. Just ask questions in plain English.
+                {t("aiDemoSubtitle")}
               </p>
             </div>
 
             <div className="bg-gray-800 rounded-2xl p-8 space-y-6">
               <div className="flex items-start gap-4">
                 <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-sm font-bold">You</span>
+                  <span className="text-sm font-bold">{t("aiDemoYou")}</span>
                 </div>
                 <div className="bg-gray-700 rounded-2xl rounded-tl-none px-5 py-3">
-                  <p>&ldquo;What was my best-selling product last month?&rdquo;</p>
+                  <p>&ldquo;{t("aiDemoQuestion")}&rdquo;</p>
                 </div>
               </div>
 
@@ -319,8 +299,8 @@ export default function HomePage() {
                   <Bot className="w-4 h-4" />
                 </div>
                 <div className="bg-emerald-900/50 border border-emerald-700/50 rounded-2xl rounded-tl-none px-5 py-3 flex-1">
-                  <p className="mb-3">&ldquo;Your best-selling product in October was <strong>Widget Pro</strong> with 847 units sold, generating $42,350 in revenue. That&apos;s up 23% from September.&rdquo;</p>
-                  <p className="text-sm text-emerald-400">Would you like me to show you the full product performance report?</p>
+                  <p className="mb-3">&ldquo;{t("aiDemoAnswer")}&rdquo;</p>
+                  <p className="text-sm text-emerald-400">{t("aiDemoFollowup")}</p>
                 </div>
               </div>
             </div>
@@ -333,31 +313,31 @@ export default function HomePage() {
         <div className="container-marketing">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              Be among the first
+              {t("earlyAccessTitle")}
             </h2>
             <p className="text-lg text-gray-600 mb-10">
-              We&apos;re launching soon. Join the waitlist to get early access, exclusive pricing, and help shape the product.
+              {t("earlyAccessSubtitle")}
             </p>
             <div className="flex justify-center mb-6">
               <EmailSignup
                 variant="hero"
-                buttonText="Join the Waitlist"
-                placeholder="your@company.com"
-                successMessage="Welcome aboard! Check your email for next steps."
+                buttonText={t("joinWaitlist")}
+                placeholder={t("emailPlaceholder")}
+                successMessage={t("welcomeAboard")}
               />
             </div>
             <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
               <span className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-primary-500" />
-                No credit card required
+                {t("noCreditCard")}
               </span>
               <span className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-primary-500" />
-                Cancel anytime
+                {t("cancelAnytime")}
               </span>
               <span className="flex items-center gap-2">
                 <CheckCircle className="w-4 h-4 text-primary-500" />
-                Early adopter pricing
+                {t("earlyAdopterPricing")}
               </span>
             </div>
           </div>
@@ -366,8 +346,8 @@ export default function HomePage() {
 
       {/* Final CTA */}
       <CTASection
-        headline="Ready to transform your business?"
-        subheadline="Join hundreds of businesses already on the waitlist. Get notified when we launch."
+        headline={t("ctaHeadline")}
+        subheadline={t("ctaSubheadline")}
         variant="gradient"
       />
     </>

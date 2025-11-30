@@ -1,36 +1,36 @@
-import { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import { CTASection } from "@/components/CTASection";
 
-export const metadata: Metadata = {
-  title: "Solutions - Industry Solutions Coming Soon",
-  description: "Industry-specific solutions for E-commerce, Retail, Professional Services, and SaaS companies. Coming soon.",
-};
-
-const industries = [
-  {
-    name: "For E-commerce",
-    description: "Manage inventory, track competitors, and automate customer communications.",
-    icon: "🛒",
-  },
-  {
-    name: "For Retail",
-    description: "Unify POS data, optimize pricing, and streamline operations across locations.",
-    icon: "🏪",
-  },
-  {
-    name: "For Professional Services",
-    description: "Track projects, manage clients, and automate billing workflows.",
-    icon: "💼",
-  },
-  {
-    name: "For SaaS Companies",
-    description: "Monitor subscriptions, reduce churn, and understand customer health.",
-    icon: "☁️",
-  },
-];
-
 export default function SolutionsPage() {
+  const t = useTranslations("solutions");
+  const tCommon = useTranslations("common");
+
+  const industries = [
+    {
+      name: t("forEcommerce"),
+      description: t("forEcommerceDesc"),
+      icon: "🛒",
+    },
+    {
+      name: t("forRetail"),
+      description: t("forRetailDesc"),
+      icon: "🏪",
+    },
+    {
+      name: t("forProfessionalServices"),
+      description: t("forProfessionalServicesDesc"),
+      icon: "💼",
+    },
+    {
+      name: t("forSaas"),
+      description: t("forSaasDesc"),
+      icon: "☁️",
+    },
+  ];
+
   return (
     <>
       {/* Hero */}
@@ -38,19 +38,19 @@ export default function SolutionsPage() {
         <div className="container-marketing">
           <div className="max-w-4xl mx-auto text-center">
             <span className="inline-block px-4 py-2 bg-primary-100 text-primary-700 rounded-full text-sm font-medium mb-6">
-              Coming Soon
+              {tCommon("comingSoon")}
             </span>
             <h1 className="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-              Industry solutions coming soon
+              {t("heroTitle")}
             </h1>
             <p className="text-xl lg:text-2xl text-gray-600 mb-8 font-serif">
-              We&apos;re building dedicated guides for e-commerce, retail, professional services, and SaaS businesses.
+              {t("heroSubtitle")}
             </p>
             <Link
               href="/demo"
               className="inline-flex items-center px-8 py-4 text-lg font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition-colors"
             >
-              Get Early Access
+              {tCommon("getEarlyAccess")}
             </Link>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function SolutionsPage() {
                 <h3 className="text-xl font-bold text-gray-500 mb-2">{industry.name}</h3>
                 <p className="text-gray-400 font-serif">{industry.description}</p>
                 <span className="inline-block mt-4 px-3 py-1 bg-gray-200 text-gray-500 rounded text-sm">
-                  Coming Soon
+                  {tCommon("comingSoon")}
                 </span>
               </div>
             ))}
@@ -82,27 +82,27 @@ export default function SolutionsPage() {
         <div className="container-marketing">
           <div className="max-w-xl mx-auto text-center">
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              Get notified when your industry page launches
+              {t("getNotified")}
             </h2>
             <form className="flex flex-col sm:flex-row gap-3 mt-6">
               <select className="flex-shrink-0 px-4 py-3 border border-gray-300 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-primary-500">
-                <option>Select your industry</option>
-                <option>E-commerce</option>
-                <option>Retail</option>
-                <option>Professional Services</option>
-                <option>SaaS</option>
-                <option>Other</option>
+                <option>{t("selectIndustry")}</option>
+                <option>{t("ecommerce")}</option>
+                <option>{t("retail")}</option>
+                <option>{t("professionalServices")}</option>
+                <option>{t("saas")}</option>
+                <option>{t("other")}</option>
               </select>
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder={t("enterEmail")}
                 className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
               />
               <button
                 type="submit"
                 className="px-6 py-3 bg-primary-600 text-white rounded-lg font-medium hover:bg-primary-700 transition-colors"
               >
-                Notify Me
+                {t("notifyMe")}
               </button>
             </form>
           </div>
@@ -111,8 +111,8 @@ export default function SolutionsPage() {
 
       {/* CTA */}
       <CTASection
-        headline="Can't wait?"
-        subheadline="Schedule a demo to see how Binelek fits your industry today."
+        headline={t("cantWait")}
+        subheadline={t("cantWaitSubheadline")}
         variant="gradient"
       />
     </>

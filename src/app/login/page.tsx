@@ -1,12 +1,11 @@
-import { Metadata } from "next";
-import Link from "next/link";
+"use client";
 
-export const metadata: Metadata = {
-  title: "Login",
-  description: "Sign in to your Binelek account.",
-};
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
+  const t = useTranslations("login");
+
   return (
     <section className="min-h-[80vh] flex items-center justify-center py-12 bg-gray-50">
       <div className="w-full max-w-md px-4">
@@ -15,14 +14,14 @@ export default function LoginPage() {
             <Link href="/" className="text-3xl font-bold text-primary-600">
               Binelek
             </Link>
-            <h1 className="text-2xl font-bold text-gray-900 mt-6 mb-2">Welcome back</h1>
-            <p className="text-gray-600">Sign in to your account</p>
+            <h1 className="text-2xl font-bold text-gray-900 mt-6 mb-2">{t("welcomeBack")}</h1>
+            <p className="text-gray-600">{t("signInToAccount")}</p>
           </div>
 
           <form className="space-y-5">
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email
+                {t("email")}
               </label>
               <input
                 type="email"
@@ -35,7 +34,7 @@ export default function LoginPage() {
 
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Password
+                {t("password")}
               </label>
               <input
                 type="password"
@@ -52,10 +51,10 @@ export default function LoginPage() {
                   type="checkbox"
                   className="w-4 h-4 text-primary-600 rounded border-gray-300 focus:ring-primary-500"
                 />
-                <span className="ml-2 text-sm text-gray-600">Remember me</span>
+                <span className="ml-2 text-sm text-gray-600">{t("rememberMe")}</span>
               </label>
               <a href="#" className="text-sm text-primary-600 hover:text-primary-700">
-                Forgot password?
+                {t("forgotPassword")}
               </a>
             </div>
 
@@ -63,23 +62,22 @@ export default function LoginPage() {
               type="submit"
               className="w-full py-3 bg-primary-600 text-white rounded-lg font-semibold hover:bg-primary-700 transition-colors"
             >
-              Sign In
+              {t("signIn")}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-gray-600">
-              Don&apos;t have an account?{" "}
+              {t("noAccount")}{" "}
               <Link href="/demo" className="text-primary-600 font-medium hover:text-primary-700">
-                Schedule a demo
+                {t("scheduleDemo")}
               </Link>
             </p>
           </div>
 
           <div className="mt-8 p-4 bg-gray-50 rounded-lg text-center">
             <p className="text-sm text-gray-500">
-              This is a placeholder login page. The actual authentication will be handled by the main application at{" "}
-              <span className="font-mono text-primary-600">app.binelek.io</span>
+              {t("placeholderNote")}
             </p>
           </div>
         </div>
