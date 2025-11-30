@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { CTASection } from "@/components/CTASection";
 import { EmailSignup } from "@/components/EmailSignup";
-import { Zap, Database, Shield, Search } from "lucide-react";
+import { Zap, Database, Shield, Search, TrendingUp } from "lucide-react";
 
 export default function ProductOverviewPage() {
   const t = useTranslations("product.overview");
@@ -64,6 +64,19 @@ export default function ProductOverviewPage() {
       ],
       href: "/product/marketplace",
       Icon: Search,
+    },
+    {
+      name: tHome("modulePredictive"),
+      tagline: tHome("modulePredictiveTagline"),
+      description: tHome("modulePredictiveDesc"),
+      features: [
+        tHome("featureSalesForecasting"),
+        tHome("featureInventoryPrediction"),
+        tHome("featureChurnPrevention"),
+        tHome("featureCustomConnectors"),
+      ],
+      href: "/product/predictive-analytics",
+      Icon: TrendingUp,
     },
   ];
 
