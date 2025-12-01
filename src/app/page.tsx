@@ -12,6 +12,7 @@ import {
   Database,
   Shield,
   Search,
+  TrendingUp as TrendingUpIcon,
   ArrowRight,
   CheckCircle,
   BarChart3,
@@ -29,6 +30,7 @@ const moduleIcons = [
   { Icon: Database, color: "from-blue-500 to-cyan-500", href: "/product/mini-foundry" },
   { Icon: Shield, color: "from-emerald-500 to-teal-500", href: "/product/security" },
   { Icon: Search, color: "from-purple-500 to-pink-500", href: "/product/marketplace" },
+  { Icon: TrendingUpIcon, color: "from-violet-500 to-indigo-500", href: "/product/predictive-analytics" },
 ];
 
 const benefitIcons = [Bot, BarChart3, Lock, TrendingUp];
@@ -66,6 +68,13 @@ export default function HomePage() {
       description: t("moduleMarketplaceDesc"),
       features: [t("featurePriceTracking"), t("featureCompetitorMonitoring"), t("featureMarketTrends"), t("featurePriceAlerts")],
       ...moduleIcons[3],
+    },
+    {
+      name: t("modulePredictive"),
+      tagline: t("modulePredictiveTagline"),
+      description: t("modulePredictiveDesc"),
+      features: [t("featureSalesForecasting"), t("featureInventoryPrediction"), t("featureChurnPrevention"), t("featureCustomConnectors")],
+      ...moduleIcons[4],
     },
   ];
 

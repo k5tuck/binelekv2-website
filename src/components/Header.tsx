@@ -12,6 +12,7 @@ const productLinks = [
   { nameKey: "miniFoundry", href: "/product/mini-foundry" },
   { nameKey: "cybersecurityScanner", href: "/product/security" },
   { nameKey: "marketplaceIntelligence", href: "/product/marketplace" },
+  { nameKey: "predictiveAnalytics", href: "/product/predictive" },
 ];
 
 const solutionsLinks = [
