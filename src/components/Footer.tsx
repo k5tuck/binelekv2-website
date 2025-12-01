@@ -9,7 +9,7 @@ const productLinks = [
   { nameKey: "overview", href: "/product" },
   { nameKey: "opsCopilot", href: "/product/ops-copilot" },
   { nameKey: "miniFoundry", href: "/product/mini-foundry" },
-  { nameKey: "security", href: "/product/security" },
+  { nameKey: "security", href: "/product/security", comingSoon: true },
   { nameKey: "marketplace", href: "/product/marketplace" },
 ];
 
@@ -94,9 +94,16 @@ export function Footer() {
             <ul className="space-y-3">
               {productLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-gray-600 hover:text-primary-600">
-                    {t(link.nameKey)}
-                  </Link>
+                  {link.comingSoon ? (
+                    <Link href={link.href} className="text-sm text-gray-400 hover:text-primary-600 flex items-center gap-2">
+                      {t(link.nameKey)}
+                      <span className="text-xs bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded">{tCommon("soon")}</span>
+                    </Link>
+                  ) : (
+                    <Link href={link.href} className="text-sm text-gray-600 hover:text-primary-600">
+                      {t(link.nameKey)}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

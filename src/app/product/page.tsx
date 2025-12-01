@@ -51,6 +51,7 @@ export default function ProductOverviewPage() {
       ],
       href: "/product/security",
       Icon: Shield,
+      comingSoon: true,
     },
     {
       name: tHome("moduleMarketplace"),
@@ -138,8 +139,13 @@ export default function ProductOverviewPage() {
               <Link
                 key={module.name}
                 href={module.href}
-                className="group bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-100"
+                className="group relative bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-100"
               >
+                {module.comingSoon && (
+                  <span className="absolute top-4 right-4 text-xs bg-primary-100 text-primary-600 px-2 py-1 rounded-full font-medium">
+                    {tCommon("comingSoon")}
+                  </span>
+                )}
                 <div className="flex items-start gap-4">
                   <module.Icon className="w-10 h-10 text-primary-600 flex-shrink-0" strokeWidth={1.5} />
                   <div className="flex-1">
