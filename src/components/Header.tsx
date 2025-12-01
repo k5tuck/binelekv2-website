@@ -10,7 +10,7 @@ const productLinks = [
   { nameKey: "overview", href: "/product" },
   { nameKey: "opsCopilot", href: "/product/ops-copilot" },
   { nameKey: "miniFoundry", href: "/product/mini-foundry" },
-  { nameKey: "cybersecurityScanner", href: "/product/security" },
+  { nameKey: "cybersecurityScanner", href: "/product/security", comingSoon: true },
   { nameKey: "marketplaceIntelligence", href: "/product/marketplace" },
   { nameKey: "predictiveAnalytics", href: "/product/predictive" },
 ];
@@ -65,15 +65,20 @@ export function Header() {
                 </svg>
               </button>
               {openDropdown === "product" && (
-                <div className="absolute top-full left-0 w-56 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
+                <div className="absolute top-full left-0 w-64 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
                   {productLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600"
+                      className={`flex items-center justify-between px-4 py-2 hover:bg-primary-50 ${link.comingSoon ? "text-gray-500" : "text-gray-700 hover:text-primary-600"}`}
                       onClick={() => setOpenDropdown(null)}
                     >
                       {t(link.nameKey)}
+                      {link.comingSoon && (
+                        <span className="text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full">
+                          {tCommon("comingSoon")}
+                        </span>
+                      )}
                     </Link>
                   ))}
                 </div>
@@ -209,10 +214,15 @@ export function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="block py-2 text-gray-700"
+                    className={`flex items-center gap-2 py-2 ${link.comingSoon ? "text-gray-500" : "text-gray-700"}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {t(link.nameKey)}
+                    {link.comingSoon && (
+                      <span className="text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full">
+                        {tCommon("comingSoon")}
+                      </span>
+                    )}
                   </Link>
                 ))}
               </div>
