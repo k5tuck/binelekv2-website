@@ -5,50 +5,78 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { CTASection } from "@/components/CTASection";
 import { EmailSignup } from "@/components/EmailSignup";
-import { Zap, Database, Shield, Search, TrendingUp } from "lucide-react";
+import { Zap, Database, Shield, Search, TrendingUp, BarChart3, GitMerge, CheckCircle, ArrowRight } from "lucide-react";
 
 export default function ProductOverviewPage() {
   const t = useTranslations("product.overview");
   const tHome = useTranslations("home");
   const tCommon = useTranslations("common");
 
+  // Hub-based architecture (primary)
+  const hubs = [
+    {
+      name: tHome("hubInsights"),
+      tagline: tHome("hubInsightsTagline"),
+      description: tHome("hubInsightsDesc"),
+      features: [
+        tHome("featureStoryTimeline"),
+        tHome("featureCustomerSegmentation"),
+        tHome("featurePredictiveAnalytics"),
+        tHome("featureUnifiedDashboard"),
+      ],
+      href: "/product/insights-hub",
+      Icon: BarChart3,
+      color: "from-blue-500 to-cyan-500",
+    },
+    {
+      name: tHome("hubAction"),
+      tagline: tHome("hubActionTagline"),
+      description: tHome("hubActionDesc"),
+      features: [
+        tHome("featureCausalSimulator"),
+        tHome("featureInitiativePlanner"),
+        tHome("featureAutomations"),
+        tHome("featureHistoryAudit"),
+      ],
+      href: "/product/action-hub",
+      Icon: Zap,
+      color: "from-amber-500 to-orange-500",
+    },
+    {
+      name: tHome("hubDataLineage"),
+      tagline: tHome("hubDataLineageTagline"),
+      description: tHome("hubDataLineageDesc"),
+      features: [
+        tHome("featureLineageVisualization"),
+        tHome("featureProvenanceTracking"),
+        tHome("featureConfidenceIndicators"),
+        tHome("featureAuditReady"),
+      ],
+      href: "/product/data-lineage",
+      Icon: GitMerge,
+      color: "from-emerald-500 to-teal-500",
+    },
+  ];
+
+  // Legacy modules (included in hubs)
   const modules = [
     {
       name: tHome("moduleOpsCopilot"),
       tagline: tHome("moduleOpsCopilotTagline"),
-      description: tHome("moduleOpsCopilotDesc"),
-      features: [
-        tHome("featureTaskScheduling"),
-        tHome("featureEmailAutomation"),
-        tHome("featureWorkflowBuilder"),
-        tHome("featureNaturalLanguage"),
-      ],
       href: "/product/ops-copilot",
       Icon: Zap,
+      parentHub: tHome("hubAction"),
     },
     {
       name: tHome("moduleMiniFoundry"),
       tagline: tHome("moduleMiniFoundryTagline"),
-      description: tHome("moduleMiniFoundryDesc"),
-      features: [
-        tHome("featureCustomDashboards"),
-        tHome("featureNaturalLanguageQueries"),
-        tHome("featureAutomatedReports"),
-        tHome("featureDataConsolidation"),
-      ],
       href: "/product/mini-foundry",
       Icon: Database,
+      parentHub: tHome("hubInsights"),
     },
     {
       name: tHome("moduleSecurity"),
       tagline: tHome("moduleSecurityTagline"),
-      description: tHome("moduleSecurityDesc"),
-      features: [
-        tHome("featureSecurityScoring"),
-        tHome("featureVulnerabilityScanning"),
-        tHome("featureComplianceReporting"),
-        tHome("featureMfaMonitoring"),
-      ],
       href: "/product/security",
       Icon: Shield,
       comingSoon: true,
@@ -56,28 +84,8 @@ export default function ProductOverviewPage() {
     {
       name: tHome("moduleMarketplace"),
       tagline: tHome("moduleMarketplaceTagline"),
-      description: tHome("moduleMarketplaceDesc"),
-      features: [
-        tHome("featurePriceTracking"),
-        tHome("featureCompetitorMonitoring"),
-        tHome("featureMarketTrends"),
-        tHome("featurePriceAlerts"),
-      ],
       href: "/product/marketplace",
       Icon: Search,
-    },
-    {
-      name: tHome("modulePredictive"),
-      tagline: tHome("modulePredictiveTagline"),
-      description: tHome("modulePredictiveDesc"),
-      features: [
-        tHome("featureSalesForecasting"),
-        tHome("featureInventoryPrediction"),
-        tHome("featureChurnPrevention"),
-        tHome("featureCustomConnectors"),
-      ],
-      href: "/product/predictive-analytics",
-      Icon: TrendingUp,
     },
   ];
 
@@ -123,8 +131,53 @@ export default function ProductOverviewPage() {
         </div>
       </section>
 
-      {/* Modules Grid */}
+      {/* Three Hubs */}
       <section className="py-16 lg:py-24 bg-gray-50">
+        <div className="container-marketing">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
+              {t("hubsTitle")}
+            </h2>
+            <p className="text-lg text-gray-600 font-serif max-w-2xl mx-auto">
+              {t("hubsSubtitle")}
+            </p>
+          </div>
+          <div className="grid lg:grid-cols-3 gap-8">
+            {hubs.map((hub) => (
+              <Link
+                key={hub.name}
+                href={hub.href}
+                className="group relative bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-100"
+              >
+                <div className="text-center mb-6">
+                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${hub.color} flex items-center justify-center mx-auto mb-4`}>
+                    <hub.Icon className="w-8 h-8 text-white" strokeWidth={1.5} />
+                  </div>
+                  <div className="flex items-center justify-center gap-2">
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
+                      {hub.name}
+                    </h3>
+                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-primary-600 group-hover:translate-x-1 transition-all" />
+                  </div>
+                  <p className="text-primary-600 font-medium text-sm mt-1">{hub.tagline}</p>
+                </div>
+                <p className="text-gray-600 font-serif mb-4 text-center text-sm">{hub.description}</p>
+                <ul className="space-y-2">
+                  {hub.features.map((feature) => (
+                    <li key={feature} className="text-sm text-gray-500 flex items-center">
+                      <CheckCircle className="w-4 h-4 text-primary-500 mr-2 flex-shrink-0" />
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Additional Modules */}
+      <section className="py-16 lg:py-24 bg-white">
         <div className="container-marketing">
           <div className="text-center mb-12">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
@@ -134,36 +187,26 @@ export default function ProductOverviewPage() {
               {t("modulesSubtitle")}
             </p>
           </div>
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {modules.map((module) => (
               <Link
                 key={module.name}
                 href={module.href}
-                className="group relative bg-white p-8 rounded-2xl shadow-sm hover:shadow-lg transition-shadow border border-gray-100"
+                className="group relative bg-gray-50 p-6 rounded-xl hover:bg-primary-50 transition-colors border border-gray-100"
               >
                 {module.comingSoon && (
-                  <span className="absolute top-4 right-4 text-xs bg-primary-100 text-primary-600 px-2 py-1 rounded-full font-medium">
+                  <span className="absolute top-3 right-3 text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full font-medium">
                     {tCommon("comingSoon")}
                   </span>
                 )}
-                <div className="flex items-start gap-4">
-                  <module.Icon className="w-10 h-10 text-primary-600 flex-shrink-0" strokeWidth={1.5} />
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
-                      {module.name}
-                    </h3>
-                    <p className="text-primary-600 font-medium mb-2">{module.tagline}</p>
-                    <p className="text-gray-600 font-serif mb-4">{module.description}</p>
-                    <ul className="grid grid-cols-2 gap-2">
-                      {module.features.map((feature) => (
-                        <li key={feature} className="text-sm text-gray-500 flex items-center">
-                          <span className="w-1.5 h-1.5 bg-primary-500 rounded-full mr-2" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
+                <module.Icon className="w-8 h-8 text-primary-600 mb-3" strokeWidth={1.5} />
+                <h3 className="font-bold text-gray-900 group-hover:text-primary-600 transition-colors mb-1">
+                  {module.name}
+                </h3>
+                <p className="text-sm text-gray-600">{module.tagline}</p>
+                {module.parentHub && (
+                  <p className="text-xs text-gray-400 mt-2">Part of {module.parentHub}</p>
+                )}
               </Link>
             ))}
           </div>
@@ -171,7 +214,7 @@ export default function ProductOverviewPage() {
       </section>
 
       {/* AI Highlight */}
-      <section className="py-16 lg:py-24 bg-white">
+      <section className="py-16 lg:py-24 bg-gray-50">
         <div className="container-marketing">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
@@ -182,9 +225,9 @@ export default function ProductOverviewPage() {
                 {t("aiSubtitle")}
               </p>
             </div>
-            <div className="bg-gray-50 rounded-2xl p-8">
+            <div className="bg-white rounded-2xl p-8 shadow-sm">
               <div className="space-y-4">
-                <div className="bg-white rounded-lg p-4 shadow-sm">
+                <div className="bg-gray-50 rounded-lg p-4">
                   <p className="text-sm text-gray-500 mb-1">{t("aiYouAsk")}</p>
                   <p className="text-gray-900">&ldquo;{t("aiQuestion")}&rdquo;</p>
                 </div>

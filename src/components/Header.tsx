@@ -8,11 +8,13 @@ import { LanguageSelector } from "./LanguageSelector";
 
 const productLinks = [
   { nameKey: "overview", href: "/product" },
+  { nameKey: "insightsHub", href: "/product/insights-hub", isHub: true },
+  { nameKey: "actionHub", href: "/product/action-hub", isHub: true },
+  { nameKey: "dataLineage", href: "/product/data-lineage", isHub: true },
   { nameKey: "opsCopilot", href: "/product/ops-copilot" },
   { nameKey: "miniFoundry", href: "/product/mini-foundry" },
   { nameKey: "cybersecurityScanner", href: "/product/security", comingSoon: true },
   { nameKey: "marketplaceIntelligence", href: "/product/marketplace" },
-  { nameKey: "predictiveAnalytics", href: "/product/predictive" },
 ];
 
 const resourcesLinks = [
