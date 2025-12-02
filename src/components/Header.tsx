@@ -6,15 +6,35 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { LanguageSelector } from "./LanguageSelector";
 
-const productLinks = [
-  { nameKey: "overview", href: "/product" },
-  { nameKey: "insightsHub", href: "/product/insights-hub", isHub: true },
-  { nameKey: "actionHub", href: "/product/action-hub", isHub: true },
-  { nameKey: "dataLineage", href: "/product/data-lineage", isHub: true },
-  { nameKey: "opsCopilot", href: "/product/ops-copilot" },
-  { nameKey: "miniFoundry", href: "/product/mini-foundry" },
+// Hub-based navigation structure with modules nested under parent hubs
+const hubLinks = [
+  {
+    nameKey: "insightsHub",
+    href: "/product/insights-hub",
+    isHub: true,
+    modules: [
+      { nameKey: "miniFoundry", href: "/product/mini-foundry" },
+      { nameKey: "marketplaceIntelligence", href: "/product/marketplace" },
+    ],
+  },
+  {
+    nameKey: "actionHub",
+    href: "/product/action-hub",
+    isHub: true,
+    modules: [
+      { nameKey: "opsCopilot", href: "/product/ops-copilot" },
+    ],
+  },
+  {
+    nameKey: "dataLineage",
+    href: "/product/data-lineage",
+    isHub: true,
+    modules: [],
+  },
+];
+
+const standaloneLinks = [
   { nameKey: "cybersecurityScanner", href: "/product/security", comingSoon: true },
-  { nameKey: "marketplaceIntelligence", href: "/product/marketplace" },
 ];
 
 const resourcesLinks = [
@@ -60,22 +80,61 @@ export function Header() {
                 </svg>
               </button>
               {openDropdown === "product" && (
-                <div className="absolute top-full left-0 w-64 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
-                  {productLinks.map((link) => (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className={`flex items-center justify-between px-4 py-2 hover:bg-primary-50 ${link.comingSoon ? "text-gray-500" : "text-gray-700 hover:text-primary-600"}`}
-                      onClick={() => setOpenDropdown(null)}
-                    >
-                      {t(link.nameKey)}
-                      {link.comingSoon && (
-                        <span className="text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full">
-                          {tCommon("comingSoon")}
-                        </span>
-                      )}
-                    </Link>
+                <div className="absolute top-full left-0 w-72 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
+                  {/* Overview Link */}
+                  <Link
+                    href="/product"
+                    className="flex items-center px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600 font-medium"
+                    onClick={() => setOpenDropdown(null)}
+                  >
+                    {t("overview")}
+                  </Link>
+                  <div className="border-t border-gray-100 my-2" />
+
+                  {/* Hubs with nested modules */}
+                  {hubLinks.map((hub) => (
+                    <div key={hub.href}>
+                      <Link
+                        href={hub.href}
+                        className="flex items-center px-4 py-2 text-gray-900 hover:bg-primary-50 hover:text-primary-600 font-semibold"
+                        onClick={() => setOpenDropdown(null)}
+                      >
+                        {t(hub.nameKey)}
+                      </Link>
+                      {hub.modules.map((module) => (
+                        <Link
+                          key={module.href}
+                          href={module.href}
+                          className="flex items-center px-4 py-1.5 pl-8 text-gray-500 hover:bg-primary-50 hover:text-primary-600 text-sm"
+                          onClick={() => setOpenDropdown(null)}
+                        >
+                          {t(module.nameKey)}
+                        </Link>
+                      ))}
+                    </div>
                   ))}
+
+                  {/* Standalone modules */}
+                  {standaloneLinks.length > 0 && (
+                    <>
+                      <div className="border-t border-gray-100 my-2" />
+                      {standaloneLinks.map((link) => (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className={`flex items-center justify-between px-4 py-2 hover:bg-primary-50 ${link.comingSoon ? "text-gray-400" : "text-gray-700 hover:text-primary-600"}`}
+                          onClick={() => setOpenDropdown(null)}
+                        >
+                          {t(link.nameKey)}
+                          {link.comingSoon && (
+                            <span className="text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full">
+                              {tCommon("comingSoon")}
+                            </span>
+                          )}
+                        </Link>
+                      ))}
+                    </>
+                  )}
                 </div>
               )}
             </div>
@@ -169,11 +228,39 @@ export function Header() {
 
               <div>
                 <p className="text-sm font-semibold text-gray-500 mb-2">{t("product")}</p>
-                {productLinks.map((link) => (
+                <Link
+                  href="/product"
+                  className="block py-2 text-gray-700 font-medium"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  {t("overview")}
+                </Link>
+                {hubLinks.map((hub) => (
+                  <div key={hub.href} className="mt-2">
+                    <Link
+                      href={hub.href}
+                      className="block py-2 text-gray-900 font-semibold"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {t(hub.nameKey)}
+                    </Link>
+                    {hub.modules.map((module) => (
+                      <Link
+                        key={module.href}
+                        href={module.href}
+                        className="block py-1.5 pl-4 text-gray-500 text-sm"
+                        onClick={() => setMobileMenuOpen(false)}
+                      >
+                        {t(module.nameKey)}
+                      </Link>
+                    ))}
+                  </div>
+                ))}
+                {standaloneLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`flex items-center gap-2 py-2 ${link.comingSoon ? "text-gray-500" : "text-gray-700"}`}
+                    className={`flex items-center gap-2 py-2 mt-2 ${link.comingSoon ? "text-gray-400" : "text-gray-700"}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {t(link.nameKey)}
