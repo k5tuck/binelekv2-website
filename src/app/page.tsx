@@ -18,13 +18,28 @@ import {
   BarChart3,
   Bot,
   Lock,
-  TrendingUp
+  TrendingUp,
+  GitMerge,
+  BookOpen,
+  Users,
+  GitBranch,
+  ClipboardList,
+  Eye,
+  FileCheck,
 } from "lucide-react";
 
 // Environment variable toggle for coming soon mode
 // Set NEXT_PUBLIC_COMING_SOON_MODE=true in Vercel to show coming soon page
 const isComingSoonMode = process.env.NEXT_PUBLIC_COMING_SOON_MODE === "true";
 
+// Hub-focused architecture (primary)
+const hubIcons = [
+  { Icon: BarChart3, color: "from-blue-500 to-cyan-500", href: "/product/insights-hub" },
+  { Icon: Zap, color: "from-amber-500 to-orange-500", href: "/product/action-hub" },
+  { Icon: GitMerge, color: "from-emerald-500 to-teal-500", href: "/product/data-lineage" },
+];
+
+// Legacy module icons (secondary)
 const moduleIcons = [
   { Icon: Zap, color: "from-amber-500 to-orange-500", href: "/product/ops-copilot" },
   { Icon: Database, color: "from-blue-500 to-cyan-500", href: "/product/mini-foundry" },
@@ -39,7 +54,32 @@ export default function HomePage() {
   const t = useTranslations("home");
   const tCommon = useTranslations("common");
 
-  // Build translated arrays
+  // Build translated arrays - Hub-focused architecture
+  const hubs = [
+    {
+      name: t("hubInsights"),
+      tagline: t("hubInsightsTagline"),
+      description: t("hubInsightsDesc"),
+      features: [t("featureStoryTimeline"), t("featureCustomerSegmentation"), t("featurePredictiveAnalytics"), t("featureUnifiedDashboard")],
+      ...hubIcons[0],
+    },
+    {
+      name: t("hubAction"),
+      tagline: t("hubActionTagline"),
+      description: t("hubActionDesc"),
+      features: [t("featureCausalSimulator"), t("featureInitiativePlanner"), t("featureAutomations"), t("featureHistoryAudit")],
+      ...hubIcons[1],
+    },
+    {
+      name: t("hubDataLineage"),
+      tagline: t("hubDataLineageTagline"),
+      description: t("hubDataLineageDesc"),
+      features: [t("featureLineageVisualization"), t("featureProvenanceTracking"), t("featureConfidenceIndicators"), t("featureAuditReady")],
+      ...hubIcons[2],
+    },
+  ];
+
+  // Legacy modules (kept for reference but not displayed prominently)
   const modules = [
     {
       name: t("moduleOpsCopilot"),
@@ -194,55 +234,48 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Four Modules */}
+      {/* Three Hubs */}
       <section className="py-20 lg:py-28 bg-gray-50">
         <div className="container-marketing">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
-              {t("modulesTitle")}
+              {t("hubsTitle")}
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              {t("modulesSubtitle")}
+              {t("hubsSubtitle")}
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            {modules.map((module) => (
+          <div className="grid lg:grid-cols-3 gap-8">
+            {hubs.map((hub) => (
               <Link
-                key={module.name}
-                href={module.href}
+                key={hub.name}
+                href={hub.href}
                 className="group relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl hover:border-primary-200 transition-all duration-300"
               >
-                {module.comingSoon && (
-                  <span className="absolute top-4 right-4 text-xs bg-primary-100 text-primary-600 px-2 py-1 rounded-full font-medium">
-                    {tCommon("comingSoon")}
-                  </span>
-                )}
-                <div className="flex items-start gap-5">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${module.color} flex items-center justify-center flex-shrink-0`}>
-                    <module.Icon className="w-7 h-7 text-white" strokeWidth={1.5} />
+                <div className="text-center mb-6">
+                  <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${hub.color} flex items-center justify-center mx-auto mb-4`}>
+                    <hub.Icon className="w-8 h-8 text-white" strokeWidth={1.5} />
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
-                        {module.name}
-                      </h3>
-                      <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-primary-600 group-hover:translate-x-1 transition-all" />
-                    </div>
-                    <p className="text-primary-600 font-medium text-sm mb-3">{module.tagline}</p>
-                    <p className="text-gray-600 mb-4">{module.description}</p>
-                    <div className="flex flex-wrap gap-2">
-                      {module.features.map((feature) => (
-                        <span
-                          key={feature}
-                          className="inline-flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded"
-                        >
-                          <CheckCircle className="w-3 h-3 text-primary-500" />
-                          {feature}
-                        </span>
-                      ))}
-                    </div>
+                  <div className="flex items-center justify-center gap-2 mb-1">
+                    <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors">
+                      {hub.name}
+                    </h3>
+                    <ArrowRight className="w-4 h-4 text-gray-400 group-hover:text-primary-600 group-hover:translate-x-1 transition-all" />
                   </div>
+                  <p className="text-primary-600 font-medium text-sm mb-3">{hub.tagline}</p>
+                </div>
+                <p className="text-gray-600 mb-4 text-center">{hub.description}</p>
+                <div className="flex flex-wrap justify-center gap-2">
+                  {hub.features.map((feature) => (
+                    <span
+                      key={feature}
+                      className="inline-flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2 py-1 rounded"
+                    >
+                      <CheckCircle className="w-3 h-3 text-primary-500" />
+                      {feature}
+                    </span>
+                  ))}
                 </div>
               </Link>
             ))}

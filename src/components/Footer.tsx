@@ -7,10 +7,12 @@ import { EmailSignup } from "./EmailSignup";
 
 const productLinks = [
   { nameKey: "overview", href: "/product" },
+  { nameKey: "insightsHub", href: "/product/insights-hub", isHub: true },
+  { nameKey: "actionHub", href: "/product/action-hub", isHub: true },
+  { nameKey: "dataLineage", href: "/product/data-lineage", isHub: true },
   { nameKey: "opsCopilot", href: "/product/ops-copilot" },
   { nameKey: "miniFoundry", href: "/product/mini-foundry" },
-  { nameKey: "security", href: "/product/security", comingSoon: true },
-  { nameKey: "marketplace", href: "/product/marketplace" },
+  { nameKey: "cybersecurityScanner", href: "/product/security", comingSoon: true },
 ];
 
 const resourcesLinks = [
