@@ -70,7 +70,7 @@ export default function InsightsHubPage() {
 
   const includedModules = [
     { name: t("includedMiniFoundry"), href: "/product/mini-foundry" },
-    { name: t("includedPredictive"), href: "/product/predictive-analytics" },
+    { name: t("includedMarketplace"), href: "/product/marketplace" },
   ];
 
   return (

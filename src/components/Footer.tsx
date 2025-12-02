@@ -5,13 +5,31 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { EmailSignup } from "./EmailSignup";
 
-const productLinks = [
-  { nameKey: "overview", href: "/product" },
-  { nameKey: "insightsHub", href: "/product/insights-hub", isHub: true },
-  { nameKey: "actionHub", href: "/product/action-hub", isHub: true },
-  { nameKey: "dataLineage", href: "/product/data-lineage", isHub: true },
-  { nameKey: "opsCopilot", href: "/product/ops-copilot" },
-  { nameKey: "miniFoundry", href: "/product/mini-foundry" },
+// Hub-based navigation structure with modules nested under parent hubs
+const hubLinks = [
+  {
+    nameKey: "insightsHub",
+    href: "/product/insights-hub",
+    modules: [
+      { nameKey: "miniFoundry", href: "/product/mini-foundry" },
+      { nameKey: "marketplaceIntelligence", href: "/product/marketplace" },
+    ],
+  },
+  {
+    nameKey: "actionHub",
+    href: "/product/action-hub",
+    modules: [
+      { nameKey: "opsCopilot", href: "/product/ops-copilot" },
+    ],
+  },
+  {
+    nameKey: "dataLineage",
+    href: "/product/data-lineage",
+    modules: [],
+  },
+];
+
+const standaloneLinks = [
   { nameKey: "cybersecurityScanner", href: "/product/security", comingSoon: true },
 ];
 
@@ -87,7 +105,30 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-semibold text-gray-900 mb-4">{t("product")}</h3>
             <ul className="space-y-3">
-              {productLinks.map((link) => (
+              <li>
+                <Link href="/product" className="text-sm text-gray-600 hover:text-primary-600">
+                  {t("overview")}
+                </Link>
+              </li>
+              {hubLinks.map((hub) => (
+                <li key={hub.href}>
+                  <Link href={hub.href} className="text-sm text-gray-900 font-medium hover:text-primary-600">
+                    {t(hub.nameKey)}
+                  </Link>
+                  {hub.modules.length > 0 && (
+                    <ul className="mt-1 ml-3 space-y-1">
+                      {hub.modules.map((module) => (
+                        <li key={module.href}>
+                          <Link href={module.href} className="text-sm text-gray-500 hover:text-primary-600">
+                            {t(module.nameKey)}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+              {standaloneLinks.map((link) => (
                 <li key={link.href}>
                   {link.comingSoon ? (
                     <Link href={link.href} className="text-sm text-gray-400 hover:text-primary-600 flex items-center gap-2">

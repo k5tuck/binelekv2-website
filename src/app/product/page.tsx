@@ -58,34 +58,50 @@ export default function ProductOverviewPage() {
     },
   ];
 
-  // Legacy modules (included in hubs)
-  const modules = [
+  // Modules organized by parent hub
+  const hubModules = [
     {
-      name: tHome("moduleOpsCopilot"),
-      tagline: tHome("moduleOpsCopilotTagline"),
-      href: "/product/ops-copilot",
-      Icon: Zap,
-      parentHub: tHome("hubAction"),
+      hubName: tHome("hubInsights"),
+      hubHref: "/product/insights-hub",
+      hubColor: "from-blue-500 to-cyan-500",
+      modules: [
+        {
+          name: tHome("moduleMiniFoundry"),
+          tagline: tHome("moduleMiniFoundryTagline"),
+          href: "/product/mini-foundry",
+          Icon: Database,
+        },
+        {
+          name: tHome("moduleMarketplace"),
+          tagline: tHome("moduleMarketplaceTagline"),
+          href: "/product/marketplace",
+          Icon: Search,
+        },
+      ],
     },
     {
-      name: tHome("moduleMiniFoundry"),
-      tagline: tHome("moduleMiniFoundryTagline"),
-      href: "/product/mini-foundry",
-      Icon: Database,
-      parentHub: tHome("hubInsights"),
+      hubName: tHome("hubAction"),
+      hubHref: "/product/action-hub",
+      hubColor: "from-amber-500 to-orange-500",
+      modules: [
+        {
+          name: tHome("moduleOpsCopilot"),
+          tagline: tHome("moduleOpsCopilotTagline"),
+          href: "/product/ops-copilot",
+          Icon: Zap,
+        },
+      ],
     },
+  ];
+
+  // Standalone modules (not part of any hub)
+  const standaloneModules = [
     {
       name: tHome("moduleSecurity"),
       tagline: tHome("moduleSecurityTagline"),
       href: "/product/security",
       Icon: Shield,
       comingSoon: true,
-    },
-    {
-      name: tHome("moduleMarketplace"),
-      tagline: tHome("moduleMarketplaceTagline"),
-      href: "/product/marketplace",
-      Icon: Search,
     },
   ];
 
@@ -176,7 +192,7 @@ export default function ProductOverviewPage() {
         </div>
       </section>
 
-      {/* Additional Modules */}
+      {/* Modules by Hub */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="container-marketing">
           <div className="text-center mb-12">
@@ -187,28 +203,64 @@ export default function ProductOverviewPage() {
               {t("modulesSubtitle")}
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {modules.map((module) => (
-              <Link
-                key={module.name}
-                href={module.href}
-                className="group relative bg-gray-50 p-6 rounded-xl hover:bg-primary-50 transition-colors border border-gray-100"
-              >
-                {module.comingSoon && (
-                  <span className="absolute top-3 right-3 text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full font-medium">
-                    {tCommon("comingSoon")}
-                  </span>
-                )}
-                <module.Icon className="w-8 h-8 text-primary-600 mb-3" strokeWidth={1.5} />
-                <h3 className="font-bold text-gray-900 group-hover:text-primary-600 transition-colors mb-1">
-                  {module.name}
-                </h3>
-                <p className="text-sm text-gray-600">{module.tagline}</p>
-                {module.parentHub && (
-                  <p className="text-xs text-gray-400 mt-2">Part of {module.parentHub}</p>
-                )}
-              </Link>
+
+          {/* Modules grouped by Hub */}
+          <div className="space-y-12">
+            {hubModules.map((hubGroup) => (
+              <div key={hubGroup.hubName}>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${hubGroup.hubColor}`} />
+                  <Link href={hubGroup.hubHref} className="text-lg font-semibold text-gray-900 hover:text-primary-600">
+                    {hubGroup.hubName}
+                  </Link>
+                </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pl-6">
+                  {hubGroup.modules.map((module) => (
+                    <Link
+                      key={module.name}
+                      href={module.href}
+                      className="group relative bg-gray-50 p-6 rounded-xl hover:bg-primary-50 transition-colors border border-gray-100"
+                    >
+                      <module.Icon className="w-8 h-8 text-primary-600 mb-3" strokeWidth={1.5} />
+                      <h3 className="font-bold text-gray-900 group-hover:text-primary-600 transition-colors mb-1">
+                        {module.name}
+                      </h3>
+                      <p className="text-sm text-gray-600">{module.tagline}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
             ))}
+
+            {/* Standalone Modules */}
+            {standaloneModules.length > 0 && (
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-3 h-3 rounded-full bg-gray-400" />
+                  <span className="text-lg font-semibold text-gray-900">{t("standaloneTitle")}</span>
+                </div>
+                <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pl-6">
+                  {standaloneModules.map((module) => (
+                    <Link
+                      key={module.name}
+                      href={module.href}
+                      className="group relative bg-gray-50 p-6 rounded-xl hover:bg-primary-50 transition-colors border border-gray-100"
+                    >
+                      {module.comingSoon && (
+                        <span className="absolute top-3 right-3 text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full font-medium">
+                          {tCommon("comingSoon")}
+                        </span>
+                      )}
+                      <module.Icon className="w-8 h-8 text-primary-600 mb-3" strokeWidth={1.5} />
+                      <h3 className="font-bold text-gray-900 group-hover:text-primary-600 transition-colors mb-1">
+                        {module.name}
+                      </h3>
+                      <p className="text-sm text-gray-600">{module.tagline}</p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
