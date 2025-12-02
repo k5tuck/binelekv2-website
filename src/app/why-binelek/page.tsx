@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { CTASection } from "@/components/CTASection";
+import { BarChart3, Zap, GitMerge } from "lucide-react";
 
 export default function WhyBinelekPage() {
   const t = useTranslations("whyBinelek");
@@ -40,11 +41,28 @@ export default function WhyBinelekPage() {
     },
   ];
 
-  const modules = [
-    { name: tHome("moduleOpsCopilot"), description: tHome("moduleOpsCopilotTagline"), href: "/product/ops-copilot" },
-    { name: tHome("moduleMiniFoundry"), description: tHome("moduleMiniFoundryTagline"), href: "/product/mini-foundry" },
-    { name: tHome("moduleSecurity"), description: tHome("moduleSecurityTagline"), href: "/product/security" },
-    { name: tHome("moduleMarketplace"), description: tHome("moduleMarketplaceTagline"), href: "/product/marketplace" },
+  const hubs = [
+    {
+      name: tHome("hubInsights"),
+      description: tHome("hubInsightsTagline"),
+      href: "/product/insights-hub",
+      Icon: BarChart3,
+      color: "from-blue-500 to-cyan-500",
+    },
+    {
+      name: tHome("hubAction"),
+      description: tHome("hubActionTagline"),
+      href: "/product/action-hub",
+      Icon: Zap,
+      color: "from-amber-500 to-orange-500",
+    },
+    {
+      name: tHome("hubDataLineage"),
+      description: tHome("hubDataLineageTagline"),
+      href: "/product/data-lineage",
+      Icon: GitMerge,
+      color: "from-emerald-500 to-teal-500",
+    },
   ];
 
   return (
@@ -108,21 +126,24 @@ export default function WhyBinelekPage() {
         </div>
       </section>
 
-      {/* Four Modules Grid */}
+      {/* Three Hubs Grid */}
       <section className="py-16 lg:py-24 bg-white">
         <div className="container-marketing">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-12 text-center">
-            {t("fourModulesTitle")}
+            {t("threeHubsTitle")}
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {modules.map((module) => (
+          <div className="grid md:grid-cols-3 gap-6">
+            {hubs.map((hub) => (
               <Link
-                key={module.name}
-                href={module.href}
-                className="text-center p-6 rounded-xl border border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-colors"
+                key={hub.name}
+                href={hub.href}
+                className="text-center p-8 rounded-xl border border-gray-200 hover:border-primary-300 hover:bg-primary-50 transition-colors group"
               >
-                <h3 className="font-bold text-gray-900 mb-2">{module.name}</h3>
-                <p className="text-sm text-gray-600">{module.description}</p>
+                <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${hub.color} flex items-center justify-center mx-auto mb-4`}>
+                  <hub.Icon className="w-7 h-7 text-white" strokeWidth={1.5} />
+                </div>
+                <h3 className="font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">{hub.name}</h3>
+                <p className="text-sm text-gray-600">{hub.description}</p>
               </Link>
             ))}
           </div>
