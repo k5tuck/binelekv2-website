@@ -28,7 +28,7 @@ const isComingSoonMode = process.env.NEXT_PUBLIC_COMING_SOON_MODE === "true";
 const moduleIcons = [
   { Icon: Zap, color: "from-amber-500 to-orange-500", href: "/product/ops-copilot" },
   { Icon: Database, color: "from-blue-500 to-cyan-500", href: "/product/mini-foundry" },
-  { Icon: Shield, color: "from-emerald-500 to-teal-500", href: "/product/security" },
+  { Icon: Shield, color: "from-emerald-500 to-teal-500", href: "/product/security", comingSoon: true },
   { Icon: Search, color: "from-purple-500 to-pink-500", href: "/product/marketplace" },
   { Icon: TrendingUpIcon, color: "from-violet-500 to-indigo-500", href: "/product/predictive-analytics" },
 ];
@@ -213,6 +213,11 @@ export default function HomePage() {
                 href={module.href}
                 className="group relative bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl hover:border-primary-200 transition-all duration-300"
               >
+                {module.comingSoon && (
+                  <span className="absolute top-4 right-4 text-xs bg-primary-100 text-primary-600 px-2 py-1 rounded-full font-medium">
+                    {tCommon("comingSoon")}
+                  </span>
+                )}
                 <div className="flex items-start gap-5">
                   <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${module.color} flex items-center justify-center flex-shrink-0`}>
                     <module.Icon className="w-7 h-7 text-white" strokeWidth={1.5} />

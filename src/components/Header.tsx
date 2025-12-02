@@ -10,16 +10,9 @@ const productLinks = [
   { nameKey: "overview", href: "/product" },
   { nameKey: "opsCopilot", href: "/product/ops-copilot" },
   { nameKey: "miniFoundry", href: "/product/mini-foundry" },
-  { nameKey: "cybersecurityScanner", href: "/product/security" },
+  { nameKey: "cybersecurityScanner", href: "/product/security", comingSoon: true },
   { nameKey: "marketplaceIntelligence", href: "/product/marketplace" },
   { nameKey: "predictiveAnalytics", href: "/product/predictive" },
-];
-
-const solutionsLinks = [
-  { nameKey: "forEcommerce", href: "/solutions", hasBadge: true },
-  { nameKey: "forRetail", href: "/solutions", hasBadge: true },
-  { nameKey: "forProfessionalServices", href: "/solutions", hasBadge: true },
-  { nameKey: "forSaas", href: "/solutions", hasBadge: true },
 ];
 
 const resourcesLinks = [
@@ -65,15 +58,20 @@ export function Header() {
                 </svg>
               </button>
               {openDropdown === "product" && (
-                <div className="absolute top-full left-0 w-56 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
+                <div className="absolute top-full left-0 w-64 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
                   {productLinks.map((link) => (
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="block px-4 py-2 text-gray-700 hover:bg-primary-50 hover:text-primary-600"
+                      className={`flex items-center justify-between px-4 py-2 hover:bg-primary-50 ${link.comingSoon ? "text-gray-500" : "text-gray-700 hover:text-primary-600"}`}
                       onClick={() => setOpenDropdown(null)}
                     >
                       {t(link.nameKey)}
+                      {link.comingSoon && (
+                        <span className="text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full">
+                          {tCommon("comingSoon")}
+                        </span>
+                      )}
                     </Link>
                   ))}
                 </div>
@@ -83,42 +81,6 @@ export function Header() {
             <Link href="/why-binelek" className="text-gray-700 hover:text-primary-600 font-medium">
               {t("whyBinelek")}
             </Link>
-
-            {/* Solutions Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setOpenDropdown("solutions")}
-              onMouseLeave={() => setOpenDropdown(null)}
-            >
-              <button className="flex items-center text-gray-700 hover:text-primary-600 font-medium">
-                {t("solutions")}
-                <span className="ml-2 text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full">
-                  {tCommon("comingSoon")}
-                </span>
-                <svg className="ml-1 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {openDropdown === "solutions" && (
-                <div className="absolute top-full left-0 w-64 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-2">
-                  {solutionsLinks.map((link) => (
-                    <Link
-                      key={link.nameKey}
-                      href={link.href}
-                      className="flex items-center justify-between px-4 py-2 text-gray-500 hover:bg-primary-50"
-                      onClick={() => setOpenDropdown(null)}
-                    >
-                      {t(link.nameKey)}
-                      {link.hasBadge && (
-                        <span className="text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">
-                          {tCommon("comingSoon")}
-                        </span>
-                      )}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
 
             <Link href="/integrations" className="text-gray-700 hover:text-primary-600 font-medium">
               {t("integrations")}
@@ -209,32 +171,21 @@ export function Header() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="block py-2 text-gray-700"
+                    className={`flex items-center gap-2 py-2 ${link.comingSoon ? "text-gray-500" : "text-gray-700"}`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {t(link.nameKey)}
+                    {link.comingSoon && (
+                      <span className="text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full">
+                        {tCommon("comingSoon")}
+                      </span>
+                    )}
                   </Link>
                 ))}
               </div>
               <Link href="/why-binelek" className="block py-2 text-gray-700 font-medium" onClick={() => setMobileMenuOpen(false)}>
                 {t("whyBinelek")}
               </Link>
-              <div>
-                <p className="text-sm font-semibold text-gray-500 mb-2 flex items-center gap-2">
-                  {t("solutions")}
-                  <span className="text-xs bg-primary-100 text-primary-600 px-2 py-0.5 rounded-full">{tCommon("comingSoon")}</span>
-                </p>
-                {solutionsLinks.map((link) => (
-                  <Link
-                    key={link.nameKey}
-                    href={link.href}
-                    className="flex items-center gap-2 py-2 text-gray-400"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {t(link.nameKey)}
-                  </Link>
-                ))}
-              </div>
               <Link href="/integrations" className="block py-2 text-gray-700 font-medium" onClick={() => setMobileMenuOpen(false)}>
                 {t("integrations")}
               </Link>

@@ -9,15 +9,8 @@ const productLinks = [
   { nameKey: "overview", href: "/product" },
   { nameKey: "opsCopilot", href: "/product/ops-copilot" },
   { nameKey: "miniFoundry", href: "/product/mini-foundry" },
-  { nameKey: "security", href: "/product/security" },
+  { nameKey: "security", href: "/product/security", comingSoon: true },
   { nameKey: "marketplace", href: "/product/marketplace" },
-];
-
-const solutionsLinks = [
-  { nameKey: "forEcommerce", href: "/solutions" },
-  { nameKey: "forRetail", href: "/solutions" },
-  { nameKey: "forProfessionalServices", href: "/solutions" },
-  { nameKey: "forSaas", href: "/solutions" },
 ];
 
 const resourcesLinks = [
@@ -87,33 +80,23 @@ export function Footer() {
     <footer className="bg-gray-50 border-t border-gray-100">
       <div className="container-marketing py-12 lg:py-16">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 lg:gap-12">
           {/* Product */}
           <div>
             <h3 className="text-sm font-semibold text-gray-900 mb-4">{t("product")}</h3>
             <ul className="space-y-3">
               {productLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-gray-600 hover:text-primary-600">
-                    {t(link.nameKey)}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Solutions */}
-          <div>
-            <h3 className="text-sm font-semibold text-gray-900 mb-4">
-              {t("solutions")}
-              <span className="ml-2 text-xs text-gray-400">{tCommon("comingSoon")}</span>
-            </h3>
-            <ul className="space-y-3">
-              {solutionsLinks.map((link) => (
-                <li key={link.nameKey}>
-                  <Link href={link.href} className="text-sm text-gray-400 hover:text-primary-600">
-                    {t(link.nameKey)}
-                  </Link>
+                  {link.comingSoon ? (
+                    <Link href={link.href} className="text-sm text-gray-400 hover:text-primary-600 flex items-center gap-2">
+                      {t(link.nameKey)}
+                      <span className="text-xs bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded">{tCommon("soon")}</span>
+                    </Link>
+                  ) : (
+                    <Link href={link.href} className="text-sm text-gray-600 hover:text-primary-600">
+                      {t(link.nameKey)}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
@@ -155,7 +138,7 @@ export function Footer() {
           </div>
 
           {/* Newsletter / CTA */}
-          <div className="col-span-2 md:col-span-4 lg:col-span-1">
+          <div className="col-span-2 md:col-span-4">
             <div className="md:flex md:items-start md:justify-between md:gap-8 lg:block">
               <div className="md:flex-1 lg:block">
                 <h3 className="text-sm font-semibold text-gray-900 mb-4 md:mb-2 lg:mb-4">{tFooter("stayUpdated")}</h3>
