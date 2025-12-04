@@ -79,10 +79,11 @@ Run the setup script to create the Terraform state bucket:
 Set your API keys as environment variables or pass them to Terraform:
 
 ```bash
-export TF_VAR_pinecone_api_key="your-pinecone-key"
 export TF_VAR_openai_api_key="your-openai-key"
 export TF_VAR_anthropic_api_key="your-anthropic-key"
 ```
+
+> **Note**: Vector search uses Qdrant, which is self-hosted in ECS (no external API key required).
 
 ### 3. Deploy Infrastructure
 
@@ -124,11 +125,12 @@ Add these secrets to your GitHub repository:
 |--------|-------------|
 | `AWS_ACCESS_KEY_ID` | AWS access key |
 | `AWS_SECRET_ACCESS_KEY` | AWS secret key |
-| `PINECONE_API_KEY` | Pinecone API key |
 | `OPENAI_API_KEY` | OpenAI API key |
 | `ANTHROPIC_API_KEY` | Anthropic API key |
 | `STAGING_CLOUDFRONT_DISTRIBUTION_ID` | Staging CloudFront ID |
 | `PRODUCTION_CLOUDFRONT_DISTRIBUTION_ID` | Production CloudFront ID |
+
+> **Note**: Qdrant for vector search is self-hosted in ECS and does not require an API key.
 
 ## Environments
 

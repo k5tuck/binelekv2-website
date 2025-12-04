@@ -46,7 +46,9 @@ This document tracks the AWS infrastructure deployment for the Binelek SMB AI Pl
                     │ • AI Orchestrator │                 │ • AI Orchestrator │
                     │ • Connectors      │                 │ • Connectors      │
                     │ • Marketplace     │                 │ • Marketplace     │
+                    │ • Support Portal  │                 │ • Support Portal  │
                     │ • Ollama (LLM)    │                 │ • Ollama (LLM)    │
+                    │ • Qdrant (Vector) │                 │ • Qdrant (Vector) │
                     └─────────┬─────────┘                 └─────────┬─────────┘
                               │                                     │
           ┌───────────────────┼───────────────────┐    ┌───────────┴───────────┐
@@ -81,13 +83,15 @@ This document tracks the AWS infrastructure deployment for the Binelek SMB AI Pl
 | Staging | binelek-frontend-staging | staging.binelek.io |
 
 ### 3. Backend (ECS Fargate)
-| Service | Port | CPU | Memory |
-|---------|------|-----|--------|
-| API Gateway | 3000 | 512 | 1024 |
-| AI Orchestrator | 8100 | 512 | 1024 |
-| Connectors Service | 8101 | 256 | 512 |
-| Marketplace Scraper | 8102 | 256 | 512 |
-| Ollama (LLM) | 11434 | 1024 | 4096 |
+| Service | Port | CPU | Memory | Notes |
+|---------|------|-----|--------|-------|
+| API Gateway | 3000 | 512 | 1024 | External (ALB) |
+| Support Portal | 3001 | 512 | 1024 | External (ALB) |
+| AI Orchestrator | 8100 | 512 | 1024 | Internal |
+| Connectors Service | 8101 | 256 | 512 | Internal |
+| Marketplace Scraper | 8102 | 256 | 512 | Internal |
+| Ollama (LLM) | 11434 | 1024 | 4096 | Internal (official image) |
+| Qdrant (Vector DB) | 6333 | 1024 | 2048 | Internal (official image) |
 
 ### 4. Database (RDS PostgreSQL)
 | Environment | Instance Type | Storage | Multi-AZ |
@@ -109,10 +113,11 @@ This document tracks the AWS infrastructure deployment for the Binelek SMB AI Pl
 | binelek-notifications-topic | Email/push notifications |
 | binelek-events-topic | Event broadcasting |
 
-### 7. External Services
+### 7. Vector Search & LLM Services
 | Service | Purpose | Configuration |
 |---------|---------|---------------|
-| Pinecone | Vector database | API key in Secrets Manager |
+| Qdrant | Vector database | Self-hosted in ECS (free) |
+| Ollama | Local LLM | Self-hosted in ECS (free) |
 | OpenAI/Anthropic | External LLM APIs | API keys in Secrets Manager |
 
 ---
@@ -175,13 +180,13 @@ This document tracks the AWS infrastructure deployment for the Binelek SMB AI Pl
 - [ ] Create IAM user with AdministratorAccess
 - [ ] Generate AWS Access Keys (for GitHub Actions)
 - [ ] Register/transfer binelek.io domain to Route 53
-- [ ] Create Pinecone account and get API key
 - [ ] Have OpenAI/Anthropic API keys ready
+
+> **Note**: Vector search uses Qdrant (self-hosted in ECS) - no external account needed!
 
 ### GitHub Repository Setup
 - [ ] Add AWS_ACCESS_KEY_ID secret to GitHub
 - [ ] Add AWS_SECRET_ACCESS_KEY secret to GitHub
-- [ ] Add PINECONE_API_KEY secret to GitHub
 - [ ] Add OPENAI_API_KEY secret to GitHub
 - [ ] Add ANTHROPIC_API_KEY secret to GitHub
 
@@ -238,7 +243,8 @@ infrastructure/
 
 - **AWS Console**: https://console.aws.amazon.com
 - **Terraform Registry**: https://registry.terraform.io
-- **Pinecone Console**: https://app.pinecone.io
+- **Qdrant Docs**: https://qdrant.tech/documentation/
+- **Ollama Docs**: https://ollama.ai/docs
 
 ---
 

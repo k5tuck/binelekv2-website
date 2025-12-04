@@ -61,4 +61,18 @@ ecs_services = {
     desired_count = 1
     health_path   = "/"
   }
+  support-portal = {
+    cpu           = 256
+    memory        = 512
+    port          = 3001
+    desired_count = 1
+    health_path   = "/health"
+  }
+  qdrant = {
+    cpu           = 512
+    memory        = 1024
+    port          = 6333
+    desired_count = 1
+    health_path   = "/healthz"
+  }
 }

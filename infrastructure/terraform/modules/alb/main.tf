@@ -2,6 +2,12 @@
 # Application Load Balancer Module
 # =============================================================================
 
+locals {
+  # Only external-facing services need ALB target groups
+  external_services = ["api-gateway", "support-portal"]
+  alb_services = { for k, v in var.ecs_services : k => v if contains(local.external_services, k) }
+}
+
 # =============================================================================
 # Security Group
 # =============================================================================
@@ -152,11 +158,11 @@ resource "aws_lb_listener" "http" {
 }
 
 # =============================================================================
-# Target Groups
+# Target Groups (only for external services)
 # =============================================================================
 
 resource "aws_lb_target_group" "services" {
-  for_each = var.ecs_services
+  for_each = local.alb_services
 
   name        = "${var.name_prefix}-${each.key}"
   port        = each.value.port
@@ -188,7 +194,26 @@ resource "aws_lb_target_group" "services" {
 # Listener Rules
 # =============================================================================
 
-# API Gateway - default for /api/* paths
+# Support Portal - for /support/* paths (higher priority)
+resource "aws_lb_listener_rule" "support_portal" {
+  listener_arn = aws_lb_listener.https.arn
+  priority     = 50
+
+  action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.services["support-portal"].arn
+  }
+
+  condition {
+    path_pattern {
+      values = ["/support/*", "/support"]
+    }
+  }
+
+  tags = var.tags
+}
+
+# API Gateway - default for all other paths
 resource "aws_lb_listener_rule" "api_gateway" {
   listener_arn = aws_lb_listener.https.arn
   priority     = 100

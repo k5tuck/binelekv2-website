@@ -86,6 +86,8 @@ resource "aws_db_parameter_group" "main" {
     apply_method = "pending-reboot"
   }
 
+  # Note: Vector search is handled by Qdrant (self-hosted in ECS)
+
   tags = merge(var.tags, {
     Name = "${var.name_prefix}-pg-params"
   })

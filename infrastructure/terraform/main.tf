@@ -72,9 +72,9 @@ module "secrets" {
   name_prefix       = local.name_prefix
   environment       = var.environment
   db_password       = module.rds.db_password
-  pinecone_api_key  = var.pinecone_api_key
   openai_api_key    = var.openai_api_key
   anthropic_api_key = var.anthropic_api_key
+  # Note: Vector search uses pgvector in PostgreSQL (no external service needed)
 
   tags = local.common_tags
 
@@ -127,12 +127,19 @@ module "elasticache" {
 # ECR Module
 # =============================================================================
 
+locals {
+  # Services that use official Docker images (no ECR needed)
+  official_image_services = ["qdrant", "ollama"]
+  # Filter out services that use official images
+  ecr_services = [for s in keys(var.ecs_services) : s if !contains(local.official_image_services, s)]
+}
+
 module "ecr" {
   source = "./modules/ecr"
 
   name_prefix = local.name_prefix
   environment = var.environment
-  services    = keys(var.ecs_services)
+  services    = local.ecr_services
 
   tags = local.common_tags
 }

@@ -152,19 +152,27 @@ variable "ecs_services" {
       desired_count = 1
       health_path   = "/"
     }
+    support-portal = {
+      cpu           = 256
+      memory        = 512
+      port          = 3001
+      desired_count = 1
+      health_path   = "/health"
+    }
+    qdrant = {
+      cpu           = 512
+      memory        = 1024
+      port          = 6333
+      desired_count = 1
+      health_path   = "/healthz"
+    }
   }
 }
 
 # =============================================================================
 # External Service API Keys (stored in Secrets Manager)
+# Note: Vector search uses Qdrant (self-hosted in ECS, free)
 # =============================================================================
-
-variable "pinecone_api_key" {
-  description = "Pinecone API key"
-  type        = string
-  sensitive   = true
-  default     = ""
-}
 
 variable "openai_api_key" {
   description = "OpenAI API key"

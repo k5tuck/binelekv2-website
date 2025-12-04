@@ -67,23 +67,8 @@ resource "aws_secretsmanager_secret_version" "encryption_key" {
 }
 
 # =============================================================================
-# Pinecone API Key
+# Note: Vector search uses pgvector in PostgreSQL (no Pinecone needed)
 # =============================================================================
-
-resource "aws_secretsmanager_secret" "pinecone_api_key" {
-  name        = "${var.name_prefix}/pinecone-api-key"
-  description = "Pinecone API key for ${var.name_prefix}"
-
-  tags = merge(var.tags, {
-    Name = "${var.name_prefix}/pinecone-api-key"
-  })
-}
-
-resource "aws_secretsmanager_secret_version" "pinecone_api_key" {
-  count         = var.pinecone_api_key != "" ? 1 : 0
-  secret_id     = aws_secretsmanager_secret.pinecone_api_key.id
-  secret_string = var.pinecone_api_key
-}
 
 # =============================================================================
 # OpenAI API Key

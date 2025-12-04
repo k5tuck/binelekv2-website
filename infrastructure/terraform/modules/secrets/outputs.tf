@@ -4,7 +4,6 @@ output "secret_arns" {
     db_password       = aws_secretsmanager_secret.db_password.arn
     jwt_secret        = aws_secretsmanager_secret.jwt_secret.arn
     encryption_key    = aws_secretsmanager_secret.encryption_key.arn
-    pinecone_api_key  = aws_secretsmanager_secret.pinecone_api_key.arn
     openai_api_key    = aws_secretsmanager_secret.openai_api_key.arn
     anthropic_api_key = aws_secretsmanager_secret.anthropic_api_key.arn
   }

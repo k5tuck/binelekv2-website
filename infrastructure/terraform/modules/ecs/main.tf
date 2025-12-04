@@ -2,6 +2,55 @@
 # ECS Fargate Module
 # =============================================================================
 
+locals {
+  # Services that use official Docker images (not ECR)
+  official_image_services = {
+    qdrant = "qdrant/qdrant:latest"
+    ollama = "ollama/ollama:latest"
+  }
+
+  # Services that need ALB (external-facing)
+  external_services = ["api-gateway", "support-portal"]
+
+  # Internal services (service discovery only, no ALB)
+  internal_services = ["qdrant", "ollama", "ai-orchestrator", "connectors", "marketplace"]
+}
+
+# =============================================================================
+# Cloud Map Service Discovery
+# =============================================================================
+
+resource "aws_service_discovery_private_dns_namespace" "main" {
+  name        = "${var.name_prefix}.local"
+  description = "Service discovery namespace for ${var.name_prefix}"
+  vpc         = var.vpc_id
+
+  tags = var.tags
+}
+
+resource "aws_service_discovery_service" "services" {
+  for_each = var.ecs_services
+
+  name = each.key
+
+  dns_config {
+    namespace_id = aws_service_discovery_private_dns_namespace.main.id
+
+    dns_records {
+      ttl  = 10
+      type = "A"
+    }
+
+    routing_policy = "MULTIVALUE"
+  }
+
+  health_check_custom_config {
+    failure_threshold = 1
+  }
+
+  tags = var.tags
+}
+
 # =============================================================================
 # ECS Cluster
 # =============================================================================
@@ -217,7 +266,8 @@ resource "aws_ecs_task_definition" "services" {
   container_definitions = jsonencode([
     {
       name      = each.key
-      image     = "${var.ecr_repository_urls[each.key]}:latest"
+      # Use official Docker image for qdrant/ollama, ECR for others
+      image     = lookup(local.official_image_services, each.key, "${lookup(var.ecr_repository_urls, each.key, "placeholder")}:latest")
       essential = true
 
       portMappings = [
@@ -237,6 +287,7 @@ resource "aws_ecs_task_definition" "services" {
         { name = "DB_USER", value = var.db_username },
         { name = "REDIS_HOST", value = var.redis_host },
         { name = "REDIS_PORT", value = tostring(var.redis_port) },
+        { name = "QDRANT_URL", value = "http://qdrant.${var.name_prefix}.local:6333" },
         { name = "AWS_REGION", value = var.aws_region },
         { name = "TASK_QUEUE_URL", value = var.task_queue_url },
         { name = "SYNC_QUEUE_URL", value = var.sync_queue_url },
@@ -246,10 +297,6 @@ resource "aws_ecs_task_definition" "services" {
         {
           name      = "DB_PASSWORD"
           valueFrom = var.secrets_arns["db_password"]
-        },
-        {
-          name      = "PINECONE_API_KEY"
-          valueFrom = var.secrets_arns["pinecone_api_key"]
         },
         {
           name      = "OPENAI_API_KEY"
@@ -289,8 +336,9 @@ resource "aws_ecs_task_definition" "services" {
 # ECS Services
 # =============================================================================
 
-resource "aws_ecs_service" "services" {
-  for_each = var.ecs_services
+# External services (with ALB)
+resource "aws_ecs_service" "external" {
+  for_each = { for k, v in var.ecs_services : k => v if contains(local.external_services, k) }
 
   name            = each.key
   cluster         = aws_ecs_cluster.main.id
@@ -308,6 +356,51 @@ resource "aws_ecs_service" "services" {
     target_group_arn = var.alb_target_group_arns[each.key]
     container_name   = each.key
     container_port   = each.value.port
+  }
+
+  service_registries {
+    registry_arn = aws_service_discovery_service.services[each.key].arn
+  }
+
+  deployment_configuration {
+    minimum_healthy_percent = 50
+    maximum_percent         = 200
+  }
+
+  deployment_circuit_breaker {
+    enable   = true
+    rollback = true
+  }
+
+  propagate_tags = "SERVICE"
+
+  tags = merge(var.tags, {
+    Service = each.key
+  })
+
+  lifecycle {
+    ignore_changes = [desired_count, task_definition]
+  }
+}
+
+# Internal services (service discovery only, no ALB)
+resource "aws_ecs_service" "internal" {
+  for_each = { for k, v in var.ecs_services : k => v if contains(local.internal_services, k) }
+
+  name            = each.key
+  cluster         = aws_ecs_cluster.main.id
+  task_definition = aws_ecs_task_definition.services[each.key].arn
+  desired_count   = each.value.desired_count
+  launch_type     = "FARGATE"
+
+  network_configuration {
+    subnets          = var.private_subnet_ids
+    security_groups  = [aws_security_group.ecs.id]
+    assign_public_ip = false
+  }
+
+  service_registries {
+    registry_arn = aws_service_discovery_service.services[each.key].arn
   }
 
   deployment_configuration {
@@ -332,27 +425,27 @@ resource "aws_ecs_service" "services" {
 }
 
 # =============================================================================
-# Auto Scaling
+# Auto Scaling (Production only, external services)
 # =============================================================================
 
-resource "aws_appautoscaling_target" "services" {
-  for_each = var.environment == "production" ? var.ecs_services : {}
+resource "aws_appautoscaling_target" "external" {
+  for_each = var.environment == "production" ? { for k, v in var.ecs_services : k => v if contains(local.external_services, k) } : {}
 
   max_capacity       = 4
   min_capacity       = 1
-  resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.services[each.key].name}"
+  resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.external[each.key].name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
 }
 
-resource "aws_appautoscaling_policy" "cpu" {
-  for_each = var.environment == "production" ? var.ecs_services : {}
+resource "aws_appautoscaling_policy" "external_cpu" {
+  for_each = var.environment == "production" ? { for k, v in var.ecs_services : k => v if contains(local.external_services, k) } : {}
 
   name               = "${var.name_prefix}-${each.key}-cpu-scaling"
   policy_type        = "TargetTrackingScaling"
-  resource_id        = aws_appautoscaling_target.services[each.key].resource_id
-  scalable_dimension = aws_appautoscaling_target.services[each.key].scalable_dimension
-  service_namespace  = aws_appautoscaling_target.services[each.key].service_namespace
+  resource_id        = aws_appautoscaling_target.external[each.key].resource_id
+  scalable_dimension = aws_appautoscaling_target.external[each.key].scalable_dimension
+  service_namespace  = aws_appautoscaling_target.external[each.key].service_namespace
 
   target_tracking_scaling_policy_configuration {
     predefined_metric_specification {
