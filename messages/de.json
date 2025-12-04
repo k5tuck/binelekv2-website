@@ -47,7 +47,7 @@
     "heroSubtitle": "Eine Plattform zur Automatisierung von Abläufen, zum Verstehen Ihrer Daten, zum Schutz Ihres Unternehmens und zum Überholen der Konkurrenz.",
     "enterWorkEmail": "Geben Sie Ihre geschäftliche E-Mail ein",
     "onWaitlist": "Sie sind auf der Liste! Wir melden uns bald.",
-    "joinWaitlistCount": "Schließen Sie sich über 500 Unternehmen auf der Warteliste an",
+    "joinWaitlistCount": "Schließen Sie sich wachsenden Unternehmen auf der Warteliste an",
     "connectsWithTools": "Verbindet sich mit den Tools, die Sie bereits nutzen",
     "valuePropTitle": "Hören Sie auf zu jonglieren. Fangen Sie an zu skalieren.",
     "valuePropSubtitle": "Die meisten Unternehmen verschwenden jede Woche Stunden mit manuellen Aufgaben und verstreuten Daten. Binelek bringt alles zusammen.",
@@ -56,7 +56,7 @@
     "benefitUnifiedData": "Vereinheitlichte Daten",
     "benefitUnifiedDataDesc": "Alle Ihre Geschäftsdaten an einem Ort. Kein Wechseln mehr zwischen Apps.",
     "benefitEnterpriseSecurity": "Enterprise-Sicherheit",
-    "benefitEnterpriseSecurityDesc": "Sicherheit auf Bankniveau integriert. SOC2-konform vom ersten Tag an.",
+    "benefitEnterpriseSecurityDesc": "Sicherheit auf Bankniveau integriert. Unternehmensweiter Schutz vom ersten Tag an.",
     "benefitActionableInsights": "Umsetzbare Erkenntnisse",
     "benefitActionableInsightsDesc": "Nicht nur Daten, sondern Empfehlungen. Wissen Sie, was als nächstes zu tun ist.",
     "modulesTitle": "Vier Module. Eine Plattform.",
@@ -112,7 +112,7 @@
     "cancelAnytime": "Jederzeit kündbar",
     "earlyAdopterPricing": "Early-Adopter-Preise",
     "ctaHeadline": "Bereit, Ihr Unternehmen zu transformieren?",
-    "ctaSubheadline": "Schließen Sie sich Hunderten von Unternehmen auf der Warteliste an. Werden Sie benachrichtigt, wenn wir starten."
+    "ctaSubheadline": "Schließen Sie sich Unternehmen auf der Warteliste an. Werden Sie benachrichtigt, wenn wir starten."
   },
   "pricing": {
     "title": "Einfache, transparente Preise",
@@ -368,7 +368,7 @@
     "fourModulesTitle": "Vier Module, eine Plattform",
     "testimonialPlaceholder": "Wir haben [X] durch Binelek ersetzt",
     "testimonialsComingSoon": "Kundenreferenzen kommen bald",
-    "joinHundreds": "Schließen Sie sich Hunderten von Unternehmen an, die ihre Abläufe mit Binelek vereinfachen.",
+    "joinHundreds": "Schließen Sie sich Unternehmen an, die ihre Abläufe mit Binelek vereinfachen.",
     "seeItInAction": "Sehen Sie es in Aktion",
     "seeItInActionSubheadline": "Buchen Sie eine personalisierte Demo, um zu sehen, wie Binelek für Ihr Unternehmen funktionieren kann."
   },
@@ -380,7 +380,7 @@
     "storyTitle": "Unsere Geschichte",
     "storyP1": "Wir haben Binelek gegründet, weil wir eine Lücke im Markt sahen. Großunternehmen haben Zugang zu unglaublichen Tools — KI-gestützte Analysen, automatisierte Workflows, ausgefeilte Sicherheitsüberwachung und Wettbewerbsintelligenz. Aber kleine und mittlere Unternehmen? Sie stecken mit Tabellenkalkulationen, getrennten Apps und manuellen Prozessen fest.",
     "storyP2": "Wir wussten, dass es einen besseren Weg geben muss. Also haben wir Binelek gebaut — eine einheitliche Plattform, die Enterprise-Funktionen für wachsende Unternehmen bringt, ohne die Enterprise-Komplexität oder den hohen Preis.",
-    "storyP3": "Heute hilft Binelek Hunderten von Unternehmen, intelligenter, schneller und sicherer zu arbeiten. Und wir fangen gerade erst an.",
+    "storyP3": "Heute möchte Binelek Unternehmen jeder Größe helfen, intelligenter, schneller und sicherer zu arbeiten. Und wir fangen gerade erst an.",
     "valuesTitle": "Unsere Werte",
     "value1Title": "Einfachheit vor Komplexität",
     "value1Desc": "Wir glauben, dass leistungsstarke Tools einfach zu bedienen sein sollten. Wenn es kompliziert ist, haben wir das Design noch nicht abgeschlossen.",

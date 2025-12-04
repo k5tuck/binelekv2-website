@@ -50,7 +50,7 @@
     "heroSubtitle": "One platform to automate operations, understand your data, secure your business, and outsmart the competition.",
     "enterWorkEmail": "Enter your work email",
     "onWaitlist": "You're on the list! We'll be in touch soon.",
-    "joinWaitlistCount": "Join 500+ businesses on the waitlist",
+    "joinWaitlistCount": "Join growing businesses on the waitlist",
     "connectsWithTools": "Connects with the tools you already use",
     "valuePropTitle": "Stop juggling. Start scaling.",
     "valuePropSubtitle": "Most businesses waste hours every week on manual tasks and scattered data. Binelek brings everything together.",
@@ -59,7 +59,7 @@
     "benefitUnifiedData": "Unified Data",
     "benefitUnifiedDataDesc": "All your business data in one place. No more switching between apps.",
     "benefitEnterpriseSecurity": "Enterprise Security",
-    "benefitEnterpriseSecurityDesc": "Bank-level security built in. SOC2 compliant from day one.",
+    "benefitEnterpriseSecurityDesc": "Bank-level security built in. Enterprise-grade protection from day one.",
     "benefitActionableInsights": "Actionable Insights",
     "benefitActionableInsightsDesc": "Not just data, but recommendations. Know what to do next.",
     "hubsTitle": "Three hubs. Complete visibility.",
@@ -145,7 +145,7 @@
     "cancelAnytime": "Cancel anytime",
     "earlyAdopterPricing": "Early adopter pricing",
     "ctaHeadline": "Ready to transform your business?",
-    "ctaSubheadline": "Join hundreds of businesses already on the waitlist. Get notified when we launch."
+    "ctaSubheadline": "Join businesses already on the waitlist. Get notified when we launch."
   },
   "pricing": {
     "title": "Simple, transparent pricing",
@@ -376,7 +376,7 @@
       "customConnectors": "Custom Data Sources",
       "customConnectorsDesc": "Connect any data source with our flexible custom connector builder. REST APIs, databases, SFTP — we handle it all.",
       "whatYouCanPredict": "What you can predict",
-      "useCase1": "Next month's revenue with 95% accuracy",
+      "useCase1": "Next month's revenue with high-accuracy forecasting",
       "useCase2": "Which products will sell out this quarter",
       "useCase3": "Which customers are likely to churn",
       "useCase4": "Optimal pricing for maximum profit",
@@ -589,7 +589,7 @@
     "threeHubsTitle": "Three hubs, complete visibility",
     "testimonialPlaceholder": "We replaced [X] with Binelek",
     "testimonialsComingSoon": "Customer testimonials coming soon",
-    "joinHundreds": "Join hundreds of businesses simplifying their operations with Binelek.",
+    "joinHundreds": "Join businesses simplifying their operations with Binelek.",
     "seeItInAction": "See it in action",
     "seeItInActionSubheadline": "Book a personalized demo to see how Binelek can work for your business."
   },
@@ -601,7 +601,7 @@
     "storyTitle": "Our Story",
     "storyP1": "We started Binelek because we saw a gap in the market. Enterprise companies have access to incredible tools — AI-powered analytics, automated workflows, sophisticated security monitoring, and competitive intelligence. But small and medium businesses? They're stuck with spreadsheets, disconnected apps, and manual processes.",
     "storyP2": "We knew there had to be a better way. So we built Binelek — a unified platform that brings enterprise capabilities to growing businesses, without the enterprise complexity or price tag.",
-    "storyP3": "Today, Binelek aims to help hundreds of businesses run smarter, faster, and more securely. And we're just getting started.",
+    "storyP3": "Today, Binelek aims to help businesses of all sizes run smarter, faster, and more securely. And we're just getting started.",
     "valuesTitle": "Our Values",
     "value1Title": "Simplicity over complexity",
     "value1Desc": "We believe powerful tools should be easy to use. If it's complicated, we haven't finished designing it.",
