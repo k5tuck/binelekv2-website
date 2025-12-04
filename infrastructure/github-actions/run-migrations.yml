@@ -1,0 +1,142 @@
+# =============================================================================
+# Database Migrations Workflow
+# =============================================================================
+# This workflow runs database migrations via ECS task
+# Copy this file to .github/workflows/ in the backend repository
+
+name: Run Database Migrations
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to run migrations'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      action:
+        description: 'Migration action'
+        required: true
+        default: 'migrate'
+        type: choice
+        options:
+          - migrate
+          - rollback
+          - status
+
+env:
+  AWS_REGION: 'us-east-1'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  run-migrations:
+    name: Run Migrations
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Set environment variables
+        id: env
+        run: |
+          if [[ "${{ github.event.inputs.environment }}" == "production" ]]; then
+            echo "cluster=binelek-production-cluster" >> $GITHUB_OUTPUT
+            echo "name_prefix=binelek-production" >> $GITHUB_OUTPUT
+          else
+            echo "cluster=binelek-staging-cluster" >> $GITHUB_OUTPUT
+            echo "name_prefix=binelek-staging" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get VPC and Subnet info
+        id: vpc
+        run: |
+          # Get private subnet IDs
+          SUBNET_IDS=$(aws ec2 describe-subnets \
+            --filters "Name=tag:Name,Values=${{ steps.env.outputs.name_prefix }}-private-*" \
+            --query 'Subnets[*].SubnetId' \
+            --output text | tr '\t' ',')
+          echo "subnets=$SUBNET_IDS" >> $GITHUB_OUTPUT
+
+          # Get security group
+          SG_ID=$(aws ec2 describe-security-groups \
+            --filters "Name=tag:Name,Values=${{ steps.env.outputs.name_prefix }}-ecs-sg" \
+            --query 'SecurityGroups[0].GroupId' \
+            --output text)
+          echo "security_group=$SG_ID" >> $GITHUB_OUTPUT
+
+      - name: Run migration task
+        id: run-task
+        run: |
+          TASK_ARN=$(aws ecs run-task \
+            --cluster ${{ steps.env.outputs.cluster }} \
+            --task-definition ${{ steps.env.outputs.name_prefix }}-api-gateway \
+            --launch-type FARGATE \
+            --network-configuration "awsvpcConfiguration={subnets=[${{ steps.vpc.outputs.subnets }}],securityGroups=[${{ steps.vpc.outputs.security_group }}],assignPublicIp=DISABLED}" \
+            --overrides '{
+              "containerOverrides": [{
+                "name": "api-gateway",
+                "command": ["npm", "run", "${{ github.event.inputs.action }}"]
+              }]
+            }' \
+            --query 'tasks[0].taskArn' \
+            --output text)
+
+          echo "task_arn=$TASK_ARN" >> $GITHUB_OUTPUT
+          echo "Running migration task: $TASK_ARN"
+
+      - name: Wait for task completion
+        run: |
+          aws ecs wait tasks-stopped \
+            --cluster ${{ steps.env.outputs.cluster }} \
+            --tasks ${{ steps.run-task.outputs.task_arn }}
+
+      - name: Check task result
+        run: |
+          EXIT_CODE=$(aws ecs describe-tasks \
+            --cluster ${{ steps.env.outputs.cluster }} \
+            --tasks ${{ steps.run-task.outputs.task_arn }} \
+            --query 'tasks[0].containers[0].exitCode' \
+            --output text)
+
+          if [[ "$EXIT_CODE" != "0" ]]; then
+            echo "Migration task failed with exit code: $EXIT_CODE"
+            exit 1
+          fi
+
+          echo "Migration completed successfully!"
+
+      - name: Get task logs
+        if: always()
+        run: |
+          # Get the task ID from ARN
+          TASK_ID=$(echo "${{ steps.run-task.outputs.task_arn }}" | cut -d'/' -f3)
+
+          # Get logs from CloudWatch
+          aws logs get-log-events \
+            --log-group-name "/ecs/${{ steps.env.outputs.name_prefix }}/api-gateway" \
+            --log-stream-name "ecs/api-gateway/$TASK_ID" \
+            --query 'events[*].message' \
+            --output text || echo "Could not retrieve logs"
+
+      - name: Migration Summary
+        run: |
+          echo "## Migration Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Environment: ${{ github.event.inputs.environment }}" >> $GITHUB_STEP_SUMMARY
+          echo "Action: ${{ github.event.inputs.action }}" >> $GITHUB_STEP_SUMMARY
+          echo "Task ARN: ${{ steps.run-task.outputs.task_arn }}" >> $GITHUB_STEP_SUMMARY
